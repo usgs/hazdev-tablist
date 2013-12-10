@@ -1,3 +1,4 @@
+/* global define */
 define([], function () {
 	'use strict';
 
@@ -9,8 +10,8 @@ define([], function () {
 	/**
 	 * Construct a new ItemList.
 	 *
-	 * Sub-classes may override the methods formatTabContent() and
-	 * formatPanelContent() to change list formatting.
+	 * Sub-classes may override the methods getTabContent() and
+	 * getPanelContent() to change list formatting.
 	 *
 	 * @param options {Object}
 	 * @param options.el {DOMElement}

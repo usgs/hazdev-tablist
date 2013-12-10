@@ -16,11 +16,9 @@ require.config({
 });
 
 require([
-	'mocha',
-	'spec/TabListTest'
+	'mocha'
 ], function (
-	mocha,
-	TabListTest
+	mocha
 ) {
 	'use strict';
 
@@ -28,6 +26,7 @@ require([
 
 	// Add each test class here as they are implemented
 	require([
+		'spec/TabListTest'
 	], function () {
 		if (window.mochaPhantomJS) {
 			window.mochaPhantomJS.run();

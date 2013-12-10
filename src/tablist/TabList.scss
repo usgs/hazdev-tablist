@@ -1,0 +1,127 @@
+
+// tablist depends on border-box
+.tablist,
+.tablist > nav,
+.tablist-tab,
+.tablist-panel {
+	box-sizing: border-box;
+	margin:0;
+	padding:0;
+}
+
+// hide tabs by default.
+.tablist > nav {
+	display:none;
+}
+
+
+@media screen and (min-width: 768px) {
+
+	// container
+	.tablist {
+		// show nav with tabs
+		& > nav {
+			display:block;
+		}
+
+		// clear after floating contents
+		&:after {
+			display:block;
+			content: ' ';
+			clear:both;
+		}
+	}
+
+	// tab buttons
+	.tablist-tab {
+		display:block;
+		padding:8px;
+		margin-bottom:4px;
+		background-color:#fff;
+		border:1px solid #fff;
+		cursor:pointer;
+
+		// hover
+		&:hover {
+			border:1px solid #ddd;
+			box-shadow:2px 2px 1px #333;
+		}
+
+		// selected
+		&.selected {
+			background-color:#ddd;
+			border:1px solid #ccc;
+			box-shadow:2px 2px 1px #333;
+		}
+	}
+
+	// tab content
+	.tablist-panel {
+		display:none;
+
+		// show the selected panel
+		&.selected {
+			display:block;
+		}
+	}
+
+
+	// position tabs on left
+	.tablist-left {
+		// nav is on left
+		& > nav {
+			float:left;
+			width:20%;
+			// with gutter to right
+			& > .tablist-tab {
+				margin-right:8px;
+			}
+		}
+
+		// panels are 80%, on right
+		& > .tablist-panel {
+			width:80%;
+			float:right;
+		}
+	}
+
+	// position tabs on right
+	.tablist-right {
+		// nav is on right
+		& > nav {
+			float:right;
+			width:20%;
+			// with gutter to left
+			& > .tablist-tab {
+				margin-left:8px;
+			}
+		}
+
+		// panels are 80%, on left
+		& > .tablist-panel {
+			width:80%;
+			float:left;
+		}
+	}
+
+	// position tabs on top
+	.tablist-top {
+		// nav is on top
+		& > nav {
+
+			& > .tablist-tab {
+				max-width:20%;
+				float:left;
+				margin-right:4px;
+				margin-bottom:8px;
+			}
+		}
+
+		// panels are full width
+		& > .tablist-panel {
+			// clear the floating tabs
+			clear:left;
+		}
+	}
+
+}

@@ -70,11 +70,13 @@ define(['./TabList'], function (TabList) {
 	 *           image tag. ie usemap: mapname, etc
 	 */
 	ImageList.prototype.getPanelContent = function (obj) {
-		var attribute = obj.attribute;
-		var attributeString = '';
-		if( obj.attribute ) {
-			for (var attr in attribute) {
-				attributeString += attr + '=' + attribute[attr] + ' ';
+		var attributes = obj.attributes,
+		    attributeString = '',
+		    attr;
+
+		if( attributes ) {
+			for (attr in attributes) {
+				attributeString += ' ' + attr + '=' + attributes[attr];
 			}
 		}
 		return [
@@ -82,7 +84,7 @@ define(['./TabList'], function (TabList) {
 				(obj.header || ''),
 				'<img src="', obj.image, '"',
 						' alt="', (obj.alt || ''), '" ',
-						(attributeString || ''), ' />',
+						attributeString, ' />',
 				(obj.footer || '')
 			].join('');
 	};

@@ -66,11 +66,17 @@ define(['./TabList'], function (TabList) {
 	 *        markup after image.
 	 */
 	ImageList.prototype.getPanelContent = function (obj) {
+		var usemap = '';
+		if( obj.usemap ) {
+			usemap = 'usemap=' + '"' + obj.usemap + '"';
+		}
+
 		return [
 				'<header>', obj.title, '</header>',
 				(obj.header || ''),
 				'<img src="', obj.image, '"',
-						' alt="', (obj.alt || ''), '"/>',
+						' alt="', (obj.alt || ''), '"',
+						usemap, '"/>',
 				(obj.footer || '')
 			].join('');
 	};

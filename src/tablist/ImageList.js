@@ -64,19 +64,25 @@ define(['./TabList'], function (TabList) {
 	 * @param obj.footer {String}
 	 *        Optional, default is empty string.
 	 *        markup after image.
+	 * @param obj.attributes {Object}
+	 *        Optional.
+	 *        An object containing potential additional attributes for the
+	 *           image tag. ie usemap: mapname, etc
 	 */
 	ImageList.prototype.getPanelContent = function (obj) {
-		var usemap = '';
-		if( obj.usemap ) {
-			usemap = 'usemap=' + '"' + obj.usemap + '"';
+		var attribute = obj.attribute;
+		var attributeString = '';
+		if( obj.attribute ) {
+			for (var attr in attribute) {
+				attributeString += attr + '=' + attribute[attr] + ' ';
+			}
 		}
-
 		return [
 				'<header>', obj.title, '</header>',
 				(obj.header || ''),
 				'<img src="', obj.image, '"',
-						' alt="', (obj.alt || ''), '"',
-						usemap, '"/>',
+						' alt="', (obj.alt || ''), '" ',
+						(attributeString || ''), ' />',
 				(obj.footer || '')
 			].join('');
 	};

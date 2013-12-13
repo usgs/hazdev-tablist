@@ -74,17 +74,17 @@ define(['./TabList'], function (TabList) {
 		    attributeString = '',
 		    attr;
 
-		if( attributes ) {
+		if (attributes) {
 			for (attr in attributes) {
-				attributeString += ' ' + attr + '=' + attributes[attr];
+				attributeString += ' ' + attr + '="' + attributes[attr] + '"';
 			}
 		}
 		return [
 				'<header>', obj.title, '</header>',
 				(obj.header || ''),
 				'<img src="', obj.image, '"',
-						' alt="', (obj.alt || ''), '" ',
-						attributeString, ' />',
+						' alt="', (obj.alt || ''), '"',
+						attributeString, '/>',
 				(obj.footer || '')
 			].join('');
 	};

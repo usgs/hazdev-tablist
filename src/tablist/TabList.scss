@@ -14,8 +14,11 @@
 	display:none;
 }
 
+
 .tablist-panel {
-	border-top: 1px solid #ccc;
+	padding:10px 15px;
+	border: 1px solid #666;
+	margin-bottom:8px;
 }
 
 @media screen and (min-width: 768px) {
@@ -33,37 +36,48 @@
 			content: ' ';
 			clear:both;
 		}
+
+		img {
+			max-width:100%;
+		}
 	}
 
 	// tab buttons
 	.tablist-tab {
 		display:block;
-		padding:8px;
+		padding:10px 15px;
 		margin-bottom:4px;
-		background-color:#fff;
-		border:1px solid #ccc;
 		cursor:pointer;
-		border-radius: 3px;
-		color: #ccc;
-		transition: border .5s, color .5s;
+		color: #666;
+		background:#ededed;
+		transition: color .5s, background .5s;
+
 
 		// hover
 		&:hover {
-			border:1px solid #666;
-			color: #666;
+			background-color:rgba(0,0,0,0.02);
+			color: #333;
 		}
 
 		// selected
 		&.selected {
-			border:1px solid #000;
+			position:relative;
 			color: #000;
+			background:#fff;
+			-webkit-box-shadow: 0 0.1em 0 inset;
+			box-shadow: 0 0.1em 0 inset;
+
+			// hover
+			&:hover {
+				background:#fff;
+			}
 		}
+
 	}
 
 	// tab content
 	.tablist-panel {
 		display:none;
-		border:none;
 
 		// show the selected panel
 		&.selected {
@@ -79,7 +93,30 @@
 			width:20%;
 			// with gutter to right
 			& > .tablist-tab {
-				margin-right:8px;
+				margin:0;
+				border-bottom:1px solid #666;
+				border-left:1px solid #666;
+			}
+
+			& > .tablist-tab:first-child {
+				border-top:1px solid #666;
+			}
+
+			& > .selected {
+				-webkit-box-shadow: 0.1em 0 0 inset;
+				box-shadow: 0.1em 0 0 inset;
+				border-right:none;
+			}
+
+			& > .selected:after {
+				position: absolute;
+				content: '';
+				margin-right: -1px;
+				bottom:0;
+				right: 0;
+				width: 2px;
+				height: 100%;
+				background-color: #fff;
 			}
 		}
 
@@ -96,9 +133,33 @@
 		& > nav {
 			float:right;
 			width:20%;
+
+			& > .tablist-tab:first-child {
+				border-top:1px solid #666;
+			}
+
 			// with gutter to left
 			& > .tablist-tab {
-				margin-left:8px;
+				margin:0;
+				border-bottom:1px solid #666;
+				border-right:1px solid #666;
+			}
+
+			& > .selected {
+				-webkit-box-shadow: -0.1em 0 0 inset;
+				box-shadow: -0.1em 0 0 inset;
+				border-left:none;
+			}
+
+			& > .selected:after {
+				position: absolute;
+				content: '';
+				margin-left: -1px;
+				bottom:0;
+				left: 0;
+				width: 2px;
+				height: 100%;
+				background-color: #fff;
 			}
 		}
 
@@ -116,8 +177,32 @@
 
 			& > .tablist-tab {
 				display:inline-block;
-				margin-right:4px;
-				margin-bottom:8px;
+				border-right:1px solid #666;
+				border-top:1px solid #666;
+				margin:0;
+			}
+
+			& > .selected {
+				border-bottom:none;
+			}
+
+			& > .selected:after {
+				position: absolute;
+				content: '';
+				margin-bottom: -1px;
+				bottom:0;
+				left: 0;
+				width: 100%;
+				height: 2px;
+				background-color: #fff;
+			}
+
+			& > .tablist-tab:before {
+				border-left:1px solid #666;
+			}
+
+			& > .tablist-tab:first-child {
+				border-left:1px solid #666;
 			}
 		}
 	}

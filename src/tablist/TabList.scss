@@ -5,6 +5,7 @@
 .tablist-tab,
 .tablist-panel {
 	box-sizing: border-box;
+	-moz-box-sizing: border-box;
 	margin:0;
 	padding:0;
 }
@@ -64,8 +65,6 @@
 			position:relative;
 			color: #000;
 			background:#fff;
-			-webkit-box-shadow: 0 0.1em 0 inset;
-			box-shadow: 0 0.1em 0 inset;
 
 			// hover
 			&:hover {
@@ -82,6 +81,44 @@
 		// show the selected panel
 		&.selected {
 			display:block;
+		}
+	}
+
+	// position tabs on top
+	.tablist-top {
+		// nav is on top
+		& > nav {
+
+			& > .tablist-tab {
+				display:inline-block;
+				border-right:1px solid #666;
+				border-top:1px solid #666;
+				margin:0;
+			}
+
+			& > .selected {
+				-webkit-box-shadow: 0 1px 0 inset;
+				box-shadow: 0 1px 0 inset;
+			}
+
+			& > .selected:after {
+				position: absolute;
+				content: '';
+				margin-bottom: -1px;
+				bottom:0;
+				left: 0;
+				width: 100%;
+				height: 2px;
+				background-color: #fff;
+			}
+
+			& > .tablist-tab:before {
+				border-left:1px solid #666;
+			}
+
+			& > .tablist-tab:first-child {
+				border-left:1px solid #666;
+			}
 		}
 	}
 
@@ -103,9 +140,8 @@
 			}
 
 			& > .selected {
-				-webkit-box-shadow: 0.1em 0 0 inset;
-				box-shadow: 0.1em 0 0 inset;
-				border-right:none;
+				-webkit-box-shadow: 1px 0 0 inset;
+				box-shadow: 1px 0 0 inset;
 			}
 
 			& > .selected:after {
@@ -146,9 +182,8 @@
 			}
 
 			& > .selected {
-				-webkit-box-shadow: -0.1em 0 0 inset;
-				box-shadow: -0.1em 0 0 inset;
-				border-left:none;
+				-webkit-box-shadow: -1px 0 0 inset;
+				box-shadow: -1px 0 0 inset;
 			}
 
 			& > .selected:after {
@@ -167,43 +202,6 @@
 		& > .tablist-panel {
 			width:80%;
 			float:left;
-		}
-	}
-
-	// position tabs on top
-	.tablist-top {
-		// nav is on top
-		& > nav {
-
-			& > .tablist-tab {
-				display:inline-block;
-				border-right:1px solid #666;
-				border-top:1px solid #666;
-				margin:0;
-			}
-
-			& > .selected {
-				border-bottom:none;
-			}
-
-			& > .selected:after {
-				position: absolute;
-				content: '';
-				margin-bottom: -1px;
-				bottom:0;
-				left: 0;
-				width: 100%;
-				height: 2px;
-				background-color: #fff;
-			}
-
-			& > .tablist-tab:before {
-				border-left:1px solid #666;
-			}
-
-			& > .tablist-tab:first-child {
-				border-left:1px solid #666;
-			}
 		}
 	}
 

@@ -77,10 +77,15 @@ define([], function () {
 	 * @param obj {Object}
 	 *        object being added to the list.
 	 * @return {String|DOMElement}
-	 *         This implementation returns obj.content.
+	 *         If obj.content is a function, its return value is returned.
+	 *         Otherwise, this implementation returns obj.content.
 	 */
 	TabList.prototype.getPanelContent = function(obj) {
-		return obj.content;
+		if (typeof obj.content === 'function') {
+			return obj.content();
+		} else {
+			return obj.content;
+		}
 	};
 
 	/**
@@ -88,8 +93,16 @@ define([], function () {
 	 *
 	 * @param options {Object}
 	 *        item being added to list.
+	 * @param options.onSelect {Function}
+	 *        Optional.
+	 *        Called when tab is selected.
 	 * @see getTabContent(), getPanelContent()
-	 *      these methods format content shown in tabs and panels.
+	 *      these methods format content shown in tabs and panels,
+	 *      and use the following parameters by default.
+	 * @param options.title {String|DOMElement}
+	 *        Used by getTabContent() to generate tab content.
+	 * @param options.content {String|DOMElement|Function}
+	 *        Used by getPanelContent() to generate panel content.
 	 * @return object with select() method that can be used to show the tab.
 	 */
 	TabList.prototype.addTab = function (options) {
@@ -117,12 +130,7 @@ define([], function () {
 		panelEl.className = 'tablist-panel';
 		panelEl.setAttribute('role', 'tabpanel');
 		panelEl.setAttribute('aria-labelledby', tabId);
-		var panelContent = this.getPanelContent(options);
-		if (typeof panelContent === 'string') {
-			panelEl.innerHTML = panelContent;
-		} else {
-			panelEl.appendChild(panelContent);
-		}
+		// content added by _selectTab()
 
 		var _this = this;
 		// save reference to tab and elements
@@ -133,7 +141,8 @@ define([], function () {
 			select: function () {
 				_this._selectTab(tab);
 				return false;
-			}
+			},
+			contentReady: false
 		};
 		this._tabs.push(tab);
 
@@ -161,14 +170,32 @@ define([], function () {
 	 */
 	TabList.prototype._selectTab = function (toSelect) {
 		for (var i=0, len=this._tabs.length; i<len; i++) {
-			var tab = this._tabs[i];
+			var tab = this._tabs[i],
+			    options = tab.options,
+			    tabEl = tab.tabEl,
+			    panelEl = tab.panelEl;
 			if (tab === toSelect) {
-				tab.tabEl.classList.add('selected');
-				tab.panelEl.classList.add('selected');
-				tab.panelEl.focus();
+				// load tab content, if needed...
+				if (!tab.contentReady) {
+					var panelContent = this.getPanelContent(options);
+					if (typeof panelContent === 'string') {
+						tab.panelEl.innerHTML = panelContent;
+					} else {
+						tab.panelEl.appendChild(panelContent);
+					}
+					tab.contentReady = true;
+				}
+				// update state classes
+				tabEl.classList.add('selected');
+				panelEl.classList.add('selected');
+				panelEl.focus();
+				// notify tab it is visible, if needed...
+				if (typeof options.onSelect === 'function') {
+					options.onSelect();
+				}
 			} else {
-				tab.tabEl.classList.remove('selected');
-				tab.panelEl.classList.remove('selected');
+				tabEl.classList.remove('selected');
+				panelEl.classList.remove('selected');
 			}
 		}
 	};

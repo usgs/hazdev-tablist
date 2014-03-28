@@ -1,10 +1,8 @@
 
 require([
-	'tablist/TabList',
-	'tablist/ImageList'
+	'tablist/TabList'
 ], function (
-	TabList,
-	ImageList
+	TabList
 ) {
 	'use strict';
 
@@ -14,33 +12,33 @@ require([
 
 
 	// left
-	new ImageList({
+	new TabList({
 		el: document.querySelector('#example-left'),
 		tabPosition: 'left',
 		tabs: [
 			{
-				title: 'Tab 1 - full title',
-				header: '<p>This is an image from placehold.it</p>',
-				image: 'http://placehold.it/640x480',
-				footer: '<footer><small>blah, blah, this is a footer, blah.</small></footer>',
-				thumbnailTitle: 'Tab 1',
-				thumbnailImage: 'http://placehold.it/320x240'
+				title: '<header>Tab 1</header>' +
+						'<img src="http://placehold.it/320x240"/>',
+				content: '<header>Tab 1 - full title</header>' +
+						'<p>This is an image from placehold.it</p>' +
+						'<img src="http://placehold.it/640x480"/>' +
+						'<footer>blah, blah, this is a footer, blah.</footer>'
 			},
 			{
-				title: 'Bacon - full title',
-				header: '<p>This is an image from baconmockup.com</p>',
-				image: 'http://baconmockup.com/640/480',
-				footer: '<footer><small>blah, blah, this is a footer, blah.</small></footer>',
-				thumbnailTitle: 'Bacon',
-				thumbnailImage: 'http://baconmockup.com/320/240'
+				title: '<header>Bacon</header>' +
+						'<img src="http://baconmockup.com/320/240"/>',
+				content: '<header>Bacon - full title</header>' +
+						'<p>This is an image from baconmockup.com</p>' +
+						'<img src="http://baconmockup.com/640/480"/>' +
+						'<footer>blah, blah, this is a footer, blah.</footer>'
 			},
 			{
-				title: 'Bill Murray - full title',
-				header: '<p>This is an image from fillmurray.com</p>',
-				image: 'http://fillmurray.com/640/480',
-				footer: '<footer><small>blah, blah, this is a footer, blah.</small></footer>',
-				thumbnailTitle: 'Bill Murray',
-				thumbnailImage: 'http://fillmurray.com/320/240'
+				title: '<header>Bill Murray</header>' +
+						'<img src="http://fillmurray.com/320/240"/>',
+				content: '<header>Bill Murray - full title</header>' +
+						'<p>This is an image from fillmurray.com</p>' +
+						'<img src="http://fillmurray.com/640/480"/>' +
+						'<footer>blah, blah, this is a footer, blah.</footer>'
 			}
 		]
 	});

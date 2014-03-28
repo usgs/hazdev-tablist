@@ -186,16 +186,16 @@ define([], function () {
 					tab.contentReady = true;
 				}
 				// update state classes
-				tabEl.classList.add('selected');
-				panelEl.classList.add('selected');
+				tabEl.classList.add('tablist-tab-selected');
+				panelEl.classList.add('tablist-panel-selected');
 				panelEl.focus();
 				// notify tab it is visible, if needed...
 				if (typeof options.onSelect === 'function') {
 					options.onSelect();
 				}
 			} else {
-				tabEl.classList.remove('selected');
-				panelEl.classList.remove('selected');
+				tabEl.classList.remove('tablist-tab-selected');
+				panelEl.classList.remove('tablist-panel-selected');
 			}
 		}
 	};

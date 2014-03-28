@@ -32,23 +32,30 @@ define([
 					content: 'content2'
 				});
 
+				var tabEl1 = tab1Ref.tabEl.classList,
+				    panelEl1 = tab1Ref.panelEl.classList,
+				    tabEl2 = tab2Ref.tabEl.classList,
+				    panelEl2 = tab2Ref.panelEl.classList,
+				    tabSelected = 'tablist-tab-selected',
+				    panelSelected = 'tablist-panel-selected';
+
 				// first tab added is selected by default
-				expect(tab1Ref.tabEl.classList.contains('selected')).to.equal(true);
-				expect(tab1Ref.panelEl.classList.contains('selected')).to.equal(true);
-				expect(tab2Ref.tabEl.classList.contains('selected')).to.equal(false);
-				expect(tab2Ref.panelEl.classList.contains('selected')).to.equal(false);
+				expect(tabEl1.contains(tabSelected)).to.equal(true);
+				expect(panelEl1.contains(panelSelected)).to.equal(true);
+				expect(tabEl2.contains(tabSelected)).to.equal(false);
+				expect(panelEl2.contains(panelSelected)).to.equal(false);
 				// now select tab 2 to confirm classes have changed
 				tab2Ref.select();
-				expect(tab1Ref.tabEl.classList.contains('selected')).to.equal(false);
-				expect(tab1Ref.panelEl.classList.contains('selected')).to.equal(false);
-				expect(tab2Ref.tabEl.classList.contains('selected')).to.equal(true);
-				expect(tab2Ref.panelEl.classList.contains('selected')).to.equal(true);
+				expect(tabEl1.contains(tabSelected)).to.equal(false);
+				expect(panelEl1.contains(panelSelected)).to.equal(false);
+				expect(tabEl2.contains(tabSelected)).to.equal(true);
+				expect(panelEl2.contains(panelSelected)).to.equal(true);
 				// and select tab 1 again to confirm classes have changed back
 				tab1Ref.select();
-				expect(tab1Ref.tabEl.classList.contains('selected')).to.equal(true);
-				expect(tab1Ref.panelEl.classList.contains('selected')).to.equal(true);
-				expect(tab2Ref.tabEl.classList.contains('selected')).to.equal(false);
-				expect(tab2Ref.panelEl.classList.contains('selected')).to.equal(false);
+				expect(tabEl1.contains(tabSelected)).to.equal(true);
+				expect(panelEl1.contains(panelSelected)).to.equal(true);
+				expect(tabEl2.contains(tabSelected)).to.equal(false);
+				expect(panelEl2.contains(panelSelected)).to.equal(false);
 
 			});
 

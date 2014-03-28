@@ -10,196 +10,223 @@
 	padding:0;
 }
 
-// hide tabs by default.
-.tablist > nav {
-	display:none;
-}
 
+// container
+.tablist {
 
-.tablist-panel {
-	padding:10px 15px;
-	border: 1px solid #666;
-	margin-bottom:8px;
-}
+	// nav with tabs
+	> nav {
+		display: block;
+		white-space: nowrap;
+		width: 100%;
+		overflow-x: auto;
+		border-left: 1px solid #666;
 
-@media screen and (min-width: 768px) {
+		> .tablist-tab-selected {
+			-webkit-box-shadow: 0 2px 0 inset;
+			box-shadow: 0 2px 0 inset;
 
-	// container
-	.tablist {
-		// show nav with tabs
-		& > nav {
-			display:block;
-		}
-
-		// clear after floating contents
-		&:after {
-			display:block;
-			content: ' ';
-			clear:both;
-		}
-
-		img {
-			max-width:100%;
-		}
-	}
-
-	// tab buttons
-	.tablist-tab {
-		display:block;
-		padding:10px 15px;
-		margin-bottom:4px;
-		cursor:pointer;
-		color: #666;
-		background:#ededed;
-		transition: color .5s, background .5s;
-
-
-		// hover
-		&:hover {
-			background-color:rgba(0,0,0,0.02);
-			color: #333;
-		}
-
-		// selected
-		&.selected {
-			position:relative;
-			color: #000;
-			background:#fff;
-
-			// hover
-			&:hover {
-				background:#fff;
-			}
-		}
-
-	}
-
-	// tab content
-	.tablist-panel {
-		display:none;
-
-		// show the selected panel
-		&.selected {
-			display:block;
-		}
-	}
-
-	// position tabs on top
-	.tablist-top {
-		// nav is on top
-		& > nav {
-
-			& > .tablist-tab {
-				display:inline-block;
-				border-right:1px solid #666;
-				border-top:1px solid #666;
-				margin:0;
-			}
-
-			& > .selected {
-				-webkit-box-shadow: 0 1px 0 inset;
-				box-shadow: 0 1px 0 inset;
-			}
-
-			& > .selected:after {
+			&:after {
 				position: absolute;
 				content: '';
 				margin-bottom: -1px;
-				bottom:0;
+				bottom: 0;
 				left: 0;
 				width: 100%;
 				height: 2px;
 				background-color: #fff;
-			}
-
-			& > .tablist-tab:before {
-				border-left:1px solid #666;
-			}
-
-			& > .tablist-tab:first-child {
-				border-left:1px solid #666;
+				z-index: 1;
 			}
 		}
 	}
 
+	// clear after floating contents
+	&:after {
+		display: block;
+		content: ' ';
+		clear: both;
+	}
+
+	img {
+		max-width: 100%;
+	}
+}
+
+
+// tab buttons
+.tablist-tab {
+	display: inline-block;
+	margin: 0;
+	max-width: 80%;
+	border-left: 1px solid #666;
+	border-top: 1px solid #666;
+	border-bottom: 1px solid #666;
+
+	&:first-child {
+		border-left: none;
+	}
+	&:last-child {
+		border-right: 1px solid #666;
+	}
+
+	padding: 10px 15px;
+	cursor: pointer;
+	color: #666;
+	background: #ededed;
+	transition: color .5s, background .5s;
+
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	// hover
+	&:hover {
+		background-color: rgba(0,0,0,0.02);
+		color: #333;
+	}
+
+}
+
+	// selected
+.tablist-tab-selected {
+	position: relative;
+	color: #000;
+	background: #fff;
+
+	// hover
+	&:hover {
+		background: #fff;
+	}
+}
+
+
+// tab content
+.tablist-panel {
+	padding: 10px 15px;
+	border: 1px solid #666;
+	margin-bottom: 8px;
+	position: relative;
+	top: -1px;
+
+	// hide by default
+	display: none;
+}
+
+// show the selected panel
+.tablist-panel-selected {
+	display: block;
+}
+
+
+@media screen and (min-width: 768px) {
+
+	// reset some of the defaults
+	.tablist-left,
+	.tablist-right {
+
+		> nav {
+			white-space: normal;
+			overflow-x: visible;
+			border-left: none;
+
+			> .tablist-tab {
+				display: block;
+				margin: 0;
+				max-width: none;
+
+				&,
+				&:first-child,
+				&:last-child {
+					border:none;
+					border-bottom:1px solid #666;
+				}
+				&:first-child {
+					border-top:1px solid #666;
+				}
+			}
+
+			> .tablist-tab-selected {
+				border-bottom:1px solid #666;
+
+				&:after {
+					margin-bottom: 0;
+					width: 2px;
+					height: 100%;
+				}
+			}
+		}
+
+		> .tablist-panel {
+			top:0;
+		}
+	}
+
+
 	// position tabs on left
 	.tablist-left {
 		// nav is on left
-		& > nav {
+		> nav {
 			float:left;
 			width:20%;
+
 			// with gutter to right
-			& > .tablist-tab {
-				margin:0;
-				border-bottom:1px solid #666;
-				border-left:1px solid #666;
+			> .tablist-tab {
+				&,
+				&:first-child,
+				&:last-child {
+					border-left:1px solid #666;
+				}
 			}
 
-			& > .tablist-tab:first-child {
-				border-top:1px solid #666;
-			}
+			> .tablist-tab-selected {
+				-webkit-box-shadow: 2px 0 0 inset;
+				box-shadow: 2px 0 0 inset;
 
-			& > .selected {
-				-webkit-box-shadow: 1px 0 0 inset;
-				box-shadow: 1px 0 0 inset;
-			}
-
-			& > .selected:after {
-				position: absolute;
-				content: '';
-				margin-right: -1px;
-				bottom:0;
-				right: 0;
-				width: 2px;
-				height: 100%;
-				background-color: #fff;
+				&:after {
+					margin-right: -1px;
+					right: 0;
+					left:inherit;
+				}
 			}
 		}
 
 		// panels are 80%, on right
-		& > .tablist-panel {
+		> .tablist-panel {
 			width:80%;
 			float:right;
 		}
 	}
 
+
 	// position tabs on right
 	.tablist-right {
 		// nav is on right
-		& > nav {
+		> nav {
 			float:right;
 			width:20%;
 
-			& > .tablist-tab:first-child {
-				border-top:1px solid #666;
-			}
-
 			// with gutter to left
-			& > .tablist-tab {
-				margin:0;
-				border-bottom:1px solid #666;
-				border-right:1px solid #666;
+			> .tablist-tab {
+				&,
+				&:first-child,
+				&:last-child {
+					border-right:1px solid #666;
+				}
 			}
 
-			& > .selected {
-				-webkit-box-shadow: -1px 0 0 inset;
-				box-shadow: -1px 0 0 inset;
-			}
+			> .tablist-tab-selected {
+				-webkit-box-shadow: -2px 0 0 inset;
+				box-shadow: -2px 0 0 inset;
 
-			& > .selected:after {
-				position: absolute;
-				content: '';
-				margin-left: -1px;
-				bottom:0;
-				left: 0;
-				width: 2px;
-				height: 100%;
-				background-color: #fff;
+				&:after {
+					margin-left: -1px;
+				}
 			}
 		}
 
 		// panels are 80%, on left
-		& > .tablist-panel {
+		> .tablist-panel {
 			width:80%;
 			float:left;
 		}

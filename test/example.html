@@ -3,30 +3,32 @@
 <head>
 	<title>TabList example</title>
 	<link rel="stylesheet" href="tablist/tablist.css"/>
-	<style>
-/*		img {
-			max-width:100%;
-		}
-
-		.tablist {
-			margin:1em 0;
-		}
-
-		.tablist-panel > header {
-			font-weight:bold;
-			font-size:larger;
-			margin-bottom:1em;
-		}
-
-		.tablist-panel {
-			border-left:1px solid #000;
-			border-right:1px solid #000;
-			border-bottom:1px solid #000;
-		}*/
-	</style>
 </head>
 <body>
 	<h1>Example</h1>
+
+	<div class="tablist" data-tabposition="right">
+		<section class="panel" data-title="Tab 1">
+			<header>Tab 1, with more content in panel header</header>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</section>
+		<section class="panel" data-selected="true">
+			<header>Tab 2</header>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</section>
+	</div>
+
+	</div><hr/>
 	<div id="example-left"></div><hr/>
 	<div id="example-top"></div><hr/>
 	<div id="example-right"></div><hr/>

@@ -201,6 +201,41 @@ define([], function () {
 	};
 
 
+	TabList.tabbifyOne = function (el) {
+		var tabs = [],
+		    panels,
+		    panel,
+		    i, len,
+		    tablist;
+
+		panels = el.querySelectorAll('.panel');
+		for (i = 0, len = panels.length; i < len; i++) {
+			panel = panels[i];
+			tabs.push({
+				'title': panel.getAttribute('data-title') ||
+						panel.querySelector('header').innerHTML,
+				'content': panel.innerHTML,
+				'selected': panel.getAttribute('data-selected') === 'true'
+			});
+		}
+
+		tablist = new TabList({
+			'tabPosition': el.getAttribute('data-tabposition') || 'left',
+			'tabs': tabs
+		});
+
+		el.parentNode.replaceChild(tablist.el, el);
+	};
+
+	TabList.tabbifyAll = function () {
+		var lists,
+		    i;
+		lists = document.querySelectorAll('.tablist');
+		for (i = lists.length - 1; i >= 0; i--) {
+			TabList.tabbifyOne(lists[i]);
+		}
+	};
+
 	return TabList;
 });
 

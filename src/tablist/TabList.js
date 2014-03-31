@@ -53,8 +53,9 @@ define([], function () {
 		// add any items provided when constructing
 		if (options.tabs) {
 			for (var i=0, len=options.tabs.length; i<len; i++) {
-				this.addTab(options.tabs[i]);
+				this.addTab(options.tabs[i], true);
 			}
+			this._ensureSelected();
 		}
 	};
 
@@ -105,7 +106,7 @@ define([], function () {
 	 *        Used by getPanelContent() to generate panel content.
 	 * @return object with select() method that can be used to show the tab.
 	 */
-	TabList.prototype.addTab = function (options) {
+	TabList.prototype.addTab = function (options, dontEnsureSelected) {
 		// assign unique ids to this items elements
 		var id = ++ID_SEQUENCE;
 		var tabId = 'tablist-tab-' + id;
@@ -150,8 +151,10 @@ define([], function () {
 		tabEl.addEventListener('click', tab.select);
 
 		// select the first, or specified item
-		if (options.selected || this._tabs.length === 1) {
+		if (options.selected === true) {
 			tab.select();
+		} else if (dontEnsureSelected !== true) {
+			this._ensureSelected();
 		}
 
 		// add elements to dom
@@ -200,6 +203,17 @@ define([], function () {
 		}
 	};
 
+	TabList.prototype._ensureSelected = function () {
+		var selectedPanel = this.el.querySelector('.tablist-panel-selected'),
+		    tabs;
+		if (selectedPanel === null) {
+			tabs = this._tabs;
+			if (tabs.length > 0) {
+				// select first tab by default
+				tabs[0].select();
+			}
+		}
+	};
 
 	TabList.tabbifyOne = function (el) {
 		var tabs = [],
@@ -235,6 +249,7 @@ define([], function () {
 			TabList.tabbifyOne(lists[i]);
 		}
 	};
+
 
 	return TabList;
 });

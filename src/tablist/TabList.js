@@ -53,8 +53,9 @@ define([], function () {
 		// add any items provided when constructing
 		if (options.tabs) {
 			for (var i=0, len=options.tabs.length; i<len; i++) {
-				this.addTab(options.tabs[i]);
+				this.addTab(options.tabs[i], true);
 			}
+			this._ensureSelected();
 		}
 	};
 
@@ -77,10 +78,15 @@ define([], function () {
 	 * @param obj {Object}
 	 *        object being added to the list.
 	 * @return {String|DOMElement}
-	 *         This implementation returns obj.content.
+	 *         If obj.content is a function, its return value is returned.
+	 *         Otherwise, this implementation returns obj.content.
 	 */
 	TabList.prototype.getPanelContent = function(obj) {
-		return obj.content;
+		if (typeof obj.content === 'function') {
+			return obj.content();
+		} else {
+			return obj.content;
+		}
 	};
 
 	/**
@@ -88,11 +94,19 @@ define([], function () {
 	 *
 	 * @param options {Object}
 	 *        item being added to list.
+	 * @param options.onSelect {Function}
+	 *        Optional.
+	 *        Called when tab is selected.
 	 * @see getTabContent(), getPanelContent()
-	 *      these methods format content shown in tabs and panels.
+	 *      these methods format content shown in tabs and panels,
+	 *      and use the following parameters by default.
+	 * @param options.title {String|DOMElement}
+	 *        Used by getTabContent() to generate tab content.
+	 * @param options.content {String|DOMElement|Function}
+	 *        Used by getPanelContent() to generate panel content.
 	 * @return object with select() method that can be used to show the tab.
 	 */
-	TabList.prototype.addTab = function (options) {
+	TabList.prototype.addTab = function (options, dontEnsureSelected) {
 		// assign unique ids to this items elements
 		var id = ++ID_SEQUENCE;
 		var tabId = 'tablist-tab-' + id;
@@ -117,12 +131,7 @@ define([], function () {
 		panelEl.className = 'tablist-panel';
 		panelEl.setAttribute('role', 'tabpanel');
 		panelEl.setAttribute('aria-labelledby', tabId);
-		var panelContent = this.getPanelContent(options);
-		if (typeof panelContent === 'string') {
-			panelEl.innerHTML = panelContent;
-		} else {
-			panelEl.appendChild(panelContent);
-		}
+		// content added by _selectTab()
 
 		var _this = this;
 		// save reference to tab and elements
@@ -133,7 +142,8 @@ define([], function () {
 			select: function () {
 				_this._selectTab(tab);
 				return false;
-			}
+			},
+			contentReady: false
 		};
 		this._tabs.push(tab);
 
@@ -141,8 +151,10 @@ define([], function () {
 		tabEl.addEventListener('click', tab.select);
 
 		// select the first, or specified item
-		if (options.selected || this._tabs.length === 1) {
+		if (options.selected === true) {
 			tab.select();
+		} else if (dontEnsureSelected !== true) {
+			this._ensureSelected();
 		}
 
 		// add elements to dom
@@ -161,15 +173,80 @@ define([], function () {
 	 */
 	TabList.prototype._selectTab = function (toSelect) {
 		for (var i=0, len=this._tabs.length; i<len; i++) {
-			var tab = this._tabs[i];
+			var tab = this._tabs[i],
+			    options = tab.options,
+			    tabEl = tab.tabEl,
+			    panelEl = tab.panelEl;
 			if (tab === toSelect) {
-				tab.tabEl.classList.add('selected');
-				tab.panelEl.classList.add('selected');
-				tab.panelEl.focus();
+				// load tab content, if needed...
+				if (!tab.contentReady) {
+					var panelContent = this.getPanelContent(options);
+					if (typeof panelContent === 'string') {
+						tab.panelEl.innerHTML = panelContent;
+					} else {
+						tab.panelEl.appendChild(panelContent);
+					}
+					tab.contentReady = true;
+				}
+				// update state classes
+				tabEl.classList.add('tablist-tab-selected');
+				panelEl.classList.add('tablist-panel-selected');
+				panelEl.focus();
+				// notify tab it is visible, if needed...
+				if (typeof options.onSelect === 'function') {
+					options.onSelect();
+				}
 			} else {
-				tab.tabEl.classList.remove('selected');
-				tab.panelEl.classList.remove('selected');
+				tabEl.classList.remove('tablist-tab-selected');
+				panelEl.classList.remove('tablist-panel-selected');
 			}
+		}
+	};
+
+	TabList.prototype._ensureSelected = function () {
+		var selectedPanel = this.el.querySelector('.tablist-panel-selected'),
+		    tabs;
+		if (selectedPanel === null) {
+			tabs = this._tabs;
+			if (tabs.length > 0) {
+				// select first tab by default
+				tabs[0].select();
+			}
+		}
+	};
+
+	TabList.tabbifyOne = function (el) {
+		var tabs = [],
+		    panels,
+		    panel,
+		    i, len,
+		    tablist;
+
+		panels = el.querySelectorAll('.panel');
+		for (i = 0, len = panels.length; i < len; i++) {
+			panel = panels[i];
+			tabs.push({
+				'title': panel.getAttribute('data-title') ||
+						panel.querySelector('header').innerHTML,
+				'content': panel.innerHTML,
+				'selected': panel.getAttribute('data-selected') === 'true'
+			});
+		}
+
+		tablist = new TabList({
+			'tabPosition': el.getAttribute('data-tabposition') || 'left',
+			'tabs': tabs
+		});
+
+		el.parentNode.replaceChild(tablist.el, el);
+	};
+
+	TabList.tabbifyAll = function () {
+		var lists,
+		    i;
+		lists = document.querySelectorAll('.tablist');
+		for (i = lists.length - 1; i >= 0; i--) {
+			TabList.tabbifyOne(lists[i]);
 		}
 	};
 

@@ -8,6 +8,7 @@ define(['./TabList'], function (TabList) {
 	 *
 	 * Overrides getTabContent and getPanelContent for image content.
 	 *
+	 * @deprecated
 	 * @see TabList
 	 */
 	var ImageList = function (options) {

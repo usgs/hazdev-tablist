@@ -20,7 +20,7 @@
 		white-space: nowrap;
 		width: 100%;
 		overflow-x: auto;
-		border-left: 1px solid #666;
+		border-left: 1px solid #999;
 
 		> .tablist-tab-selected {
 			-webkit-box-shadow: none;
@@ -58,8 +58,8 @@
 	display: inline-block;
 	margin: 0;
 	max-width: 80%;
-	border-left: 1px solid #666;
-	border-top: 1px solid #666;
+	border-left: 1px solid #999;
+	border-top: 1px solid #999;
 	color: #444;
 	background:#ededed;
 	transition: color .5s, background .5s;
@@ -70,12 +70,12 @@
 		border-left: none;
 	}
 	&:last-child {
-		border-right: 1px solid #666;
+		border-right: 1px solid #999;
 	}
 
 	padding: 10px 15px;
 	cursor: pointer;
-	color: #666;
+	color: #999;
 	background: #ededed;
 	transition: color .5s, background .5s;
 
@@ -110,7 +110,7 @@
 // tab content
 .tablist-panel {
 	padding: 10px 15px;
-	border: 1px solid #666;
+	border: 1px solid #999;
 	margin-bottom: 8px;
 	position: relative;
 	top: -1px;
@@ -140,29 +140,34 @@
 				display: block;
 				margin: 0;
 				max-width: none;
-				-webkit-box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
-				box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
+				// -webkit-box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
+				// box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
 
 				&,
 				&:first-child,
 				&:last-child {
 					border:none;
-					border-bottom:1px solid #666;
+					border-bottom:1px solid #999;
 				}
 				&:first-child {
-					border-top:1px solid #666;
+					border-top:1px solid #999;
 				}
 
 				&:hover {
-					-webkit-box-shadow: 0 0.3em 0 rgba(221, 221, 221, 0.5) inset;
-					box-shadow: 0 0.3em 0 rgba(221, 221, 221, 0.5) inset;
+					// -webkit-box-shadow: 0 -0.3em 0 rgba(221, 221, 221, 0.5) inset;
+					// box-shadow: 0 -0.3em 0 rgba(221, 221, 221, 0.5) inset;
 				}
 			}
 
 			> .tablist-tab-selected {
-				border-bottom:1px solid #666;
+				border-bottom:1px solid #999;
 				-webkit-box-shadow: none;
 				box-shadow: none;
+
+				~ .tablist-tab {
+					-webkit-box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
+					box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
+				}
 
 				&:after {
 					margin-bottom: 0;
@@ -195,7 +200,7 @@
 				&,
 				&:first-child,
 				&:last-child {
-					border-left:1px solid #666;
+					border-left:1px solid #999;
 				}
 			}
 
@@ -229,7 +234,7 @@
 				&,
 				&:first-child,
 				&:last-child {
-					border-right:1px solid #666;
+					border-right:1px solid #999;
 				}
 			}
 

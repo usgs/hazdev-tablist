@@ -59,6 +59,10 @@ require([
 			{
 				title: 'Tab 3 title',
 				content: '<header>Tab 3 title</header>' + LOREM + LOREM + LOREM
+			},
+			{
+				title: 'Tab 4 title',
+				content: '<header>Tab 4 title</header>' + LOREM + LOREM + LOREM
 			}
 		]
 	});
@@ -70,15 +74,19 @@ require([
 		tabs: [
 			{
 				title: 'Tab 1 title',
-				content: '<header>Tab 1 title</header>' + LOREM
+				content: '<header>Tab 1 title</header>' + LOREM + LOREM + LOREM + LOREM + LOREM
 			},
 			{
 				title: 'Tab 2 title',
-				content: '<header>Tab 2 title</header>' + LOREM + LOREM
+				content: '<header>Tab 2 title</header>' + LOREM + LOREM + LOREM + LOREM
 			},
 			{
 				title: 'Tab 3 title',
-				content: '<header>Tab 3 title</header>' + LOREM + LOREM + LOREM
+				content: '<header>Tab 3 title</header>' + LOREM + LOREM + LOREM + LOREM
+			},
+			{
+				title: 'Tab 4 title',
+				content: '<header>Tab 4 title</header>' + LOREM + LOREM + LOREM + LOREM
 			}
 		]
 	});

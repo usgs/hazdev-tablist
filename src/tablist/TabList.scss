@@ -61,7 +61,7 @@
 	border-left: 1px solid #999;
 	border-top: 1px solid #999;
 	border-bottom: 1px solid #999;
-	color: #444;
+	color: #666;
 	background:#ededed;
 	transition: color .5s, background .5s;
 	-webkit-box-shadow: 0 -0.3em 0 rgba(221, 221, 221, 1) inset;
@@ -76,7 +76,6 @@
 
 	padding: 10px 15px;
 	cursor: pointer;
-	color: #999;
 	background: #ededed;
 	transition: color .5s, background .5s;
 
@@ -141,8 +140,6 @@
 				display: block;
 				margin: 0;
 				max-width: none;
-				// -webkit-box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
-				// box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
 
 				&,
 				&:first-child,
@@ -152,11 +149,6 @@
 				}
 				&:first-child {
 					border-top:1px solid #999;
-				}
-
-				&:hover {
-					// -webkit-box-shadow: 0 -0.3em 0 rgba(221, 221, 221, 0.5) inset;
-					// box-shadow: 0 -0.3em 0 rgba(221, 221, 221, 0.5) inset;
 				}
 			}
 
@@ -168,6 +160,11 @@
 				~ .tablist-tab {
 					-webkit-box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
 					box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
+
+					&:hover {
+						-webkit-box-shadow: 0 0.3em 0 rgba(221, 221, 221, 0.5) inset;
+						box-shadow: 0 0.3em 0 rgba(221, 221, 221, 0.5) inset;
+					}
 				}
 
 				&:after {

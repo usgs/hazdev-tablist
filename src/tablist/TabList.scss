@@ -20,11 +20,11 @@
 		white-space: nowrap;
 		width: 100%;
 		overflow-x: auto;
-		border-left: 1px solid #666;
+		border-left: 1px solid #999;
 
 		> .tablist-tab-selected {
-			-webkit-box-shadow: 0 2px 0 inset;
-			box-shadow: 0 2px 0 inset;
+			-webkit-box-shadow: none;
+			box-shadow: none;
 
 			&:after {
 				position: absolute;
@@ -58,20 +58,24 @@
 	display: inline-block;
 	margin: 0;
 	max-width: 80%;
-	border-left: 1px solid #666;
-	border-top: 1px solid #666;
-	border-bottom: 1px solid #666;
+	border-left: 1px solid #999;
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #999;
+	color: #666;
+	background:#ededed;
+	transition: color .5s, background .5s;
+	-webkit-box-shadow: 0 -0.3em 0 rgba(221, 221, 221, 1) inset;
+	box-shadow: 0 -0.3em 0 rgba(221, 221, 221, 1) inset;
 
 	&:first-child {
 		border-left: none;
 	}
 	&:last-child {
-		border-right: 1px solid #666;
+		border-right: 1px solid #999;
 	}
 
 	padding: 10px 15px;
 	cursor: pointer;
-	color: #666;
 	background: #ededed;
 	transition: color .5s, background .5s;
 
@@ -84,6 +88,8 @@
 	&:hover {
 		background-color: rgba(0,0,0,0.02);
 		color: #333;
+		-webkit-box-shadow: 0 -0.3em 0 rgba(221, 221, 221, 0.5) inset;
+		box-shadow: 0 -0.3em 0 rgba(221, 221, 221, 0.5) inset;
 	}
 
 }
@@ -104,7 +110,7 @@
 // tab content
 .tablist-panel {
 	padding: 10px 15px;
-	border: 1px solid #666;
+	border: 1px solid #999;
 	margin-bottom: 8px;
 	position: relative;
 	top: -1px;
@@ -139,20 +145,37 @@
 				&:first-child,
 				&:last-child {
 					border:none;
-					border-bottom:1px solid #666;
+					border-bottom:1px solid #999;
 				}
 				&:first-child {
-					border-top:1px solid #666;
+					border-top:1px solid #999;
 				}
 			}
 
 			> .tablist-tab-selected {
-				border-bottom:1px solid #666;
+				border-bottom:1px solid #999;
+				-webkit-box-shadow: none;
+				box-shadow: none;
+
+				~ .tablist-tab {
+					-webkit-box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
+					box-shadow: 0 0.3em 0 rgba(221, 221, 221, 1) inset;
+
+					&:hover {
+						-webkit-box-shadow: 0 0.3em 0 rgba(221, 221, 221, 0.5) inset;
+						box-shadow: 0 0.3em 0 rgba(221, 221, 221, 0.5) inset;
+					}
+				}
 
 				&:after {
 					margin-bottom: 0;
 					width: 2px;
 					height: 100%;
+				}
+
+				&:hover {
+					-webkit-box-shadow: none;
+					box-shadow: none;
 				}
 			}
 		}
@@ -175,13 +198,11 @@
 				&,
 				&:first-child,
 				&:last-child {
-					border-left:1px solid #666;
+					border-left:1px solid #999;
 				}
 			}
 
 			> .tablist-tab-selected {
-				-webkit-box-shadow: 2px 0 0 inset;
-				box-shadow: 2px 0 0 inset;
 
 				&:after {
 					margin-right: -1px;
@@ -211,13 +232,11 @@
 				&,
 				&:first-child,
 				&:last-child {
-					border-right:1px solid #666;
+					border-right:1px solid #999;
 				}
 			}
 
 			> .tablist-tab-selected {
-				-webkit-box-shadow: -2px 0 0 inset;
-				box-shadow: -2px 0 0 inset;
 
 				&:after {
 					margin-left: -1px;

@@ -11,12 +11,68 @@
 }
 
 
+.tablist-top {
+	position:relative;
+
+		> .tablist-backward-button,
+		> .tablist-forward-button {
+			position:absolute;
+			top:0;
+			display:block;
+			height:38px;
+			width:35px;
+			text-align:center;
+			cursor:pointer;
+			border:1px solid #666;
+			background:#fff;
+			z-index:10;
+		}
+
+		> .tablist-button-hide {
+			display:none;
+		}
+
+		> .tablist-backward-button {
+			left:0;
+
+			> .image {
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAdCAQAAADvTe9wAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABvSURBVBjT7c4hEoAgFEXRuwwDUGAfLtvgjMMqLJpkId/EgOV/mkHfrSc8hNH46QdoN8dCGKGeE2GzaeRC2JksmirE+JooFer0AXWaEYS5ntao40AoJJuC42xYp+AbtmiHbQqRgpBHKARWnEL1Xqc3taYZSjTkftUAAAAASUVORK5CYII=);
+				background-repeat:no-repeat;
+				height: 100%;
+				opacity: .6;
+				position: absolute;
+				left: 7px;
+				top: 0;
+				width: 21px;
+				z-index: 3;
+			}
+		}
+
+		> .tablist-forward-button {
+			right:0;
+
+			> .image {
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAQAAAADHm0dAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAUklEQVQokWNgGLpAjmE7gwxxSvcz/Ge4zSBLjFIZoML/DI8YlGmmWIV4xY+JU+wAVPof6EmCQJPhOTgkZKis8A7xComIhIPEh6ksw27ionVwAwB0ByJpmp8pkgAAAABJRU5ErkJggg==);
+				background-repeat:no-repeat;
+				height: 21px;
+				opacity: .6;
+				position: absolute;
+				right: 7px;
+				top: 8px;
+				width: 21px;
+				z-index: 3;
+			}
+	}
+}
+
+
 // container
 .tablist {
 
 	// nav with tabs
 	> nav {
 		display: block;
+		position:relative;
 		white-space: nowrap;
 		width: 100%;
 		overflow-x: auto;

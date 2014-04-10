@@ -25,6 +25,8 @@ define([], function () {
 	 *        "left", "right", "top" are only supported options.
 	 */
 	var TabList = function (options) {
+		var backward, forward, _this = this;
+
 		this.el = options.el || document.createElement('section');
 		this.el.classList.add('tablist');
 
@@ -47,6 +49,27 @@ define([], function () {
 		this._nav = this.el.appendChild(document.createElement('nav'));
 		this._nav.setAttribute('role', 'tablist');
 
+		// add tab back/next buttons
+		backward = this._backward = document.createElement('div');
+		backward.className = 'tablist-backward-button';
+		backward.innerHTML = '<div class="image"></div>';
+
+		forward = this._forward = document.createElement('div');
+		forward.className = 'tablist-forward-button';
+		forward.innerHTML = '<div class="image"></div>';
+
+		this.el.appendChild(backward);
+		this.el.appendChild(forward);
+
+		backward.addEventListener('click', function () {
+				_this._clickButton({button:'backward'});
+			});
+
+		forward.addEventListener('click', function () {
+				_this._clickButton({button:'forward'});
+			});
+
+
 		// array of tab objects
 		this._tabs = [];
 
@@ -56,6 +79,45 @@ define([], function () {
 				this.addTab(options.tabs[i], true);
 			}
 			this._ensureSelected();
+		}
+
+		// initial state
+		this._updateButtonState();
+	};
+
+	TabList.prototype._clickButton = function (options) {
+		var move = options.button || null,
+		    currentIndex = this._tabs.indexOf(this._selected);
+
+		console.log(this);
+
+		if (move === 'forward') {
+			this._tabs[(currentIndex + 1)].select();
+		} else {
+			this._tabs[(currentIndex - 1)].select();
+		}
+
+		this._updateButtonState();
+	};
+
+
+	TabList.prototype._updateButtonState = function () {
+		var currentIndex = this._tabs.indexOf(this._selected),
+		    maxIndex = this._tabs.length - 1,
+		    minIndex = 0;
+
+		if (currentIndex === minIndex) {
+			// first tab selected, hide back button
+			this._backward.classList.add('tablist-button-hide');
+			this._forward.classList.remove('tablist-button-hide');
+		} else if (currentIndex === maxIndex) {
+			// last tab selected, hide forward button
+			this._forward.classList.add('tablist-button-hide');
+			this._backward.classList.remove('tablist-button-hide');
+		} else {
+			// other button selected, show back and forward button
+			this._forward.classList.remove('tablist-button-hide');
+			this._backward.classList.remove('tablist-button-hide');
 		}
 	};
 
@@ -196,6 +258,9 @@ define([], function () {
 				if (typeof options.onSelect === 'function') {
 					options.onSelect();
 				}
+				// update selected tab
+				this._selected = tab;
+				this._updateButtonState();
 			} else {
 				tabEl.classList.remove('tablist-tab-selected');
 				panelEl.classList.remove('tablist-panel-selected');

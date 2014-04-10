@@ -59,6 +59,18 @@ require([
 			{
 				title: 'Tab 3 title',
 				content: '<header>Tab 3 title</header>' + LOREM + LOREM + LOREM
+			},
+			{
+				title: 'Tab 4 title',
+				content: '<header>Tab 4 title</header>' + LOREM
+			},
+			{
+				title: 'Tab 5 title',
+				content: '<header>Tab 5 title</header>' + LOREM + LOREM
+			},
+			{
+				title: 'Tab 6 title',
+				content: '<header>Tab 6 title</header>' + LOREM + LOREM + LOREM
 			}
 		]
 	});

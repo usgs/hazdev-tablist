@@ -49,28 +49,32 @@ require([
 		tabPosition: 'top',
 		tabs: [
 			{
-				title: 'Tab 1 title',
-				content: '<header>Tab 1 title</header>' + LOREM
+				title: 'Golf',
+				content: '<header>Golf</header>' + LOREM + LOREM
 			},
 			{
-				title: 'Tab 2 title',
-				content: '<header>Tab 2 title</header>' + LOREM + LOREM
+				title: 'Soccer',
+				content: '<header>Soccer</header>' + LOREM + LOREM
 			},
 			{
-				title: 'Tab 3 title',
-				content: '<header>Tab 3 title</header>' + LOREM + LOREM + LOREM
+				title: 'Basketball',
+				content: '<header>Basketball</header>' + LOREM + LOREM + LOREM
 			},
 			{
-				title: 'Tab 4 title',
-				content: '<header>Tab 4 title</header>' + LOREM
+				title: 'Tennis',
+				content: '<header>Tennis</header>' + LOREM + LOREM
 			},
 			{
-				title: 'Tab 5 title',
-				content: '<header>Tab 5 title</header>' + LOREM + LOREM
+				title: 'Track and Field',
+				content: '<header>Track and Field</header>' + LOREM + LOREM
 			},
 			{
-				title: 'Tab 6 title',
-				content: '<header>Tab 6 title</header>' + LOREM + LOREM + LOREM
+				title: 'Bowling',
+				content: '<header>Bowling</header>' + LOREM + LOREM + LOREM
+			},
+			{
+				title: 'Baseball',
+				content: '<header>Baseball</header>' + LOREM + LOREM + LOREM
 			}
 		]
 	});

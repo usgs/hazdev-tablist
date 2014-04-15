@@ -89,8 +89,6 @@ define([], function () {
 		var move = options.button || null,
 		    currentIndex = this._tabs.indexOf(this._selected);
 
-		console.log(this);
-
 		if (move === 'forward') {
 			this._tabs[(currentIndex + 1)].select();
 		} else {
@@ -98,6 +96,7 @@ define([], function () {
 		}
 
 		this._updateButtonState();
+		this._slideTabNavigation();
 	};
 
 
@@ -121,6 +120,24 @@ define([], function () {
 		}
 	};
 
+	TabList.prototype._slideTabNavigation = function () {
+		var tab = this._selected.tabEl, // selected tab
+		    tabWidth = tab.clientWidth, // width of selected tab
+		    offsetLeft = tab.offsetLeft, // left offset of selected tab
+		    navSlider = tab.offsetParent, // nav element
+		    navSliderWidth,
+		    scrollNav;
+
+		if (navSlider) {
+			// width of nav element
+			navSliderWidth = navSlider.clientWidth;
+			// compute offset for centering the tab
+			scrollNav = offsetLeft - ((navSliderWidth - tabWidth) / 2);
+			// center the tab
+			navSlider.scrollLeft = scrollNav;
+		}
+
+	};
 
 	/**
 	 * Format tab (summary) content for a list item.
@@ -261,6 +278,7 @@ define([], function () {
 				// update selected tab
 				this._selected = tab;
 				this._updateButtonState();
+				this._slideTabNavigation();
 			} else {
 				tabEl.classList.remove('tablist-tab-selected');
 				panelEl.classList.remove('tablist-panel-selected');

@@ -21,16 +21,17 @@ require([
 				content: '<header>Golf</header>' +
 						'<form>' +
 							'<label>Choice 1</label>' +
-							'<input type="radio" name="choice1" value="1" />' +
+							'<input type="radio" name="choice" value="1"' +
+									'checked="checked" />' +
 							'<br />' +
 							'<label>Choice 2</label>' +
-							'<input type="radio" name="choice2" value="2" />' +
+							'<input type="radio" name="choice" value="2" />' +
 							'<br />' +
 							'<label>Choice 3</label>' +
-							'<input type="radio" name="choice3" value="3" />' +
+							'<input type="radio" name="choice" value="3" />' +
 							'<br />' +
 							'<label>Choice 4</label>' +
-							'<input type="radio" name="choice4" value="4" />' +
+							'<input type="radio" name="choice" value="4" />' +
 						'</form>'
 			},
 			{
@@ -68,49 +69,63 @@ require([
 		]
 	});
 
-	// // top
-	// new TabList({
-	// 	el: document.querySelector('#example-top-wide'),
-	// 	tabPosition: 'top',
-	// 	tabs: [
-	// 		{
-	// 			title: 'Golf',
-	// 			content: '<header>Golf</header>' + LOREM
-	// 		},
-	// 		{
-	// 			title: 'Soccer',
-	// 			content: '<header>Soccer</header>' + LOREM
-	// 		},
-	// 		{
-	// 			title: 'Basketball',
-	// 			content: '<header>Basketball</header>' + LOREM
-	// 		},
-	// 		{
-	// 			title: 'Tennis',
-	// 			content: '<header>Tennis</header>' + LOREM
-	// 		},
-	// 		{
-	// 			title: 'Track and Field',
-	// 			content: '<header>Track and Field</header>' + LOREM
-	// 		},
-	// 		{
-	// 			title: 'Bowling',
-	// 			content: '<header>Bowling</header>' + LOREM
-	// 		},
-	// 		{
-	// 			title: 'Baseball',
-	// 			content: '<header>Baseball</header>' + LOREM
-	// 		},
-	// 		{
-	// 			title: 'Hockey',
-	// 			content: '<header>Hockey</header>' + LOREM
-	// 		},
-	// 		{
-	// 			title: 'Squash',
-	// 			content: '<header>Squash</header>' + LOREM
-	// 		}
-	// 	]
-	// });
+
+	new TabList({
+		el: document.querySelector('#example-top-second'),
+		tabPosition: 'top',
+		tabs: [
+			{
+				title: 'Golf',
+				content: '<header>Golf</header>' +
+						'<form>' +
+							'<label>Choice 1</label>' +
+							'<input type="radio" name="choice" value="1"' +
+									'checked="checked" />' +
+							'<br />' +
+							'<label>Choice 2</label>' +
+							'<input type="radio" name="choice" value="2" />' +
+							'<br />' +
+							'<label>Choice 3</label>' +
+							'<input type="radio" name="choice" value="3" />' +
+							'<br />' +
+							'<label>Choice 4</label>' +
+							'<input type="radio" name="choice" value="4" />' +
+						'</form>'
+			},
+			{
+				title: 'Soccer',
+				content: '<header>Soccer</header>' + LOREM
+			},
+			{
+				title: 'Basketball',
+				content: '<header>Basketball</header>' + LOREM
+			},
+			{
+				title: 'Tennis',
+				content: '<header>Tennis</header>' + LOREM
+			},
+			{
+				title: 'Track and Field',
+				content: '<header>Track and Field</header>' + LOREM
+			},
+			{
+				title: 'Bowling',
+				content: '<header>Bowling</header>' + LOREM
+			},
+			{
+				title: 'Baseball',
+				content: '<header>Baseball</header>' + LOREM
+			},
+			{
+				title: 'Hockey',
+				content: '<header>Hockey</header>' + LOREM
+			},
+			{
+				title: 'Squash',
+				content: '<header>Squash</header>' + LOREM
+			}
+		]
+	});
 
 
 });

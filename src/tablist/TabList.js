@@ -63,7 +63,6 @@ define([], function () {
 
 		this._clickNavScrolling = this._clickNavScrolling.bind(this);
 		this._touchNavScrolling = this._touchNavScrolling.bind(this);
-		//this._handleNavScrolling = this._handleNavScrolling.bind(this);
 		this._onDragStart = this._onDragStart.bind(this);
 		this._onDragEnd = this._onDragEnd.bind(this);
 		this._onDragLeave = this._onDragLeave.bind(this);
@@ -78,30 +77,24 @@ define([], function () {
 			});
 
 		this._nav.addEventListener('mousedown', function (event) {
-			//_this._handleNavScrolling(event);
 			_this._onDragStart(event);
 		});
 
 		this._nav.addEventListener('mouseup', function (event) {
-			//_this._handleNavScrolling(event);
 			_this._onDragEnd(event);
 		});
 
-
 		// touch (mobile) interactions
 		this._nav.addEventListener('touchstart', function (event) {
-			//_this._handleNavScrolling(event);
 			_this._onDragStart(event);
 		});
 
 		this._nav.addEventListener('touchend', function (event) {
-			//_this._handleNavScrolling(event);
 			_this._onDragEnd(event);
 		});
 
-
 		// keyboard interactions
-		this.el.addEventListener('keyup', function (e) {
+		this._nav.addEventListener('keyup', function (e) {
 			_this._keyPressHandler(e);
 		});
 
@@ -130,8 +123,7 @@ define([], function () {
 	 *         "keypress" event
 	 */
 	TabList.prototype._keyPressHandler = function (e) {
-		var keyCode = e.keyCode,
-		    tab, index;
+		var keyCode = e.keyCode;
 
 		if (keyCode === 37) {
 			// d-pad left key
@@ -139,36 +131,6 @@ define([], function () {
 		} else if (keyCode === 39) {
 			// d-pad right key
 			this._clickButton({'increment':1});
-		} else if (keyCode === 13) {
-			// enter key
-			tab = document.activeElement;
-			index = tab.getAttribute('tabindex');
-
-			// make sure it is a tab element with focus
-			if (index) {
-				this._selectTabByIndex(index);
-			}
-		}
-	};
-
-/**
- * Select a tab based on the tab index. Used by keyPressHandler,
- * this is useful when multiple tab lists exist.
- *
- * @param  {integer} index,
- *         tab index of the tab element
- * 
- */
-	TabList.prototype._selectTabByIndex = function(index) {
-		var tabs = this._tabs,
-		    id = 'tablist-tab-' + index;
-
-		for (var i = 0; i < tabs.length; i++) {
-			if (tabs[i].tabEl.id === id) {
-				// select tab and exit loop
-				tabs[i].select();
-				return;
-			}
 		}
 	};
 
@@ -185,15 +147,12 @@ define([], function () {
 		this._navPosition = e.currentTarget.scrollLeft;
 
 		if (e.type === 'mousedown') {
-			console.log('mousedown');
 			this._startPosition = e.clientX;
 			document.addEventListener('mousemove', this._clickNavScrolling);
 			this._nav.addEventListener('mouseleave', this._onDragLeave);
 		} else if (e.type === 'touchstart') {
-			console.log('touchstart');
 			this._startPosition = e.touches[0].clientX;
 			document.addEventListener('touchmove', this._touchNavScrolling);
-			//this._nav.addEventListener('touchleave', this._onDragLeave);
 		}
 	};
 
@@ -207,15 +166,11 @@ define([], function () {
 	 *         "mouseup" event OR "touchend" event
 	 */
 	TabList.prototype._onDragEnd = function (e) {
-
 		if (e.type === 'mouseup') {
-			console.log('mouseup');
 			document.removeEventListener('mousemove', this._clickNavScrolling);
 			this._nav.removeEventListener('mouseleave', this._onDragLeave);
 		} else if (e.type === 'touchend') {
-			console.log('touchend');
 			document.removeEventListener('touchmove', this._clickNavScrolling);
-			//this._nav.removeEventListener('touchleave', this._onDragLeave);
 		}
 	};
 
@@ -228,16 +183,8 @@ define([], function () {
 	 *         "mouseleave" event OR "touchleave" event
 	 */
 	TabList.prototype._onDragLeave = function (/*e*/) {
-
-		// if (e.type === 'mouseleave') {
-			console.log('mouseleave');
 			document.removeEventListener('mousemove', this._clickNavScrolling);
 			this._nav.removeEventListener('mouseleave', this._onDragLeave);
-		// } else if (e.type === 'touchleave') {
-		// 	console.log('touchleave');
-		// 	document.removeEventListener('touchmove', this._touchNavScrolling);
-		// 	this._nav.removeEventListener('touchleave', this._onDragLeave);
-		// }
 	};
 
 
@@ -250,7 +197,6 @@ define([], function () {
 	 */
 	TabList.prototype._clickNavScrolling = function (e) {
 		var scroll = this._startPosition - e.clientX;
-		console.log(scroll);
 		this._nav.scrollLeft = this._navPosition + scroll;
 	};
 
@@ -263,7 +209,6 @@ define([], function () {
 	 */
 	TabList.prototype._touchNavScrolling = function (e) {
 		var scroll = this._startPosition - e.touches[0].clientX;
-		console.log(scroll);
 		this._nav.scrollLeft = this._navPosition + scroll;
 	};
 
@@ -283,14 +228,15 @@ define([], function () {
 
 		if (increment) {
 			currentIndex = currentIndex + increment;
-			// check bounds to find the end of the tablist
-			if (currentIndex > maxTabIndex || currentIndex < minTabIndex) {
-				return;
+			if (currentIndex > maxTabIndex) {
+				// if at the end of the tablist, start over at the beginning
+				this._tabs[minTabIndex].select();
+			} else if (currentIndex < minTabIndex) {
+				// if at the start of the tablist, move to the end
+				this._tabs[maxTabIndex].select();
+			} else {
+				this._tabs[currentIndex].select();
 			}
-			this._tabs[(currentIndex)].select();
-			this._updateButtonState();
-			//this._slideTabNavigation();
-			this._smoothTabNavigation();
 		}
 	};
 
@@ -320,27 +266,26 @@ define([], function () {
 	};
 
 	/**
-	 * Called on a tab.select(), updates the position of the
-	 * tablist navigation to center the selected tab (when possible).
+	 * Change tabindex to -1 on all tabs. Change tabindex on
+	 * selected tab to 0.
 	 */
-	TabList.prototype._slideTabNavigation = function () {
-		var tab = this._selected.tabEl, // selected tab
-		    tabWidth = tab.clientWidth, // width of selected tab
-		    offsetLeft = tab.offsetLeft, // left offset of selected tab
-		    navSlider = tab.offsetParent, // nav element
-		    navSliderWidth,
-		    scrollNav;
+	TabList.prototype._updateTabState = function () {
+		var tab;
 
-		if (navSlider) {
-			// width of nav element
-			navSliderWidth = navSlider.clientWidth;
-			// compute offset for centering the tab
-			scrollNav = offsetLeft - ((navSliderWidth - tabWidth) / 2);
-			// center the tab
-			navSlider.scrollLeft = scrollNav;
+		for (var i = 0; i < this._tabs.length; i++) {
+			tab = this._tabs[i].tabEl;
+			if (tab.getAttribute('tabindex') !== -1) {
+				tab.setAttribute('tabindex', -1);
+			}
 		}
+
+		this._selected.tabEl.setAttribute('tabindex', 0);
 	};
 
+	/**
+	 * Calculate the amount that the tablist navigation has to shift
+	 * for the tab title to be centered above it's content when selected.
+	 */
 	TabList.prototype._getScrollOffset = function () {
 		var tab = this._selected.tabEl, // selected tab
 		    tabWidth = tab.clientWidth, // width of selected tab
@@ -360,6 +305,11 @@ define([], function () {
 		return scrollNav;
 	};
 
+
+	/**
+	 * Animate the scrolling of the tablist navigation to give
+	 * the effect of smooth scrolling.
+	 */
 	TabList.prototype._smoothTabNavigation = function() {
 		var tab = this._selected.tabEl,
 		    navSlider = tab.offsetParent,
@@ -446,7 +396,7 @@ define([], function () {
 		tabEl.id = tabId;
 		tabEl.className = 'tablist-tab';
 		tabEl.setAttribute('role', 'tab');
-		tabEl.setAttribute('tabindex', id);
+		tabEl.setAttribute('tabindex', -1);
 		tabEl.setAttribute('aria-controls', panelId);
 		var tabContent = this.getTabContent(options);
 		if (typeof tabContent === 'string') {
@@ -533,8 +483,9 @@ define([], function () {
 				}
 				// update selected tab
 				this._selected = tab;
+				tab.tabEl.focus();
+				this._updateTabState();
 				this._updateButtonState();
-				//this._slideTabNavigation();
 				this._smoothTabNavigation();
 			} else {
 				tabEl.classList.remove('tablist-tab-selected');

@@ -1,4 +1,4 @@
-/* global define, describe, it */
+/* global define, describe, it, beforeEach, afterEach */
 
 define([
 	'chai',
@@ -13,6 +13,44 @@ define([
 
 	var expect = chai.expect;
 
+	var getClickEvent = function () {
+		var clickEvent = document.createEvent('MouseEvents');
+		clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0);
+		return clickEvent;
+	};
+
+	var getKeyboardEvent = function (type, keyCode) {
+		var ev = document.createEvent('KeyboardEvent');
+
+		if (typeof ev.initKeyEvent === 'function') {
+		// https://developer.mozilla.org/en-US/docs/Web/API/event.initKeyEvent
+			ev.initKeyEvent(
+				type,
+				true, // bubble
+				true, // cancelable
+				document.defaultView, // view
+				false, // ctrl
+				false, // alt
+				false, // shift
+				false, // meta
+				keyCode, // keyCode
+				0 // charCode
+			);
+		} else {
+		// http://stackoverflow.com/questions/10455626/
+		//		keydown-simulation-in-chrome-fires-normally-but-not-the-correct-key
+			ev.initKeyboardEvent(
+				type, // type
+				true, // bubble
+				true, // cancelable
+				document.defaultView, // view
+				null, // key identifier
+				null, // location
+				null //modifiers
+			);
+		}
+		return ev;
+	};
 
 	describe('Unit tests for the "TabList" class', function () {
 
@@ -178,6 +216,187 @@ define([
 				expect(onSelectSpy.callCount).to.equal(2);
 			});
 
+		});
+
+		describe('_selectTabByIndex()', function () {
+			it('can select tab using a tabIndex value', function (){
+				var tabList, tab4Ref, index;
+
+				tabList = new TabList({
+					tabs: [
+						{
+							title: 'tab1',
+							content: 'content1'
+						},
+						{
+							title: 'tab2',
+							content: 'content2'
+						},
+						{
+							title: 'tab3',
+							content: 'content3'
+						}
+					]
+				});
+
+				tab4Ref = tabList.addTab({
+					title: 'tab4',
+					content: 'content4'
+				});
+
+				index = tab4Ref.tabEl.getAttribute('tabIndex');
+
+				tabList._selectTabByIndex(index);
+				expect(tabList._selected).to.be.equal(tab4Ref);
+			});
+		});
+
+		describe('event bindings', function () {
+			var tabList,
+			    keyPressSpy,
+			    clickButtonSpy,
+			    dragStartSpy,
+			    dragEndSpy,
+			    dragLeaveSpy;
+
+			beforeEach(function () {
+				keyPressSpy = sinon.spy(TabList.prototype, '_keyPressHandler');
+				clickButtonSpy = sinon.spy(TabList.prototype, '_clickButton');
+				dragStartSpy = sinon.spy(TabList.prototype, '_onDragStart');
+				dragEndSpy = sinon.spy(TabList.prototype, '_onDragEnd');
+				dragLeaveSpy = sinon.spy(TabList.prototype, '_onDragLeave');
+
+				tabList = new TabList({
+					tabs: [
+						{
+							title: 'tab1',
+							content: 'content1'
+						},
+						{
+							title: 'tab2',
+							content: 'content2'
+						},
+						{
+							title: 'tab3',
+							content: 'content3'
+						}
+					]
+				});
+			});
+
+			afterEach(function () {
+				keyPressSpy.restore();
+				clickButtonSpy.restore();
+				dragStartSpy.restore();
+				dragEndSpy.restore();
+				dragLeaveSpy.restore();
+			});
+
+			it('responds to a keyboard event on tablist', function () {
+				tabList.el.dispatchEvent(getKeyboardEvent('keyup', 13));
+				expect(keyPressSpy.callCount).to.equal(1);
+			});
+
+			it('responds to a click event on tablist navigation buttons', function () {
+				tabList._forward.dispatchEvent(getClickEvent());
+				tabList._backward.dispatchEvent(getClickEvent());
+				expect(clickButtonSpy.callCount).to.equal(2);
+			});
+
+			it('responds to a mousedown event on tablist navigation', function () {
+				var mousedownEvent = document.createEvent('MouseEvents');
+				mousedownEvent.initMouseEvent('mousedown', true, true, window, 1, 0, 0);
+
+				tabList._nav.dispatchEvent(mousedownEvent);
+				expect(dragStartSpy.callCount).to.equal(1);
+			});
+
+			it('responds to a mouseup event on tablist navigation', function () {
+				var mouseupEvent = document.createEvent('MouseEvents');
+				mouseupEvent.initMouseEvent('mouseup', true, true, window, 1, 0, 0);
+
+				tabList._nav.dispatchEvent(mouseupEvent);
+				expect(dragEndSpy.callCount).to.equal(1);
+			});
+
+			it('responds to a mouseleave event on tablist navigation', function () {
+				var mouseleaveEvent = document.createEvent('MouseEvents'),
+				    mousedownEvent = document.createEvent('MouseEvents');
+
+				mousedownEvent.initMouseEvent('mousedown', true, true, window, 1, 0, 0);
+				mouseleaveEvent.initMouseEvent('mouseleave', true, true, window, 1, 0, 0);
+
+				tabList._nav.dispatchEvent(mousedownEvent);
+				tabList._nav.dispatchEvent(mouseleaveEvent);
+				expect(dragStartSpy.callCount).to.equal(1);
+			});
+
+		});
+
+		describe('navigating using tablist nav', function () {
+			var tabList;
+
+			beforeEach(function () {
+				tabList = new TabList({
+					tabs: [
+						{
+							title: 'tab1',
+							content: 'content1'
+						},
+						{
+							title: 'tab2',
+							content: 'content2'
+						},
+						{
+							title: 'tab3',
+							content: 'content3'
+						}
+					]
+				});
+
+			});
+
+			afterEach(function() {
+				tabList = null;
+			});
+
+			it('click on a tab to load content', function () {
+				var tab4Ref, tabEl, panelEl;
+
+				tab4Ref = tabList.addTab({
+					title: 'tab4',
+					content: 'content4'
+				});
+
+				tabEl = tab4Ref.tabEl;
+				panelEl = tab4Ref.panelEl;
+
+				tabEl.dispatchEvent(getClickEvent());
+				expect(tabList._selected).to.be.equal(tab4Ref);
+			});
+
+			it('use forward and backward button to navigate tabs', function () {
+				var forwardButton, backwardButton;
+
+				forwardButton = tabList._forward;
+				backwardButton = tabList._backward;
+
+				forwardButton.dispatchEvent(getClickEvent());
+				expect(tabList._selected.tabEl.innerHTML).to.be.equal('tab2');
+
+				backwardButton.dispatchEvent(getClickEvent());
+				expect(tabList._selected.tabEl.innerHTML).to.be.equal('tab1');
+			});
+
+
+			it('use directional pad keys to navigate tabs', function () {
+
+				tabList._keyPressHandler({'keyCode': 39});
+				expect(tabList._selected.tabEl.innerHTML).to.be.equal('tab2');
+
+				tabList._keyPressHandler({'keyCode': 37});
+				expect(tabList._selected.tabEl.innerHTML).to.be.equal('tab1');
+			});
 		});
 
 	});

@@ -4,12 +4,20 @@
 .tablist > nav,
 .tablist-tab,
 .tablist-panel {
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 	margin:0;
 	padding:0;
 }
 
+@media screen and (max-width:767px) {
+	.tablist-top {
+		> nav > .tablist-tab {
+			text-align:center;
+		}
+	}
+}
 
 .tablist-top {
 	position:relative;
@@ -32,25 +40,8 @@
 			display:none;
 		}
 
-		> .tablist-backward-button {
-			left:0;
-
-			> .image {
-				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAdCAQAAADvTe9wAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABvSURBVBjT7c4hEoAgFEXRuwwDUGAfLtvgjMMqLJpkId/EgOV/mkHfrSc8hNH46QdoN8dCGKGeE2GzaeRC2JksmirE+JooFer0AXWaEYS5ntao40AoJJuC42xYp+AbtmiHbQqRgpBHKARWnEL1Xqc3taYZSjTkftUAAAAASUVORK5CYII=);
-				background-repeat:no-repeat;
-				height: 100%;
-				opacity: .6;
-				position: absolute;
-				left: 7px;
-				top: 0;
-				width: 21px;
-				z-index: 3;
-			}
-		}
-
+		> .tablist-backward-button,
 		> .tablist-forward-button {
-			right:0;
-
 			> .image {
 				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAQAAAADHm0dAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAUklEQVQokWNgGLpAjmE7gwxxSvcz/Ge4zSBLjFIZoML/DI8YlGmmWIV4xY+JU+wAVPof6EmCQJPhOTgkZKis8A7xComIhIPEh6ksw27ionVwAwB0ByJpmp8pkgAAAABJRU5ErkJggg==);
 				background-repeat:no-repeat;
@@ -62,6 +53,22 @@
 				width: 21px;
 				z-index: 3;
 			}
+		}
+
+		> .tablist-backward-button {
+			left:0;
+
+			> .image {
+				-webkit-transform: rotate(180deg);
+				-moz-transform: rotate(180deg);
+				-ms-transform: rotate(180deg);
+				-o-transform: rotate(180deg);
+				transform: rotate(180deg);
+			}
+		}
+
+		> .tablist-forward-button {
+			right:0;
 	}
 }
 
@@ -71,16 +78,18 @@
 
 	// nav with tabs
 	> nav {
+		float:left;
 		display: block;
 		position:relative;
 		white-space: nowrap;
-		width: 100%;
-		overflow-x: auto;
+		max-width: 100%;
+		overflow-x: hidden;
 		border-left: 1px solid #666;
+		border-right: 1px solid #666;
+		border-top: 1px solid #666;
+
 
 		> .tablist-tab-selected {
-			-webkit-box-shadow: 0 2px 0 inset;
-			box-shadow: 0 2px 0 inset;
 
 			&:after {
 				position: absolute;
@@ -113,23 +122,18 @@
 .tablist-tab {
 	display: inline-block;
 	margin: 0;
-	max-width: 80%;
 	border-left: 1px solid #666;
-	border-top: 1px solid #666;
 	border-bottom: 1px solid #666;
 
 	&:first-child {
 		border-left: none;
 	}
-	&:last-child {
-		border-right: 1px solid #666;
-	}
-
 	padding: 10px 15px;
 	cursor: pointer;
 	color: #666;
 	background: #ededed;
-	transition: color .5s, background .5s;
+	// transition-delay: .3s;
+	// transition: color .5s, background .5s;
 
 	-moz-user-select: none;
 	-webkit-user-select: none;
@@ -137,9 +141,15 @@
 	user-select: none;
 
 	// hover
-	&:hover {
-		background-color: rgba(0,0,0,0.02);
-		color: #333;
+	// &:hover {
+	// 	background-color: rgba(0,0,0,0.02);
+	// 	color: #333;
+	// }
+
+	&:focus {
+		text-decoration:underline;
+		color:#00f;
+		outline:none;
 	}
 
 }
@@ -151,14 +161,19 @@
 	background: #fff;
 
 	// hover
-	&:hover {
-		background: #fff;
+	// &:hover {
+	// 	background: #fff;
+	// }
+
+	&:focus {
+		color:#000;
 	}
 }
 
 
 // tab content
 .tablist-panel {
+	clear:left;
 	padding: 10px 15px;
 	border: 1px solid #666;
 	margin-bottom: 8px;

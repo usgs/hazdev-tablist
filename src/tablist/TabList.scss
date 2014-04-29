@@ -11,6 +11,109 @@
 	padding:0;
 }
 
+
+// container
+.tablist {
+
+	// nav with tabs
+	> nav {
+		float:left;
+		display: block;
+		position:relative;
+		white-space: nowrap;
+		max-width: 100%;
+		overflow: hidden;
+		border-left: 1px solid #666;
+		border-right: 1px solid #666;
+		border-top: 1px solid #666;
+
+
+		> .tablist-tab-selected {
+
+			&:after {
+				position: absolute;
+				content: '';
+				margin-bottom: -1px;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 2px;
+				background-color: #fff;
+				z-index: 1;
+			}
+		}
+	}
+
+	// clear after floating contents
+	&:after {
+		display: block;
+		content: ' ';
+		clear: both;
+	}
+
+	img {
+		max-width: 100%;
+	}
+}
+
+
+// tab buttons
+.tablist-tab {
+	display: inline-block;
+	margin: 0;
+	border-left: 1px solid #666;
+	border-bottom: 1px solid #666;
+	padding: 10px 15px;
+	cursor: pointer;
+	color: #666;
+	background: #ededed;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	&:first-child {
+		border-left: none;
+	}
+
+	&:focus {
+		text-decoration:underline;
+		color:#00f;
+		outline:none;
+	}
+
+}
+
+	// selected
+.tablist-tab-selected {
+	position: relative;
+	color: #000;
+	background: #fff;
+
+	&:focus {
+		color:#000;
+	}
+}
+
+
+// tab content
+.tablist-panel {
+	clear:left;
+	padding: 10px 15px;
+	border: 1px solid #666;
+	margin-bottom: 8px;
+	position: relative;
+	top: -1px;
+
+	// hide by default
+	display: none;
+}
+
+// show the selected panel
+.tablist-panel-selected {
+	display: block;
+}
+
 @media screen and (max-width:767px) {
 	.tablist-top {
 		> nav > .tablist-tab {
@@ -71,124 +174,6 @@
 			right:0;
 	}
 }
-
-
-// container
-.tablist {
-
-	// nav with tabs
-	> nav {
-		float:left;
-		display: block;
-		position:relative;
-		white-space: nowrap;
-		max-width: 100%;
-		overflow-x: hidden;
-		border-left: 1px solid #666;
-		border-right: 1px solid #666;
-		border-top: 1px solid #666;
-
-
-		> .tablist-tab-selected {
-
-			&:after {
-				position: absolute;
-				content: '';
-				margin-bottom: -1px;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				height: 2px;
-				background-color: #fff;
-				z-index: 1;
-			}
-		}
-	}
-
-	// clear after floating contents
-	&:after {
-		display: block;
-		content: ' ';
-		clear: both;
-	}
-
-	img {
-		max-width: 100%;
-	}
-}
-
-
-// tab buttons
-.tablist-tab {
-	display: inline-block;
-	margin: 0;
-	border-left: 1px solid #666;
-	border-bottom: 1px solid #666;
-
-	&:first-child {
-		border-left: none;
-	}
-	padding: 10px 15px;
-	cursor: pointer;
-	color: #666;
-	background: #ededed;
-	// transition-delay: .3s;
-	// transition: color .5s, background .5s;
-
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-
-	// hover
-	// &:hover {
-	// 	background-color: rgba(0,0,0,0.02);
-	// 	color: #333;
-	// }
-
-	&:focus {
-		text-decoration:underline;
-		color:#00f;
-		outline:none;
-	}
-
-}
-
-	// selected
-.tablist-tab-selected {
-	position: relative;
-	color: #000;
-	background: #fff;
-
-	// hover
-	// &:hover {
-	// 	background: #fff;
-	// }
-
-	&:focus {
-		color:#000;
-	}
-}
-
-
-// tab content
-.tablist-panel {
-	clear:left;
-	padding: 10px 15px;
-	border: 1px solid #666;
-	margin-bottom: 8px;
-	position: relative;
-	top: -1px;
-
-	// hide by default
-	display: none;
-}
-
-// show the selected panel
-.tablist-panel-selected {
-	display: block;
-}
-
 
 @media screen and (min-width: 768px) {
 

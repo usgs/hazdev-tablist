@@ -1,12 +1,13 @@
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
 
 // tablist depends on border-box
 .tablist,
 .tablist > nav,
 .tablist-tab,
 .tablist-panel {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
 	margin:0;
 	padding:0;
 }
@@ -26,10 +27,12 @@
 		border-left: 1px solid #666;
 		border-right: 1px solid #666;
 		border-top: 1px solid #666;
+		height:40px;
 
 
 		> .tablist-tab-selected {
 
+			// removes the bottom border allowing the tab to flow into the content
 			&:after {
 				position: absolute;
 				content: '';
@@ -47,7 +50,7 @@
 	// clear after floating contents
 	&:after {
 		display: block;
-		content: ' ';
+		content: '';
 		clear: both;
 	}
 
@@ -62,7 +65,6 @@
 	display: inline-block;
 	margin: 0;
 	border-left: 1px solid #666;
-	border-bottom: 1px solid #666;
 	padding: 10px 15px;
 	cursor: pointer;
 	color: #666;
@@ -71,6 +73,7 @@
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	height:40px;
 
 	&:first-child {
 		border-left: none;
@@ -114,14 +117,6 @@
 	display: block;
 }
 
-@media screen and (max-width:767px) {
-	.tablist-top {
-		> nav > .tablist-tab {
-			text-align:center;
-		}
-	}
-}
-
 .tablist-top {
 	position:relative;
 
@@ -130,7 +125,7 @@
 			position:absolute;
 			top:0;
 			display:block;
-			height:38px;
+			height: 40px;
 			width:35px;
 			text-align:center;
 			cursor:pointer;
@@ -172,6 +167,14 @@
 
 		> .tablist-forward-button {
 			right:0;
+	}
+}
+
+@media screen and (max-width:767px) {
+	.tablist-top {
+		> nav > .tablist-tab {
+			text-align:center;
+		}
 	}
 }
 

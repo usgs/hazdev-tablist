@@ -218,39 +218,6 @@ define([
 
 		});
 
-		describe('_selectTabByIndex()', function () {
-			it('can select tab using a tabIndex value', function (){
-				var tabList, tab4Ref, index;
-
-				tabList = new TabList({
-					tabs: [
-						{
-							title: 'tab1',
-							content: 'content1'
-						},
-						{
-							title: 'tab2',
-							content: 'content2'
-						},
-						{
-							title: 'tab3',
-							content: 'content3'
-						}
-					]
-				});
-
-				tab4Ref = tabList.addTab({
-					title: 'tab4',
-					content: 'content4'
-				});
-
-				index = tab4Ref.tabEl.getAttribute('tabIndex');
-
-				tabList._selectTabByIndex(index);
-				expect(tabList._selected).to.be.equal(tab4Ref);
-			});
-		});
-
 		describe('event bindings', function () {
 			var tabList,
 			    keyPressSpy,

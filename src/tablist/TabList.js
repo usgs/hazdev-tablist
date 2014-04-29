@@ -269,17 +269,19 @@ define([], function () {
 	 * Change tabindex to -1 on all tabs. Change tabindex on
 	 * selected tab to 0.
 	 */
-	TabList.prototype._updateTabState = function () {
+	TabList.prototype._updateTabIndex = function () {
 		var tab;
 
 		for (var i = 0; i < this._tabs.length; i++) {
 			tab = this._tabs[i].tabEl;
 			if (tab.getAttribute('tabindex') !== -1) {
 				tab.setAttribute('tabindex', -1);
+				tab.setAttribute('aria-hidden', true);
 			}
 		}
 
 		this._selected.tabEl.setAttribute('tabindex', 0);
+		this._selected.tabEl.setAttribute('aria-hidden', false);
 	};
 
 	/**
@@ -310,7 +312,7 @@ define([], function () {
 	 * Animate the scrolling of the tablist navigation to give
 	 * the effect of smooth scrolling.
 	 */
-	TabList.prototype._smoothTabNavigation = function() {
+	TabList.prototype._smoothTabScrolling = function() {
 		var navSlider = this._nav,
 		    startPosition = navSlider.scrollLeft,
 		    endPosition = this._getScrollOffset(),
@@ -483,9 +485,9 @@ define([], function () {
 				// update selected tab
 				this._selected = tab;
 				tab.tabEl.focus();
-				this._updateTabState();
+				this._updateTabIndex();
 				this._updateButtonState();
-				this._smoothTabNavigation();
+				this._smoothTabScrolling();
 			} else {
 				tabEl.classList.remove('tablist-tab-selected');
 				panelEl.classList.remove('tablist-panel-selected');

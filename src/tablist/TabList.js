@@ -311,8 +311,7 @@ define([], function () {
 	 * the effect of smooth scrolling.
 	 */
 	TabList.prototype._smoothTabNavigation = function() {
-		var tab = this._selected.tabEl,
-		    navSlider = tab.offsetParent,
+		var navSlider = this._nav,
 		    startPosition = navSlider.scrollLeft,
 		    endPosition = this._getScrollOffset(),
 		    diff = startPosition - endPosition,

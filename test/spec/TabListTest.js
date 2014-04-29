@@ -259,11 +259,6 @@ define([
 				dragLeaveSpy.restore();
 			});
 
-			it('responds to a keyboard event on tablist', function () {
-				tabList.el.dispatchEvent(getKeyboardEvent('keyup', 13));
-				expect(keyPressSpy.callCount).to.equal(1);
-			});
-
 			it('responds to a click event on tablist navigation buttons', function () {
 				tabList._forward.dispatchEvent(getClickEvent());
 				tabList._backward.dispatchEvent(getClickEvent());

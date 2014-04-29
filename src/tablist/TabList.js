@@ -125,10 +125,10 @@ define([], function () {
 	TabList.prototype._keyPressHandler = function (e) {
 		var keyCode = e.keyCode;
 
-		if (keyCode === 37) {
+		if (keyCode === 37 || keyCode === 38) {
 			// d-pad left key
 			this._clickButton({'increment':-1});
-		} else if (keyCode === 39) {
+		} else if (keyCode === 39 || keyCode === 40) {
 			// d-pad right key
 			this._clickButton({'increment':1});
 		}

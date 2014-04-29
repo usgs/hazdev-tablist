@@ -117,8 +117,8 @@ define([], function () {
 	/**
 	 * Called on "keypress", handles changing the selected tab from the
 	 * tablist-tab navigation when a enter is clicked on a tab with focus,
-	 * or the left/right directional pad is clicked. 
-	 * 
+	 * or the left/right directional pad is clicked.
+	 *
 	 * @param  {object} e,
 	 *         "keypress" event
 	 */
@@ -138,7 +138,7 @@ define([], function () {
 	 * Called on "touchstart" or "mousedown", tracks the drag start position
 	 * and adds event listeners for mouse events or touch events that update
 	 * the position of the tablist-tab navigation.
-	 * 
+	 *
 	 * @param  {object} e,
 	 *         "mousedown" event OR "touchstart" event
 	 */
@@ -159,9 +159,9 @@ define([], function () {
 
 	/**
 	 * Called on "touchend" or "mouseup", removes event listeners
-	 * for mouse events or touch events that update the position 
+	 * for mouse events or touch events that update the position
 	 * of the tablist-tab navigation.
-	 * 
+	 *
 	 * @param  {object} e,
 	 *         "mouseup" event OR "touchend" event
 	 */
@@ -178,7 +178,7 @@ define([], function () {
 	 * Called on "touchleave" or "mouseleave", removes event listeners
 	 * for mouse events or touch events that update the position 
 	 * of the tablist-tab navigation.
-	 * 
+	 *
 	 * @param  {object} e,
 	 *         "mouseleave" event OR "touchleave" event
 	 */
@@ -191,7 +191,7 @@ define([], function () {
 	/**
 	 * Called on "mousemove", updates the scrollLeft position
 	 * on the nav slider that contains the tab elements.
-	 * 
+	 *
 	 * @param  {object} e,
 	 *         "mousemove" event
 	 */
@@ -203,7 +203,7 @@ define([], function () {
 	/**
 	 * Called on "touchmove", updates the scrollLeft position
 	 * on the nav slider that contains the tab elements.
-	 * 
+	 *
 	 * @param  {object} e,
 	 *         "touchmove" event
 	 */
@@ -216,7 +216,7 @@ define([], function () {
 	 * Called on "forward"/"backward" button click, and also
 	 * left/right d-pad keyboard click. Changes the tab panel
 	 * position if the slide exists.
-	 * 
+	 *
 	 * @param  {object} options,
 	 *         options.increment, increment/decrement the position by 1
 	 */
@@ -243,7 +243,7 @@ define([], function () {
 	/**
 	 * Hides the corresponding 'forward' and 'backward' button
 	 * when the selected tab is either the first or last tab in
-	 * the list, respectively. 
+	 * the list, respectively.
 	 */
 	TabList.prototype._updateButtonState = function () {
 		var currentIndex = this._tabs.indexOf(this._selected),

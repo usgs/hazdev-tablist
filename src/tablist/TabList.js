@@ -156,7 +156,6 @@ define([], function () {
 		}
 	};
 
-
 	/**
 	 * Called on "touchend" or "mouseup", removes event listeners
 	 * for mouse events or touch events that update the position
@@ -170,7 +169,7 @@ define([], function () {
 			document.removeEventListener('mousemove', this._clickNavScrolling);
 			this._nav.removeEventListener('mouseleave', this._onDragLeave);
 		} else if (e.type === 'touchend') {
-			document.removeEventListener('touchmove', this._clickNavScrolling);
+			document.removeEventListener('touchmove', this._touchNavScrolling);
 		}
 	};
 
@@ -186,7 +185,6 @@ define([], function () {
 			document.removeEventListener('mousemove', this._clickNavScrolling);
 			this._nav.removeEventListener('mouseleave', this._onDragLeave);
 	};
-
 
 	/**
 	 * Called on "mousemove", updates the scrollLeft position

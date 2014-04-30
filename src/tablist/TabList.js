@@ -46,7 +46,7 @@ define([], function () {
 		}
 
 		// create tab container
-		this._nav = this.el.appendChild(document.createElement('nav'));
+		this._nav = document.createElement('nav');
 		this._nav.setAttribute('role', 'tablist');
 
 		// add tab back/next buttons
@@ -59,6 +59,7 @@ define([], function () {
 		forward.innerHTML = '<div class="image"></div>';
 
 		this.el.appendChild(backward);
+		this.el.appendChild(this._nav);
 		this.el.appendChild(forward);
 
 		this._clickNavScrolling = this._clickNavScrolling.bind(this);
@@ -94,6 +95,13 @@ define([], function () {
 		});
 
 		// keyboard interactions
+		this._nav.addEventListener('keydown', function (e) {
+			// up/down key, shouldn't scroll the page when this._nav has focus
+			if (e.keyCode === 38 || e.keyCode === 40) {
+				e.preventDefault();
+			}
+		});
+
 		this._nav.addEventListener('keyup', function (e) {
 			_this._keyPressHandler(e);
 		});
@@ -126,10 +134,10 @@ define([], function () {
 		var keyCode = e.keyCode;
 
 		if (keyCode === 37 || keyCode === 38) {
-			// d-pad left key
+			// d-pad left/up key
 			this._clickButton({'increment':-1});
 		} else if (keyCode === 39 || keyCode === 40) {
-			// d-pad right key
+			// d-pad right/down key
 			this._clickButton({'increment':1});
 		}
 	};

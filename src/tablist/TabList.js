@@ -246,6 +246,31 @@ define([], function () {
 		}
 	};
 
+	TabList.prototype._getTabPosition = function () {
+		var span = this.el.querySelector('.tab-position'),
+		    currentTabNumber = this._tabs.indexOf(this._selected) + 1,
+		    totalTabNumber = this._tabs.length,
+		    fadeInterval;
+
+		if (span) {
+			// update text
+			span.className = 'tab-position';
+			span.innerHTML = currentTabNumber + ' of ' + totalTabNumber;
+		} else {
+			// create new span
+			span = document.createElement('span');
+			span.className = 'tab-position';
+			span.innerHTML = currentTabNumber + ' of ' + totalTabNumber;
+			this.el.appendChild(span);
+		}
+
+		clearInterval(fadeInterval);
+		fadeInterval = window.setInterval(function () {
+			span.className = 'tab-position fade';
+		}, 1000);
+
+	};
+
 	/**
 	 * Hides the corresponding 'forward' and 'backward' button
 	 * when the selected tab is either the first or last tab in
@@ -494,6 +519,7 @@ define([], function () {
 				this._updateTabIndex();
 				this._updateButtonState();
 				this._smoothTabScrolling();
+				this._getTabPosition();
 			} else {
 				tabEl.classList.remove('tablist-tab-selected');
 				panelEl.classList.remove('tablist-panel-selected');

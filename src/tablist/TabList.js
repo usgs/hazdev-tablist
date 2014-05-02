@@ -25,7 +25,7 @@ define([], function () {
 	 *        "left", "right", "top" are only supported options.
 	 */
 	var TabList = function (options) {
-		var backward, forward, _this = this;
+		var backward, forward, _this = this, container;
 
 		this.el = options.el || document.createElement('section');
 		this.el.classList.add('tablist');
@@ -45,9 +45,15 @@ define([], function () {
 			this._header.innerHTML = options.header;
 		}
 
-		// create tab container
+		// create tab container 
+		container = this._container = document.createElement('div');
+		container.className = 'tablist-container';
+
+		// create tab list
 		this._nav = document.createElement('nav');
 		this._nav.setAttribute('role', 'tablist');
+		this._nav.className = 'smooth';
+		this._navPosition = 0;
 
 		// add tab back/next buttons
 		backward = this._backward = document.createElement('div');
@@ -58,15 +64,17 @@ define([], function () {
 		forward.className = 'tablist-forward-button';
 		forward.innerHTML = '<div class="image"></div>';
 
+
+		container.appendChild(this._nav);
 		this.el.appendChild(backward);
-		this.el.appendChild(this._nav);
+		this.el.appendChild(container);
 		this.el.appendChild(forward);
 
 		this._clickNavScrolling = this._clickNavScrolling.bind(this);
 		this._touchNavScrolling = this._touchNavScrolling.bind(this);
 		this._onDragStart = this._onDragStart.bind(this);
 		this._onDragEnd = this._onDragEnd.bind(this);
-		this._onDragLeave = this._onDragLeave.bind(this);
+		//this._onDragLeave = this._onDragLeave.bind(this);
 
 		// mouse (desktop) interactions
 		this._backward.addEventListener('click', function () {
@@ -152,16 +160,21 @@ define([], function () {
 	 */
 	TabList.prototype._onDragStart = function (e) {
 
-		this._navPosition = e.currentTarget.scrollLeft;
+		// use saved navigtation position
+		if (!this._navPosition) {
+			this._navPosition = 0;
+		}
 
 		if (e.type === 'mousedown') {
 			this._startPosition = e.clientX;
+			this._nav.className = '';
 			document.addEventListener('mousemove', this._clickNavScrolling);
-			this._nav.addEventListener('mouseleave', this._onDragLeave);
+			this._nav.addEventListener('mouseleave', this._onDragEnd);
 		} else if (e.type === 'touchstart') {
 			this._startPosition = e.touches[0].clientX;
 			document.addEventListener('touchmove', this._touchNavScrolling);
 		}
+
 	};
 
 	/**
@@ -173,11 +186,83 @@ define([], function () {
 	 *         "mouseup" event OR "touchend" event
 	 */
 	TabList.prototype._onDragEnd = function (e) {
-		if (e.type === 'mouseup') {
+		// maxScroll = container width - total nav width
+		var maxScroll = 0,
+		    minScroll = this._nav.clientWidth - this._nav.scrollWidth;
+
+		// set final position to current position for navigation
+		this._navPosition = this._navPosition + this._positionChange;
+
+		// console.log('start position: ' + this._startPosition);
+		// console.log('end position: ' + (this._endPosition));
+		// console.log('position change: ' + this._positionChange);
+		// console.log('navigation position: ' +this._navPosition);
+
+		if (e.type === 'mouseup' || e.type === 'mouseleave') {
+			this._nav.className = 'smooth';
 			document.removeEventListener('mousemove', this._clickNavScrolling);
-			this._nav.removeEventListener('mouseleave', this._onDragLeave);
+			this._nav.removeEventListener('mouseleave', this._onDragEnd);
 		} else if (e.type === 'touchend') {
 			document.removeEventListener('touchmove', this._touchNavScrolling);
+		}
+
+		// if the user scrolls outside of the content, snap to min or max scroll
+		if (this._navPosition < minScroll) {
+
+		console.log('min position:' + minScroll);
+		console.log('current position:' + this._navPosition);
+		console.log('max position:' + maxScroll);
+			this._navPosition = minScroll;
+			this._setTranslate(this._navPosition);
+		} else if (this._navPosition > maxScroll) {
+			this._navPosition = maxScroll;
+			this._setTranslate(this._navPosition);
+		}
+	};
+
+
+	// center the selected tab in the tablist
+	TabList.prototype._centerSelectedTab = function () {
+		var tab = this._selected.tabEl,
+		    position;
+
+		// slide all the way to left edge
+		position = (tab.offsetLeft * -1);
+
+		// push tab (left-edge of tab) to the middle 
+		position = position + (this._nav.clientWidth / 2);
+
+		// center the tab, by adjusting half of the width right
+		position = position - (tab.clientWidth / 2);
+
+		// don't leave half of a px
+		position = Math.round(position);
+
+		this._checkValueBeforeScrolling(position);
+
+	};
+
+
+	TabList.prototype._checkValueBeforeScrolling = function (value) {
+		var maxScroll = 0,
+		    minScroll = this._nav.clientWidth - this._nav.scrollWidth;
+
+
+		console.log('min position:' + minScroll);
+		console.log('current position:' + value);
+		console.log('max position:' + maxScroll);
+
+
+		this._navPosition = value;
+
+		if (this._navPosition < minScroll) {
+			this._navPosition = minScroll;
+			this._setTranslate(this._navPosition);
+		} else if (this._navPosition > maxScroll) {
+			this._navPosition = maxScroll;
+			this._setTranslate(this._navPosition);
+		} else {
+			this._setTranslate(this._navPosition);
 		}
 	};
 
@@ -189,10 +274,10 @@ define([], function () {
 	 * @param  {object} e,
 	 *         "mouseleave" event OR "touchleave" event
 	 */
-	TabList.prototype._onDragLeave = function (/*e*/) {
-			document.removeEventListener('mousemove', this._clickNavScrolling);
-			this._nav.removeEventListener('mouseleave', this._onDragLeave);
-	};
+	// TabList.prototype._onDragLeave = function (/*e*/) {
+	// 		document.removeEventListener('mousemove', this._clickNavScrolling);
+	// 		this._nav.removeEventListener('mouseleave', this._onDragLeave);
+	// };
 
 	/**
 	 * Called on "mousemove", updates the scrollLeft position
@@ -202,8 +287,21 @@ define([], function () {
 	 *         "mousemove" event
 	 */
 	TabList.prototype._clickNavScrolling = function (e) {
-		var scroll = this._startPosition - e.clientX;
-		this._nav.scrollLeft = this._navPosition + scroll;
+		this._endPosition = e.clientX;
+		this._positionChange = this._endPosition - this._startPosition;
+		this._setTranslate(this._navPosition + this._positionChange);
+	};
+
+	TabList.prototype._setTranslate = function (position) {
+		this._nav.style['-webkit-transform'] =
+				'translate3d(' + position + 'px, 0px, 0px)';
+		this._nav.style['-moz-transform'] =
+				'translate3d(' + position + 'px, 0px, 0px)';
+		this._nav.style['-ms-transform'] =
+				'translate3d(' + position + 'px, 0px, 0px)';
+		this._nav.style['-o-transform'] =
+				'translate3d(' + position + 'px, 0px, 0px)';
+		this._nav.style.transform = 'translate3d(' + position + 'px, 0px, 0px)';
 	};
 
 	/**
@@ -247,26 +345,26 @@ define([], function () {
 	};
 
 	TabList.prototype._getTabPosition = function () {
-		var span = this.el.querySelector('.tab-position'),
+		var span = this.el.querySelector('.tab-position-indicator'),
 		    currentTabNumber = this._tabs.indexOf(this._selected) + 1,
 		    totalTabNumber = this._tabs.length,
 		    fadeInterval;
 
 		if (span) {
 			// update text
-			span.className = 'tab-position';
+			span.className = 'tab-position-indicator';
 			span.innerHTML = currentTabNumber + ' of ' + totalTabNumber;
 		} else {
 			// create new span
 			span = document.createElement('span');
-			span.className = 'tab-position';
+			span.className = 'tab-position-indicator';
 			span.innerHTML = currentTabNumber + ' of ' + totalTabNumber;
 			this.el.appendChild(span);
 		}
 
 		clearInterval(fadeInterval);
 		fadeInterval = window.setInterval(function () {
-			span.className = 'tab-position fade';
+			span.className = 'tab-position-indicator fade';
 		}, 1000);
 
 	};
@@ -518,7 +616,8 @@ define([], function () {
 				tab.tabEl.focus();
 				this._updateTabIndex();
 				this._updateButtonState();
-				this._smoothTabScrolling();
+				//this._smoothTabScrolling();
+				this._centerSelectedTab();
 				this._getTabPosition();
 			} else {
 				tabEl.classList.remove('tablist-tab-selected');

@@ -1,6 +1,7 @@
 * {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
 
 // tablist depends on border-box
@@ -12,81 +13,86 @@
 	padding:0;
 }
 
-	span.fade {
-		opacity: 0;
-		transition: opacity 0.5s ease-in-out 1s;
-		-moz-transition: opacity 0.5s ease-in-out 1s;
-		-webkit-transition: opacity 0.5s ease-in-out 1s;
-	}
+// indicates the position of the current tab
+.tab-position-indicator {
+	position: absolute;
+	top: 50px;
+	left: 50%;
+	width: 60px;
+	margin-left: -30px;
 
-	.tab-position {
-		position: absolute;
-		top: 45px;
-		left: 50%;
-		width: 60px;
-		margin-left: -30px;
+	opacity: 1;
+	font-size: 14px;
+	text-align: center;
+	padding: 1px;
+	border-radius: 10px;
+	text-shadow: 0 1px 0 #fff;
+	z-index: 1;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
 
-		opacity: 1;
-		font-size: 14px;
-		text-align: center;
-		padding: 1px;
-		border-radius: 10px;
-		text-shadow: 0 1px 0 #fff;
-		z-index:1;
-		box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+	background: #f0f0f0;
+	color: #666;
+	border: 1px solid #999;
+}
 
-		background: #f3f3f3;
-		color: #666;
-		border: 1px solid #bbb;
-	}
+// hides the tab-position-indicator
+span.fade {
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out 1s;
+	-moz-transition: opacity 0.5s ease-in-out 1s;
+	-webkit-transition: opacity 0.5s ease-in-out 1s;
+}
+
+nav.smooth {
+	transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+}
 
 // container
 .tablist {
 
-	// nav with tabs
-	> nav {
-		float:left;
-		padding:0 33px;
-		display: block;
-		position:relative;
-		white-space: nowrap;
-		max-width: 100%;
-		overflow: hidden;
-		border-left: 1px solid #666;
-		border-right: 1px solid #666;
-		border-top: 1px solid #666;
-		height:40px;
+	> .tablist-container {
+		padding:0 34px;
 		width:100%;
+		overflow:hidden;
+		border-top: 1px solid #666;
 		background:#f9f9f9;
 
+		// nav with tabs
+		> nav {
+			display: block;
+			position:relative;
+			white-space: nowrap;
 
-		> .tablist-tab-selected {
-			box-shadow:none;
+			> .tablist-tab-selected {
+				box-shadow:none;
 
-			// removes the bottom border allowing the tab to flow into the content
-			&:after {
-				position: absolute;
-				content: '';
-				margin-bottom: -1px;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				height: 2px;
-				background-color: #fff;
-				z-index: 1;
+				// removes the bottom border allowing the tab to flow into the content
+				&:after {
+					position: absolute;
+					content: '';
+					margin-bottom: -1px;
+					bottom: 0;
+					left: 0;
+					width: 100%;
+					height: 2px;
+					background-color: #fff;
+					z-index: 1;
+				}
 			}
 		}
-	}
 
-	// clear after floating contents
-	&:after {
-		display: block;
-		content: '';
-		clear: both;
-	}
+		// clear after floating contents
+		&:after {
+			display: block;
+			content: '';
+			clear: both;
+		}
 
-	img {
-		max-width: 100%;
+		img {
+			max-width: 100%;
+		}
 	}
 }
 
@@ -94,7 +100,6 @@
 // tab buttons
 .tablist-tab {
 	display: inline-block;
-	margin: 0;
 	border-right: 1px solid #666;
 	padding: 10px 15px;
 	cursor: pointer;
@@ -106,6 +111,9 @@
 	user-select: none;
 	height:40px;
 
+	&:first-child {
+		border-left: 1px solid #666;
+	}
 
 	&:focus {
 		text-decoration:underline;
@@ -129,7 +137,6 @@
 
 // tab content
 .tablist-panel {
-	clear:left;
 	padding: 10px 15px;
 	border: 1px solid #666;
 	margin-bottom: 8px;
@@ -138,7 +145,6 @@
 
 	// hide by default
 	display: none;
-
 }
 
 // show the selected panel
@@ -154,18 +160,13 @@
 			position:absolute;
 			top:0;
 			display:block;
-			height: 40px;
+			height: 41px;
 			width:35px;
-			text-align:center;
 			cursor:pointer;
 			border:1px solid #666;
 			background:#fff;
 			z-index:10;
 		}
-
-		// > .tablist-button-hide {
-		// 	display:none;
-		// }
 
 		> .tablist-backward-button,
 		> .tablist-forward-button {
@@ -198,14 +199,6 @@
 		> .tablist-forward-button {
 			right:0;
 			box-shadow: -3px 0 1px rgba(0,0,0,0.1);
-	}
-}
-
-@media screen and (max-width:767px) {
-	.tablist-top {
-		> nav > .tablist-tab {
-			text-align:center;
-		}
 	}
 }
 

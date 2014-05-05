@@ -3,6 +3,15 @@ define([], function () {
 	'use strict';
 
 
+	window.requestAnimFrame = (function(){
+		return window.requestAnimationFrame    ||
+				window.webkitRequestAnimationFrame ||
+				window.mozRequestAnimationFrame    ||
+				function( callback ){
+					window.setTimeout(callback, 1000 / 60);
+				};
+	})();
+
 	// sequence for assigning unique element ids, for aria roles
 	var ID_SEQUENCE = 0;
 
@@ -125,9 +134,6 @@ define([], function () {
 			}
 			this._ensureSelected();
 		}
-
-		// initial state
-		this._updateButtonState();
 	};
 
 	/**
@@ -193,11 +199,6 @@ define([], function () {
 		// set final position to current position for navigation
 		this._navPosition = this._navPosition + this._positionChange;
 
-		// console.log('start position: ' + this._startPosition);
-		// console.log('end position: ' + (this._endPosition));
-		// console.log('position change: ' + this._positionChange);
-		// console.log('navigation position: ' +this._navPosition);
-
 		if (e.type === 'mouseup' || e.type === 'mouseleave') {
 			this._nav.className = 'smooth';
 			document.removeEventListener('mousemove', this._clickNavScrolling);
@@ -208,10 +209,6 @@ define([], function () {
 
 		// if the user scrolls outside of the content, snap to min or max scroll
 		if (this._navPosition < minScroll) {
-
-		console.log('min position:' + minScroll);
-		console.log('current position:' + this._navPosition);
-		console.log('max position:' + maxScroll);
 			this._navPosition = minScroll;
 			this._setTranslate(this._navPosition);
 		} else if (this._navPosition > maxScroll) {
@@ -267,19 +264,6 @@ define([], function () {
 	};
 
 	/**
-	 * Called on "touchleave" or "mouseleave", removes event listeners
-	 * for mouse events or touch events that update the position 
-	 * of the tablist-tab navigation.
-	 *
-	 * @param  {object} e,
-	 *         "mouseleave" event OR "touchleave" event
-	 */
-	// TabList.prototype._onDragLeave = function (/*e*/) {
-	// 		document.removeEventListener('mousemove', this._clickNavScrolling);
-	// 		this._nav.removeEventListener('mouseleave', this._onDragLeave);
-	// };
-
-	/**
 	 * Called on "mousemove", updates the scrollLeft position
 	 * on the nav slider that contains the tab elements.
 	 *
@@ -293,6 +277,7 @@ define([], function () {
 	};
 
 	TabList.prototype._setTranslate = function (position) {
+
 		this._nav.style['-webkit-transform'] =
 				'translate3d(' + position + 'px, 0px, 0px)';
 		this._nav.style['-moz-transform'] =
@@ -370,31 +355,6 @@ define([], function () {
 	};
 
 	/**
-	 * Hides the corresponding 'forward' and 'backward' button
-	 * when the selected tab is either the first or last tab in
-	 * the list, respectively.
-	 */
-	TabList.prototype._updateButtonState = function () {
-		var currentIndex = this._tabs.indexOf(this._selected),
-		    maxIndex = this._tabs.length - 1,
-		    minIndex = 0;
-
-		if (currentIndex === minIndex) {
-			// first tab selected, hide back button
-			this._backward.classList.add('tablist-button-hide');
-			this._forward.classList.remove('tablist-button-hide');
-		} else if (currentIndex === maxIndex) {
-			// last tab selected, hide forward button
-			this._forward.classList.add('tablist-button-hide');
-			this._backward.classList.remove('tablist-button-hide');
-		} else {
-			// other button selected, show back and forward button
-			this._forward.classList.remove('tablist-button-hide');
-			this._backward.classList.remove('tablist-button-hide');
-		}
-	};
-
-	/**
 	 * Change tabindex to -1 on all tabs. Change tabindex on
 	 * selected tab to 0.
 	 */
@@ -413,61 +373,6 @@ define([], function () {
 		this._selected.tabEl.setAttribute('aria-hidden', false);
 	};
 
-	/**
-	 * Calculate the amount that the tablist navigation has to shift
-	 * for the tab title to be centered above it's content when selected.
-	 */
-	TabList.prototype._getScrollOffset = function () {
-		var tab = this._selected.tabEl, // selected tab
-		    tabWidth = tab.clientWidth, // width of selected tab
-		    offsetLeft = tab.offsetLeft, // left offset of selected tab
-		    navSlider = tab.offsetParent, // nav element
-		    navSliderWidth,
-		    scrollNav = null;
-
-		if (navSlider) {
-			// width of nav element
-			navSliderWidth = navSlider.clientWidth;
-			// compute offset for centering the tab
-			scrollNav = offsetLeft - ((navSliderWidth - tabWidth) / 2);
-		}
-
-		// return center x-coordinate position
-		return scrollNav;
-	};
-
-
-	/**
-	 * Animate the scrolling of the tablist navigation to give
-	 * the effect of smooth scrolling.
-	 */
-	TabList.prototype._smoothTabScrolling = function() {
-		var navSlider = this._nav,
-		    startPosition = navSlider.scrollLeft,
-		    endPosition = this._getScrollOffset(),
-		    diff = startPosition - endPosition,
-		    time = 300, // 250ms
-		    steps = 10,
-		    i = steps,
-		    shift,
-		    scrollInterval;
-
-		// amount to shift each step
-		shift = diff / steps;
-
-		clearInterval(scrollInterval);
-		scrollInterval = window.setInterval(function () {
-			i -= 1;
-			startPosition = startPosition - shift;
-			navSlider.scrollLeft = startPosition;
-
-			// last step
-			if (0 === i) {
-				clearInterval(scrollInterval);
-				navSlider.scrollLeft = endPosition;
-			}
-		}, time / steps);
-};
 
 	/**
 	 * Format tab (summary) content for a list item.
@@ -606,18 +511,18 @@ define([], function () {
 				// update state classes
 				tabEl.classList.add('tablist-tab-selected');
 				panelEl.classList.add('tablist-panel-selected');
-				panelEl.focus();
 				// notify tab it is visible, if needed...
 				if (typeof options.onSelect === 'function') {
 					options.onSelect();
 				}
 				// update selected tab
 				this._selected = tab;
-				tab.tabEl.focus();
 				this._updateTabIndex();
-				this._updateButtonState();
-				//this._smoothTabScrolling();
 				this._centerSelectedTab();
+				window.requestAnimFrame(function () {
+					this._selected.tabEl.focus();
+				}.bind(this));
+				// setTimeout(1,tab.tabEl.focus());
 				this._getTabPosition();
 			} else {
 				tabEl.classList.remove('tablist-tab-selected');

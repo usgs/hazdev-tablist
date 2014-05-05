@@ -64,6 +64,7 @@ nav.smooth {
 			display: block;
 			position:relative;
 			white-space: nowrap;
+			z-index:1;
 
 			> .tablist-tab-selected {
 				box-shadow:none;
@@ -173,7 +174,7 @@ nav.smooth {
 			> .image {
 				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAQAAAADHm0dAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAUklEQVQokWNgGLpAjmE7gwxxSvcz/Ge4zSBLjFIZoML/DI8YlGmmWIV4xY+JU+wAVPof6EmCQJPhOTgkZKis8A7xComIhIPEh6ksw27ionVwAwB0ByJpmp8pkgAAAABJRU5ErkJggg==);
 				background-repeat:no-repeat;
-				height: 21px;
+				height: 23px;
 				opacity: .6;
 				position: absolute;
 				right: 7px;

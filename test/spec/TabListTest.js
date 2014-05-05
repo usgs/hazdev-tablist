@@ -19,39 +19,6 @@ define([
 		return clickEvent;
 	};
 
-	var getKeyboardEvent = function (type, keyCode) {
-		var ev = document.createEvent('KeyboardEvent');
-
-		if (typeof ev.initKeyEvent === 'function') {
-		// https://developer.mozilla.org/en-US/docs/Web/API/event.initKeyEvent
-			ev.initKeyEvent(
-				type,
-				true, // bubble
-				true, // cancelable
-				document.defaultView, // view
-				false, // ctrl
-				false, // alt
-				false, // shift
-				false, // meta
-				keyCode, // keyCode
-				0 // charCode
-			);
-		} else {
-		// http://stackoverflow.com/questions/10455626/
-		//		keydown-simulation-in-chrome-fires-normally-but-not-the-correct-key
-			ev.initKeyboardEvent(
-				type, // type
-				true, // bubble
-				true, // cancelable
-				document.defaultView, // view
-				null, // key identifier
-				null, // location
-				null //modifiers
-			);
-		}
-		return ev;
-	};
-
 	describe('Unit tests for the "TabList" class', function () {
 
 		describe('constructor()', function () {
@@ -223,15 +190,13 @@ define([
 			    keyPressSpy,
 			    clickButtonSpy,
 			    dragStartSpy,
-			    dragEndSpy,
-			    dragLeaveSpy;
+			    dragEndSpy;
 
 			beforeEach(function () {
 				keyPressSpy = sinon.spy(TabList.prototype, '_keyPressHandler');
 				clickButtonSpy = sinon.spy(TabList.prototype, '_clickButton');
 				dragStartSpy = sinon.spy(TabList.prototype, '_onDragStart');
 				dragEndSpy = sinon.spy(TabList.prototype, '_onDragEnd');
-				dragLeaveSpy = sinon.spy(TabList.prototype, '_onDragLeave');
 
 				tabList = new TabList({
 					tabs: [
@@ -256,7 +221,6 @@ define([
 				clickButtonSpy.restore();
 				dragStartSpy.restore();
 				dragEndSpy.restore();
-				dragLeaveSpy.restore();
 			});
 
 			it('responds to a click event on tablist navigation buttons', function () {

@@ -236,7 +236,6 @@ define([], function () {
 		position = Math.round(position);
 
 		this._checkValueBeforeScrolling(position);
-
 	};
 
 
@@ -322,7 +321,9 @@ define([], function () {
 				this._tabs[minTabIndex].select();
 			} else if (currentIndex < minTabIndex) {
 				// if at the start of the tablist, move to the end
+				this._nav.classList.remove('smooth');
 				this._tabs[maxTabIndex].select();
+				this._nav.classList.add('smooth');
 			} else {
 				this._tabs[currentIndex].select();
 			}
@@ -519,10 +520,7 @@ define([], function () {
 				this._selected = tab;
 				this._updateTabIndex();
 				this._centerSelectedTab();
-				window.requestAnimFrame(function () {
-					this._selected.tabEl.focus();
-				}.bind(this));
-				// setTimeout(1,tab.tabEl.focus());
+				tab.tabEl.focus();
 				this._getTabPosition();
 			} else {
 				tabEl.classList.remove('tablist-tab-selected');

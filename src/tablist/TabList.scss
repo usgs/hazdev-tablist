@@ -64,6 +64,7 @@ nav.smooth {
 			display: block;
 			position:relative;
 			white-space: nowrap;
+			bottom:1px;
 			z-index:1;
 
 			> .tablist-tab-selected {
@@ -117,8 +118,6 @@ nav.smooth {
 	}
 
 	&:focus {
-		text-decoration:underline;
-		color:#00f;
 		outline:none;
 	}
 
@@ -131,6 +130,7 @@ nav.smooth {
 	background: #fff;
 
 	&:focus {
+		text-decoration:underline;
 		color:#000;
 	}
 }

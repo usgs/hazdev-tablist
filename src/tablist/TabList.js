@@ -218,7 +218,9 @@ define([], function () {
 	};
 
 
-	// center the selected tab in the tablist
+	/**
+	 * center the selected tab on the navigation slider.
+	 */
 	TabList.prototype._centerSelectedTab = function () {
 		var tab = this._selected.tabEl,
 		    position;
@@ -226,7 +228,7 @@ define([], function () {
 		// slide all the way to left edge
 		position = (tab.offsetLeft * -1);
 
-		// push tab (left-edge of tab) to the middle 
+		// push tab (left-edge of tab) to the middle
 		position = position + (this._nav.clientWidth / 2);
 
 		// center the tab, by adjusting half of the width right
@@ -239,15 +241,14 @@ define([], function () {
 	};
 
 
+	/**
+	 * Checks the translate value before it is applied to ensure that
+	 * tab slider is not scrolled more than it needs to be to make
+	 * the selected tab visible.
+	 */
 	TabList.prototype._checkValueBeforeScrolling = function (value) {
 		var maxScroll = 0,
 		    minScroll = this._nav.clientWidth - this._nav.scrollWidth;
-
-
-		console.log('min position:' + minScroll);
-		console.log('current position:' + value);
-		console.log('max position:' + maxScroll);
-
 
 		this._navPosition = value;
 

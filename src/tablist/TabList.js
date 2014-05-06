@@ -170,10 +170,11 @@ define([], function () {
 		if (!this._navPosition) {
 			this._navPosition = 0;
 		}
+		// do not animate a click/touch drag event
+		this._nav.className = '';
 
 		if (e.type === 'mousedown') {
 			this._startPosition = e.clientX;
-			this._nav.className = '';
 			document.addEventListener('mousemove', this._clickNavScrolling);
 			this._nav.addEventListener('mouseleave', this._onDragEnd);
 		} else if (e.type === 'touchstart') {
@@ -198,9 +199,9 @@ define([], function () {
 
 		// set final position to current position for navigation
 		this._navPosition = this._navPosition + this._positionChange;
+		this._nav.className = 'smooth';
 
 		if (e.type === 'mouseup' || e.type === 'mouseleave') {
-			this._nav.className = 'smooth';
 			document.removeEventListener('mousemove', this._clickNavScrolling);
 			this._nav.removeEventListener('mouseleave', this._onDragEnd);
 		} else if (e.type === 'touchend') {
@@ -276,6 +277,25 @@ define([], function () {
 		this._setTranslate(this._navPosition + this._positionChange);
 	};
 
+	/**
+	 * Called on "touchmove", updates the scrollLeft position
+	 * on the nav slider that contains the tab elements.
+	 *
+	 * @param  {object} e,
+	 *         "touchmove" event
+	 */
+	TabList.prototype._touchNavScrolling = function (e) {
+		this._endPosition = e.touches[0].clientX;
+		this._positionChange = this._endPosition - this._startPosition;
+		this._setTranslate(this._navPosition + this._positionChange);
+	};
+
+	/**
+	 * Update the position of the nav slider.
+	 * 
+	 * @param {Number} position,
+	 *        the x-position of the slider
+	 */
 	TabList.prototype._setTranslate = function (position) {
 
 		this._nav.style['-webkit-transform'] =
@@ -289,17 +309,6 @@ define([], function () {
 		this._nav.style.transform = 'translate3d(' + position + 'px, 0px, 0px)';
 	};
 
-	/**
-	 * Called on "touchmove", updates the scrollLeft position
-	 * on the nav slider that contains the tab elements.
-	 *
-	 * @param  {object} e,
-	 *         "touchmove" event
-	 */
-	TabList.prototype._touchNavScrolling = function (e) {
-		var scroll = this._startPosition - e.touches[0].clientX;
-		this._nav.scrollLeft = this._navPosition + scroll;
-	};
 
 	/**
 	 * Called on "forward"/"backward" button click, and also

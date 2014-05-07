@@ -61,8 +61,9 @@ define([], function () {
 		// create tab list
 		this._nav = document.createElement('nav');
 		this._nav.setAttribute('role', 'tablist');
-		this._nav.className = 'smooth';
+		this._nav.classList.add('smooth');
 		this._navPosition = 0;
+		this._positionChange = 0;
 
 		// add tab back/next buttons
 		backward = this._backward = document.createElement('div');
@@ -165,21 +166,24 @@ define([], function () {
 	 *         "mousedown" event OR "touchstart" event
 	 */
 	TabList.prototype._onDragStart = function (e) {
-
 		// use saved navigtation position
 		if (!this._navPosition) {
 			this._navPosition = 0;
 		}
 		// do not animate a click/touch drag event
-		this._nav.className = '';
+		this._nav.classList.remove('smooth');
+		this._positionChange = 0;
 
 		if (e.type === 'mousedown') {
 			this._startPosition = e.clientX;
 			document.addEventListener('mousemove', this._clickNavScrolling);
 			this._nav.addEventListener('mouseleave', this._onDragEnd);
 		} else if (e.type === 'touchstart') {
+			// keeps mouse event from also being delivered on touch events
+			e.preventDefault();
 			this._startPosition = e.touches[0].clientX;
 			document.addEventListener('touchmove', this._touchNavScrolling);
+			this._nav.addEventListener('touchleave', this._onDragEnd);
 		}
 
 	};
@@ -199,13 +203,13 @@ define([], function () {
 
 		// set final position to current position for navigation
 		this._navPosition = this._navPosition + this._positionChange;
-		this._nav.className = 'smooth';
 
 		if (e.type === 'mouseup' || e.type === 'mouseleave') {
 			document.removeEventListener('mousemove', this._clickNavScrolling);
 			this._nav.removeEventListener('mouseleave', this._onDragEnd);
 		} else if (e.type === 'touchend') {
 			document.removeEventListener('touchmove', this._touchNavScrolling);
+			this._nav.removeEventListener('touchleave', this._onDragEnd);
 		}
 
 		// if the user scrolls outside of the content, snap to min or max scroll
@@ -216,6 +220,9 @@ define([], function () {
 			this._navPosition = maxScroll;
 			this._setTranslate(this._navPosition);
 		}
+
+		// add back the class that animates nav sliding
+		this._nav.classList.add('smooth');
 	};
 
 
@@ -466,10 +473,11 @@ define([], function () {
 			tabEl: tabEl,
 			panelEl: panelEl,
 			select: function (e) {
-				// if the drag <= 5px, consider it a click
-				if (e && Math.abs(_this._startPosition - e.clientX) > 5) {
-					e.stopPropagation();
-				} else {
+				// smooth the touchend click, without smoothing any drag events
+				if (e && e.type === 'touchend') {
+					_this._nav.classList.add('smooth');
+				}
+				if (_this._clickOccurred()) {
 					_this._selectTab(tab);
 				}
 				return false;
@@ -480,6 +488,7 @@ define([], function () {
 
 		// click handler for tab
 		tabEl.addEventListener('click', tab.select);
+		tabEl.addEventListener('touchend', tab.select);
 
 		// select the first, or specified item
 		if (options.selected === true) {
@@ -494,6 +503,17 @@ define([], function () {
 
 		// return reference to tab for selecting
 		return tab;
+	};
+
+	/**
+	 * if the drag <= 5px, consider it a click
+	 */
+	TabList.prototype._clickOccurred = function () {
+		if (Math.abs(this._positionChange) <= 5) {
+			return true;
+		}
+
+		return false;
 	};
 
 	/**

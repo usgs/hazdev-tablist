@@ -2,16 +2,6 @@
 define([], function () {
 	'use strict';
 
-
-	window.requestAnimFrame = (function(){
-		return window.requestAnimationFrame    ||
-				window.webkitRequestAnimationFrame ||
-				window.mozRequestAnimationFrame    ||
-				function( callback ){
-					window.setTimeout(callback, 1000 / 60);
-				};
-	})();
-
 	// sequence for assigning unique element ids, for aria roles
 	var ID_SEQUENCE = 0;
 
@@ -166,12 +156,13 @@ define([], function () {
 	 *         "mousedown" event OR "touchstart" event
 	 */
 	TabList.prototype._onDragStart = function (e) {
-		// use saved navigtation position
+		// if no saved navigation position exists, start at zero
 		if (!this._navPosition) {
 			this._navPosition = 0;
 		}
 		// do not animate a click/touch drag event
 		this._nav.classList.remove('smooth');
+		// reset the position change, used to determine click vs scroll
 		this._positionChange = 0;
 
 		if (e.type === 'mousedown') {
@@ -179,7 +170,7 @@ define([], function () {
 			document.addEventListener('mousemove', this._clickNavScrolling);
 			this._nav.addEventListener('mouseleave', this._onDragEnd);
 		} else if (e.type === 'touchstart') {
-			// keeps mouse event from also being delivered on touch events
+			// keeps mouse event from being delivered on touch events
 			e.preventDefault();
 			this._startPosition = e.touches[0].clientX;
 			document.addEventListener('touchmove', this._touchNavScrolling);
@@ -235,13 +226,10 @@ define([], function () {
 
 		// slide all the way to left edge
 		position = (tab.offsetLeft * -1);
-
 		// push tab (left-edge of tab) to the middle
 		position = position + (this._nav.clientWidth / 2);
-
 		// center the tab, by adjusting half of the width right
 		position = position - (tab.clientWidth / 2);
-
 		// don't leave half of a px
 		position = Math.round(position);
 
@@ -257,6 +245,8 @@ define([], function () {
 	TabList.prototype._checkValueBeforeScrolling = function (value) {
 		var maxScroll = 0,
 		    minScroll = this._nav.clientWidth - this._nav.scrollWidth;
+
+		console.log('minScroll: ' + minScroll);
 
 		this._navPosition = value;
 
@@ -299,7 +289,7 @@ define([], function () {
 
 	/**
 	 * Update the position of the nav slider.
-	 * 
+	 *
 	 * @param {Number} position,
 	 *        the x-position of the slider
 	 */
@@ -330,6 +320,9 @@ define([], function () {
 		    currentIndex = this._tabs.indexOf(this._selected),
 		    maxTabIndex = this._tabs.length - 1,
 		    minTabIndex = 0;
+
+		// positionChange is not calculated on a button click
+		this._positionChange = 0;
 
 		if (increment) {
 			currentIndex = currentIndex + increment;
@@ -370,8 +363,7 @@ define([], function () {
 
 		window.setTimeout(function () {
 			span.classList.add('fade');
-		}, 1000);
-
+		}, 0);
 	};
 
 	/**

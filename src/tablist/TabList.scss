@@ -38,9 +38,9 @@
 // hides the tab-position-indicator
 span.fade {
 	opacity: 0;
-	transition: opacity 0.5s ease-in-out 1s;
-	-moz-transition: opacity 0.5s ease-in-out 1s;
-	-webkit-transition: opacity 0.5s ease-in-out 1s;
+	transition: opacity 1s ease-out 1s;
+	-moz-transition: opacity 1s ease-out 1s;
+	-webkit-transition: opacity 1s ease-out 1s;
 }
 
 nav.smooth {

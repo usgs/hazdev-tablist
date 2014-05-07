@@ -347,11 +347,14 @@ define([], function () {
 		}
 	};
 
-	TabList.prototype._getTabPosition = function () {
+	/**
+	 * Adds/ Updates the span that indicates the current tab position,
+	 * automatically fades the tab position using the 'fade' class.
+	 */
+	TabList.prototype._showTabPosition = function () {
 		var span = this.el.querySelector('.tab-position-indicator'),
 		    currentTabNumber = this._tabs.indexOf(this._selected) + 1,
-		    totalTabNumber = this._tabs.length,
-		    fadeInterval;
+		    totalTabNumber = this._tabs.length;
 
 		if (span) {
 			// update text
@@ -365,9 +368,8 @@ define([], function () {
 			this.el.appendChild(span);
 		}
 
-		clearInterval(fadeInterval);
-		fadeInterval = window.setInterval(function () {
-			span.className = 'tab-position-indicator fade';
+		window.setTimeout(function () {
+			span.classList.add('fade');
 		}, 1000);
 
 	};
@@ -551,7 +553,7 @@ define([], function () {
 				this._updateTabIndex();
 				this._centerSelectedTab();
 				tab.tabEl.focus();
-				this._getTabPosition();
+				this._showTabPosition();
 			} else {
 				tabEl.classList.remove('tablist-tab-selected');
 				panelEl.classList.remove('tablist-panel-selected');

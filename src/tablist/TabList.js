@@ -247,8 +247,6 @@ define([], function () {
 		var maxScroll = 0,
 		    minScroll = this._nav.clientWidth - this._nav.scrollWidth;
 
-		console.log('minScroll: ' + minScroll);
-
 		this._navPosition = value;
 
 		// sanitize value

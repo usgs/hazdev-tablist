@@ -203,7 +203,8 @@ define([], function () {
 			this._nav.removeEventListener('touchleave', this._onDragEnd);
 		}
 
-		// if the user scrolls outside of the content, snap to min or max scroll
+		// if the user scrolls outside of the content (snap to min or max scroll)
+		// this happens after mouseup, mouseleave, touchend, or touchleave
 		if (this._navPosition < minScroll) {
 			this._navPosition = minScroll;
 			this._setTranslate(this._navPosition);
@@ -250,15 +251,18 @@ define([], function () {
 
 		this._navPosition = value;
 
-		if (this._navPosition < minScroll) {
-			this._navPosition = minScroll;
-			this._setTranslate(this._navPosition);
-		} else if (this._navPosition > maxScroll) {
-			this._navPosition = maxScroll;
-			this._setTranslate(this._navPosition);
-		} else {
-			this._setTranslate(this._navPosition);
+		// sanitize value
+		if (value < minScroll) {
+			value = minScroll;
+		} else if (value > maxScroll) {
+			value = maxScroll;
 		}
+
+		// scroll nav slider
+		this._setTranslate(value);
+
+		// update tracking of navPosition
+		this._navPosition = value;
 	};
 
 	/**

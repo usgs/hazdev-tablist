@@ -631,9 +631,9 @@ define([], function () {
 			for (var i = 0; i < this._tabs.length; i++) {
 				tab = this._tabs[i];
 
-				// if tab has onRemove method, call onRemove()
-				if (tab.onRemove && typeof tab.onRemove === 'function') {
-					tab.onRemove();
+				// if tab has onDestroy method, call onDestroy()
+				if (tab.onDestroy && typeof tab.onDestroy === 'function') {
+					tab.onDestroy();
 				}
 
 				// remove click/tap event bindings

@@ -138,7 +138,8 @@ define([
 
 		describe('_selectTab()', function () {
 
-			it('loads tab content once, calls onSelect callback each time', function () {
+			it('loads tab content once, calls onSelect callback each time',
+					function () {
 				var tl,
 				    tabOptions,
 				    contentSpy,
@@ -188,13 +189,15 @@ define([
 		describe('event bindings', function () {
 			var tabList,
 			    keyPressSpy,
-			    clickButtonSpy,
+			    forwardButtonSpy,
+			    previousButtonSpy,
 			    dragStartSpy,
 			    dragEndSpy;
 
 			beforeEach(function () {
-				keyPressSpy = sinon.spy(TabList.prototype, '_keyPressHandler');
-				clickButtonSpy = sinon.spy(TabList.prototype, '_clickButton');
+				keyPressSpy = sinon.spy(TabList.prototype, '_onKeyPress');
+				forwardButtonSpy = sinon.spy(TabList.prototype, '_selectNextTab');
+				previousButtonSpy = sinon.spy(TabList.prototype, '_selectPreviousTab');
 				dragStartSpy = sinon.spy(TabList.prototype, '_onDragStart');
 				dragEndSpy = sinon.spy(TabList.prototype, '_onDragEnd');
 
@@ -218,15 +221,18 @@ define([
 
 			afterEach(function () {
 				keyPressSpy.restore();
-				clickButtonSpy.restore();
+				forwardButtonSpy.restore();
+				previousButtonSpy.restore();
 				dragStartSpy.restore();
 				dragEndSpy.restore();
 			});
 
-			it('responds to a click event on tablist navigation buttons', function () {
+			it('responds to a click event on tablist navigation buttons',
+					function () {
 				tabList._forward.dispatchEvent(getClickEvent());
 				tabList._backward.dispatchEvent(getClickEvent());
-				expect(clickButtonSpy.callCount).to.equal(2);
+				expect(forwardButtonSpy.callCount).to.equal(1);
+				expect(previousButtonSpy.callCount).to.equal(1);
 			});
 
 			it('responds to a mousedown event on tablist navigation', function () {
@@ -249,8 +255,10 @@ define([
 				var mouseleaveEvent = document.createEvent('MouseEvents'),
 				    mousedownEvent = document.createEvent('MouseEvents');
 
-				mousedownEvent.initMouseEvent('mousedown', true, true, window, 1, 0, 0);
-				mouseleaveEvent.initMouseEvent('mouseleave', true, true, window, 1, 0, 0);
+				mousedownEvent.initMouseEvent('mousedown', true, true,
+						window, 1, 0, 0);
+				mouseleaveEvent.initMouseEvent('mouseleave', true, true,
+						window, 1, 0, 0);
 
 				tabList._nav.dispatchEvent(mousedownEvent);
 				tabList._nav.dispatchEvent(mouseleaveEvent);
@@ -314,17 +322,7 @@ define([
 				expect(tabList._selected.tabEl.innerHTML).to.be.equal('tab1');
 			});
 
-
-			it('use directional pad keys to navigate tabs', function () {
-
-				tabList._keyPressHandler({'keyCode': 39});
-				expect(tabList._selected.tabEl.innerHTML).to.be.equal('tab2');
-
-				tabList._keyPressHandler({'keyCode': 37});
-				expect(tabList._selected.tabEl.innerHTML).to.be.equal('tab1');
-			});
 		});
-
 	});
 
 });

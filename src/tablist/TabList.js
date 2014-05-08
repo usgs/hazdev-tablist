@@ -145,7 +145,6 @@ define([], function () {
 	 *         "mousedown" event OR "touchstart" event
 	 */
 	TabList.prototype._onDragStart = function (e) {
-		console.log(this._navPosition);
 		// if no saved navigation position exists, start at zero
 		if (!this._navPosition) {
 			this._navPosition = 0;
@@ -272,10 +271,8 @@ define([], function () {
 	 *         "touchmove" event
 	 */
 	TabList.prototype._touchNavScrolling = function (e) {
-		console.log('this._endPosition -> ' + this._endPosition);
 		this._endPosition = e.touches[0].clientX;
 		this._positionChange = this._endPosition - this._startPosition;
-		console.log('this._positionChange -> ' + this._positionChange);
 		this._setTranslate(this._navPosition + this._positionChange);
 	};
 

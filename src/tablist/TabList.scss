@@ -172,14 +172,18 @@ nav.smooth {
 		> .tablist-backward-button,
 		> .tablist-forward-button {
 			> .image {
-				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAQAAAADHm0dAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAUklEQVQokWNgGLpAjmE7gwxxSvcz/Ge4zSBLjFIZoML/DI8YlGmmWIV4xY+JU+wAVPof6EmCQJPhOTgkZKis8A7xComIhIPEh6ksw27ionVwAwB0ByJpmp8pkgAAAABJRU5ErkJggg==);
-				background-repeat:no-repeat;
-				height: 23px;
-				opacity: .6;
 				position: absolute;
-				right: 7px;
-				top: 8px;
-				width: 21px;
+				background-image: url('tablist-button.png');
+				background-size:33px 39px;
+				background-position:0;
+				background-repeat:no-repeat;
+				// height: 32px;
+				// width: 32px;
+				top: 0;
+				bottom:0;
+				left:0;
+				right:0;
+				opacity: .5;
 				z-index: 3;
 			}
 		}
@@ -189,11 +193,12 @@ nav.smooth {
 			box-shadow: 3px 0 1px rgba(0,0,0,0.1);
 
 			> .image {
-				-webkit-transform: rotate(180deg);
-				-moz-transform: rotate(180deg);
-				-ms-transform: rotate(180deg);
-				-o-transform: rotate(180deg);
-				transform: rotate(180deg);
+				-moz-transform: scaleX(-1);
+				-o-transform: scaleX(-1);
+				-webkit-transform: scaleX(-1);
+				transform: scaleX(-1);
+				filter: FlipH;
+				-ms-filter: "FlipH";
 			}
 		}
 

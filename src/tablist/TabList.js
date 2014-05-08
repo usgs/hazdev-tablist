@@ -368,7 +368,7 @@ define([], function () {
 
 		window.setTimeout(function () {
 			span.classList.add('fade');
-		}, 1000);
+		}, 500);
 	};
 
 	/**

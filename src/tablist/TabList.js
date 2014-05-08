@@ -522,6 +522,8 @@ define([], function () {
 	 *         the tab to select, as returned by addTab().
 	 */
 	TabList.prototype._selectTab = function (toSelect) {
+		var previouslySelected = this._selected;
+
 		for (var i=0, len=this._tabs.length; i<len; i++) {
 			var tab = this._tabs[i],
 			    options = tab.options,
@@ -555,6 +557,13 @@ define([], function () {
 				tabEl.classList.remove('tablist-tab-selected');
 				panelEl.classList.remove('tablist-panel-selected');
 			}
+		}
+
+		// call deselect on previously selected tab to remove any bindings
+		// that exist in the content
+		if (previouslySelected && previouslySelected.deselect &&
+				typeof previouslySelected.deselect === 'function') {
+			previouslySelected.deselect();
 		}
 	};
 
@@ -606,6 +615,7 @@ define([], function () {
 	};
 
 	TabList.prototype.destroy = function () {
+		var tab;
 
 		// event bindings
 		this._nav.removeEventListener('mousedown', this._onDragStart);
@@ -616,9 +626,21 @@ define([], function () {
 		this._backward.removeEventListener('click', this._selectPreviousTab);
 		this._forward.removeEventListener('click', this._selectNextTab);
 
-		// TODO, remove tabEl bindings?
-		// tabEl.addEventListener('click', tab.select);
-		// tabEl.addEventListener('touchend', tab.select);
+		// remove tabEl bindings
+		if (this._tabs) {
+			for (var i = 0; i < this._tabs.length; i++) {
+				tab = this._tabs[i];
+
+				// if tab has onRemove method, call onRemove()
+				if (tab.onRemove && typeof tab.onRemove === 'function') {
+					tab.onRemove();
+				}
+
+				// remove click/tap event bindings
+				tab.tabEl.removeEventListener('click', tab.select);
+				tab.tabEl.removeEventListener('touchend', tab.select);
+			}
+		}
 
 		// methods bound to 'this'
 		this._clickNavScrolling = null;

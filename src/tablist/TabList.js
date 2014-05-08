@@ -556,15 +556,14 @@ define([], function () {
 			} else {
 				tabEl.classList.remove('tablist-tab-selected');
 				panelEl.classList.remove('tablist-panel-selected');
+				// notify tab it is hidden, if needed...
+				if (tab === previouslySelected &&
+						typeof options.onDeselect === 'function') {
+					options.onDeselect();
+				}
 			}
 		}
 
-		// call deselect on previously selected tab to remove any bindings
-		// that exist in the content
-		if (previouslySelected && previouslySelected.deselect &&
-				typeof previouslySelected.deselect === 'function') {
-			previouslySelected.deselect();
-		}
 	};
 
 	TabList.prototype._ensureSelected = function () {
@@ -632,8 +631,8 @@ define([], function () {
 				tab = this._tabs[i];
 
 				// if tab has onDestroy method, call onDestroy()
-				if (tab.onDestroy && typeof tab.onDestroy === 'function') {
-					tab.onDestroy();
+				if (typeof tab.options.onDestroy === 'function') {
+					tab.options.onDestroy();
 				}
 
 				// remove click/tap event bindings

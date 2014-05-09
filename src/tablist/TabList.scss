@@ -1,54 +1,100 @@
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
 
 // tablist depends on border-box
 .tablist,
 .tablist > nav,
 .tablist-tab,
 .tablist-panel {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	margin:0;
 	padding:0;
 }
 
+// indicates the position of the current tab
+.tab-position-indicator {
+	position: absolute;
+	top: 50px;
+	left: 50%;
+	width: 60px;
+	margin-left: -30px;
+
+	opacity: 1;
+	font-size: 14px;
+	text-align: center;
+	padding: 1px;
+	border-radius: 10px;
+	text-shadow: 0 1px 0 #fff;
+	z-index: 1;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+
+	background: #f0f0f0;
+	color: #666;
+	border: 1px solid #999;
+}
+
+// hides the tab-position-indicator
+span.fade {
+	opacity: 0;
+	transition: opacity 1s ease-out 1s;
+	-moz-transition: opacity 1s ease-out 1s;
+	-webkit-transition: opacity 1s ease-out 1s;
+}
+
+nav.smooth {
+	transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+}
 
 // container
 .tablist {
 
-	// nav with tabs
-	> nav {
-		display: block;
-		white-space: nowrap;
-		width: 100%;
-		overflow-x: auto;
-		border-left: 1px solid #666;
+	> .tablist-container {
+		padding:0 34px;
+		width:100%;
+		overflow:hidden;
+		border-top: 1px solid #666;
+		background:#f9f9f9;
 
-		> .tablist-tab-selected {
-			-webkit-box-shadow: 0 2px 0 inset;
-			box-shadow: 0 2px 0 inset;
+		// nav with tabs
+		> nav {
+			display: block;
+			position:relative;
+			white-space: nowrap;
+			bottom:1px;
+			z-index:1;
 
-			&:after {
-				position: absolute;
-				content: '';
-				margin-bottom: -1px;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				height: 2px;
-				background-color: #fff;
-				z-index: 1;
+			> .tablist-tab-selected {
+				box-shadow:none;
+
+				// removes the bottom border allowing the tab to flow into the content
+				&:after {
+					position: absolute;
+					content: '';
+					margin-bottom: -1px;
+					bottom: 0;
+					left: 0;
+					width: 100%;
+					height: 2px;
+					background-color: #fff;
+					z-index: 1;
+				}
 			}
 		}
-	}
 
-	// clear after floating contents
-	&:after {
-		display: block;
-		content: ' ';
-		clear: both;
-	}
+		// clear after floating contents
+		&:after {
+			display: block;
+			content: '';
+			clear: both;
+		}
 
-	img {
-		max-width: 100%;
+		img {
+			max-width: 100%;
+		}
 	}
 }
 
@@ -56,34 +102,23 @@
 // tab buttons
 .tablist-tab {
 	display: inline-block;
-	margin: 0;
-	max-width: 80%;
-	border-left: 1px solid #666;
-	border-top: 1px solid #666;
-	border-bottom: 1px solid #666;
-
-	&:first-child {
-		border-left: none;
-	}
-	&:last-child {
-		border-right: 1px solid #666;
-	}
-
+	border-right: 1px solid #666;
 	padding: 10px 15px;
 	cursor: pointer;
 	color: #666;
 	background: #ededed;
-	transition: color .5s, background .5s;
-
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	height:40px;
 
-	// hover
-	&:hover {
-		background-color: rgba(0,0,0,0.02);
-		color: #333;
+	&:first-child {
+		border-left: 1px solid #666;
+	}
+
+	&:focus {
+		outline:none;
 	}
 
 }
@@ -94,9 +129,9 @@
 	color: #000;
 	background: #fff;
 
-	// hover
-	&:hover {
-		background: #fff;
+	&:focus {
+		text-decoration:underline;
+		color:#000;
 	}
 }
 
@@ -118,6 +153,58 @@
 	display: block;
 }
 
+.tablist-top {
+	position:relative;
+
+		> .tablist-backward-button,
+		> .tablist-forward-button {
+			position:absolute;
+			top:0;
+			display:block;
+			height: 41px;
+			width:35px;
+			cursor:pointer;
+			border:1px solid #666;
+			background:#fff;
+			z-index:10;
+		}
+
+		> .tablist-backward-button,
+		> .tablist-forward-button {
+			> .image {
+				position: absolute;
+				background-image: url('tablist-button.png');
+				background-size:33px 39px;
+				background-position:0;
+				background-repeat:no-repeat;
+				top: 0;
+				bottom:0;
+				left:0;
+				right:0;
+				opacity: .5;
+				z-index: 3;
+			}
+		}
+
+		> .tablist-backward-button {
+			left:0;
+			box-shadow: 3px 0 1px rgba(0,0,0,0.1);
+
+			> .image {
+				-moz-transform: scaleX(-1);
+				-o-transform: scaleX(-1);
+				-webkit-transform: scaleX(-1);
+				transform: scaleX(-1);
+				filter: FlipH;
+				-ms-filter: "FlipH";
+			}
+		}
+
+		> .tablist-forward-button {
+			right:0;
+			box-shadow: -3px 0 1px rgba(0,0,0,0.1);
+	}
+}
 
 @media screen and (min-width: 768px) {
 

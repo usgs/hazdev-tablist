@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TabList Usability</title>
+	<link rel="stylesheet" href="tablist/tablist.css"/>
+
+	<style>
+		header {
+			font-weight:bold;
+			font-size:20px;
+			margin:10px 0;
+		}
+
+		label {
+			padding:10px 5px 10px 0;
+		}
+
+		@media screen and (min-width: 768px) {
+
+		}
+	</style>
+
+</head>
+<body>
+	<h1>Usability</h1>
+	<p>
+		This page demonstrates the usability requirements outlined by ARIA
+		<a href="http://www.w3.org/TR/wai-aria-practices/#tabpanel">here</a>.
+		The two tablists below use the rules found at that link for the
+		following keyboard keys:
+	</p>
+
+	<ul>
+		<li>tab</li>
+		<li>left arrow</li>
+		<li>right arrow</li>
+		<li>up arrow</li>
+		<li>down arrow</li>
+	</ul>
+
+	<div id="example-top"></div><hr/>
+	<div id="example-top-second"></div><hr/>
+
+	<!-- Javascripts go here -->
+	<script src="requirejs/require.js" data-main="usability.js"></script>
+</body>
+</html>

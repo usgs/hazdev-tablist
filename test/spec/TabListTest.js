@@ -1,4 +1,4 @@
-/* global define, describe, it */
+/* global define, describe, it, beforeEach, afterEach */
 
 define([
 	'chai',
@@ -13,6 +13,11 @@ define([
 
 	var expect = chai.expect;
 
+	var getClickEvent = function () {
+		var clickEvent = document.createEvent('MouseEvents');
+		clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0);
+		return clickEvent;
+	};
 
 	describe('Unit tests for the "TabList" class', function () {
 
@@ -133,7 +138,8 @@ define([
 
 		describe('_selectTab()', function () {
 
-			it('loads tab content once, calls onSelect callback each time', function () {
+			it('loads tab content once, calls onSelect callback each time',
+					function () {
 				var tl,
 				    tabOptions,
 				    contentSpy,
@@ -180,6 +186,143 @@ define([
 
 		});
 
+		describe('event bindings', function () {
+			var tabList,
+			    keyPressSpy,
+			    forwardButtonSpy,
+			    previousButtonSpy,
+			    dragStartSpy,
+			    dragEndSpy;
+
+			beforeEach(function () {
+				keyPressSpy = sinon.spy(TabList.prototype, '_onKeyPress');
+				forwardButtonSpy = sinon.spy(TabList.prototype, '_selectNextTab');
+				previousButtonSpy = sinon.spy(TabList.prototype, '_selectPreviousTab');
+				dragStartSpy = sinon.spy(TabList.prototype, '_onDragStart');
+				dragEndSpy = sinon.spy(TabList.prototype, '_onDragEnd');
+
+				tabList = new TabList({
+					tabs: [
+						{
+							title: 'tab1',
+							content: 'content1'
+						},
+						{
+							title: 'tab2',
+							content: 'content2'
+						},
+						{
+							title: 'tab3',
+							content: 'content3'
+						}
+					]
+				});
+			});
+
+			afterEach(function () {
+				keyPressSpy.restore();
+				forwardButtonSpy.restore();
+				previousButtonSpy.restore();
+				dragStartSpy.restore();
+				dragEndSpy.restore();
+			});
+
+			it('responds to a click event on tablist navigation buttons',
+					function () {
+				tabList._forward.dispatchEvent(getClickEvent());
+				tabList._backward.dispatchEvent(getClickEvent());
+				expect(forwardButtonSpy.callCount).to.equal(1);
+				expect(previousButtonSpy.callCount).to.equal(1);
+			});
+
+			it('responds to a mousedown event on tablist navigation', function () {
+				var mousedownEvent = document.createEvent('MouseEvents');
+				mousedownEvent.initMouseEvent('mousedown', true, true, window, 1, 0, 0);
+
+				tabList._nav.dispatchEvent(mousedownEvent);
+				expect(dragStartSpy.callCount).to.equal(1);
+			});
+
+			it('responds to a mouseup event on tablist navigation', function () {
+				var mouseupEvent = document.createEvent('MouseEvents');
+				mouseupEvent.initMouseEvent('mouseup', true, true, window, 1, 0, 0);
+
+				tabList._nav.dispatchEvent(mouseupEvent);
+				expect(dragEndSpy.callCount).to.equal(1);
+			});
+
+			it('responds to a mouseleave event on tablist navigation', function () {
+				var mouseleaveEvent = document.createEvent('MouseEvents'),
+				    mousedownEvent = document.createEvent('MouseEvents');
+
+				mousedownEvent.initMouseEvent('mousedown', true, true,
+						window, 1, 0, 0);
+				mouseleaveEvent.initMouseEvent('mouseleave', true, true,
+						window, 1, 0, 0);
+
+				tabList._nav.dispatchEvent(mousedownEvent);
+				tabList._nav.dispatchEvent(mouseleaveEvent);
+				expect(dragStartSpy.callCount).to.equal(1);
+			});
+
+		});
+
+		describe('navigating using tablist nav', function () {
+			var tabList;
+
+			beforeEach(function () {
+				tabList = new TabList({
+					tabs: [
+						{
+							title: 'tab1',
+							content: 'content1'
+						},
+						{
+							title: 'tab2',
+							content: 'content2'
+						},
+						{
+							title: 'tab3',
+							content: 'content3'
+						}
+					]
+				});
+
+			});
+
+			afterEach(function() {
+				tabList = null;
+			});
+
+			it('click on a tab to load content', function () {
+				var tab4Ref, tabEl, panelEl;
+
+				tab4Ref = tabList.addTab({
+					title: 'tab4',
+					content: 'content4'
+				});
+
+				tabEl = tab4Ref.tabEl;
+				panelEl = tab4Ref.panelEl;
+
+				tabEl.dispatchEvent(getClickEvent());
+				expect(tabList._selected).to.be.equal(tab4Ref);
+			});
+
+			it('use forward and backward button to navigate tabs', function () {
+				var forwardButton, backwardButton;
+
+				forwardButton = tabList._forward;
+				backwardButton = tabList._backward;
+
+				forwardButton.dispatchEvent(getClickEvent());
+				expect(tabList._selected.tabEl.innerHTML).to.be.equal('tab2');
+
+				backwardButton.dispatchEvent(getClickEvent());
+				expect(tabList._selected.tabEl.innerHTML).to.be.equal('tab1');
+			});
+
+		});
 	});
 
 });

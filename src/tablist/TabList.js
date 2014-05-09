@@ -81,18 +81,14 @@ define([], function () {
 		// mouse (desktop) interactions
 		this._backward.addEventListener('click', this._selectPreviousTab);
 		this._forward.addEventListener('click', this._selectNextTab);
-
-
 		this._nav.addEventListener('mousedown', this._onDragStart);
-		this._nav.addEventListener('mouseup', this._onDragEnd);
 
 		// touch (mobile) interactions
 		this._nav.addEventListener('touchstart', this._onDragStart);
-		this._nav.addEventListener('touchend', this._onDragEnd);
 
 		// keyboard interactions
+		this._nav.addEventListener('keydown', this._onKeyPress);
 		this._nav.addEventListener('keyup', this._onKeyPress);
-
 
 		// array of tab objects
 		this._tabs = [];
@@ -117,14 +113,13 @@ define([], function () {
 	TabList.prototype._onKeyPress = function (e) {
 		var keyCode = e.keyCode;
 
-		// only trigger event on keyup
-		if (e.type === 'keydown') {
-			return;
-		}
 
-		// up/down key, shouldn't scroll the page when this._nav has focus
-		if (e.keyCode === 38 || e.keyCode === 40) {
-			e.preventDefault();
+		if (e.type === 'keydown') {
+			// prevent scrolling the window
+			if (keyCode === 38 || keyCode === 40) {
+				e.preventDefault();
+			}
+			return;
 		}
 
 		if (keyCode === 37 || keyCode === 38) {
@@ -145,25 +140,20 @@ define([], function () {
 	 *         "mousedown" event OR "touchstart" event
 	 */
 	TabList.prototype._onDragStart = function (e) {
-		// if no saved navigation position exists, start at zero
-		if (!this._navPosition) {
-			this._navPosition = 0;
-		}
 		// do not animate a click/touch drag event
 		this._nav.classList.remove('smooth');
-		// reset the position change, used to determine click vs scroll
-		this._positionChange = 0;
 
 		if (e.type === 'mousedown') {
 			this._startPosition = e.clientX;
 			document.addEventListener('mousemove', this._clickNavScrolling);
-			this._nav.addEventListener('mouseleave', this._onDragEnd);
+			document.addEventListener('mouseup', this._onDragEnd);
 		} else if (e.type === 'touchstart') {
 			// keeps mouse event from being delivered on touch events
 			e.preventDefault();
 			this._startPosition = e.touches[0].clientX;
 			document.addEventListener('touchmove', this._touchNavScrolling);
-			this._nav.addEventListener('touchleave', this._onDragEnd);
+			document.addEventListener('touchend', this._onDragEnd);
+			document.addEventListener('touchcancel', this._onDragEnd);
 		}
 
 	};
@@ -177,30 +167,18 @@ define([], function () {
 	 *         "mouseup" event OR "touchend" event
 	 */
 	TabList.prototype._onDragEnd = function (e) {
-		// maxScroll = container width - total nav width
-		var maxScroll = 0,
-		    minScroll = this._nav.clientWidth - this._nav.scrollWidth;
 
-		// set final position to current position for navigation
-		this._navPosition = this._navPosition + this._positionChange;
-
-		if (e.type === 'mouseup' || e.type === 'mouseleave') {
+		if (e.type === 'mouseup') {
 			document.removeEventListener('mousemove', this._clickNavScrolling);
-			this._nav.removeEventListener('mouseleave', this._onDragEnd);
-		} else if (e.type === 'touchend') {
+			document.removeEventListener('mouseup', this._onDragEnd);
+		} else if (e.type === 'touchend' || e.type === 'touchcancel') {
 			document.removeEventListener('touchmove', this._touchNavScrolling);
-			this._nav.removeEventListener('touchleave', this._onDragEnd);
+			document.removeEventListener('touchend', this._onDragEnd);
+			document.removeEventListener('touchcancel', this._onDragEnd);
 		}
 
-		// if the user scrolls outside of the content (snap to min or max scroll)
-		// this happens after mouseup, mouseleave, touchend, or touchleave
-		if (this._navPosition < minScroll) {
-			this._navPosition = minScroll;
-			this._setTranslate(this._navPosition);
-		} else if (this._navPosition > maxScroll) {
-			this._navPosition = maxScroll;
-			this._setTranslate(this._navPosition);
-		}
+		this._checkValueBeforeScrolling(this._navPosition + this._positionChange);
+		this._positionChange = 0;
 
 		// add back the class that animates nav sliding
 		this._nav.classList.add('smooth');
@@ -308,7 +286,6 @@ define([], function () {
 		    maxTabIndex = this._tabs.length - 1,
 		    minTabIndex = 0;
 
-
 		// if at the start of the tablist, jump to end
 		if (currentIndex < minTabIndex) {
 			currentIndex = maxTabIndex;
@@ -354,17 +331,15 @@ define([], function () {
 		    currentTabNumber = this._tabs.indexOf(this._selected) + 1,
 		    totalTabNumber = this._tabs.length;
 
-		if (span) {
-			// update text
-			span.className = 'tab-position-indicator';
-			span.innerHTML = currentTabNumber + ' of ' + totalTabNumber;
-		} else {
+		if (!span) {
 			// create new span
 			span = document.createElement('span');
-			span.className = 'tab-position-indicator';
-			span.innerHTML = currentTabNumber + ' of ' + totalTabNumber;
 			this.el.appendChild(span);
 		}
+
+		// update text
+		span.className = 'tab-position-indicator';
+		span.innerHTML = currentTabNumber + ' of ' + totalTabNumber;
 
 		window.setTimeout(function () {
 			span.classList.add('fade');
@@ -471,12 +446,14 @@ define([], function () {
 			options: options,
 			tabEl: tabEl,
 			panelEl: panelEl,
-			select: function (e) {
-				// smooth the touchend click, without smoothing any drag events
-				if (e && e.type === 'touchend') {
-					_this._nav.classList.add('smooth');
-				}
-				if (_this._clickOccurred()) {
+			select: function () {
+				_this._selectTab(tab);
+				return false;
+			},
+			touchend: function () {
+				_this._nav.classList.add('smooth');
+				// if the user moved more than 5px, treat as a drag not a click
+				if (Math.abs(_this._positionChange) <= 5) {
 					_this._selectTab(tab);
 				}
 				return false;
@@ -487,7 +464,7 @@ define([], function () {
 
 		// click handler for tab
 		tabEl.addEventListener('click', tab.select);
-		tabEl.addEventListener('touchend', tab.select);
+		tabEl.addEventListener('touchend', tab.touchend);
 
 		// select the first, or specified item
 		if (options.selected === true) {
@@ -504,16 +481,6 @@ define([], function () {
 		return tab;
 	};
 
-	/**
-	 * if the drag <= 5px, consider it a click
-	 */
-	TabList.prototype._clickOccurred = function () {
-		if (Math.abs(this._positionChange) <= 5) {
-			return true;
-		}
-
-		return false;
-	};
 
 	/**
 	 * Select a tab in this list.
@@ -618,9 +585,7 @@ define([], function () {
 
 		// event bindings
 		this._nav.removeEventListener('mousedown', this._onDragStart);
-		this._nav.removeEventListener('mouseup', this._onDragEnd);
 		this._nav.removeEventListener('touchstart', this._onDragStart);
-		this._nav.removeEventListener('touchend', this._onDragEnd);
 		this._nav.removeEventListener('keyup', this._onKeyPress);
 		this._backward.removeEventListener('click', this._selectPreviousTab);
 		this._forward.removeEventListener('click', this._selectNextTab);
@@ -637,7 +602,7 @@ define([], function () {
 
 				// remove click/tap event bindings
 				tab.tabEl.removeEventListener('click', tab.select);
-				tab.tabEl.removeEventListener('touchend', tab.select);
+				tab.tabEl.removeEventListener('touchend', tab.touchend);
 			}
 		}
 

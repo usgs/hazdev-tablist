@@ -244,10 +244,20 @@ define([
 			});
 
 			it('responds to a mouseup event on tablist navigation', function () {
+				var mousedownEvent = document.createEvent('MouseEvents');
+				mousedownEvent.initMouseEvent('mousedown', true, true, window, 1, 0, 0);
 				var mouseupEvent = document.createEvent('MouseEvents');
 				mouseupEvent.initMouseEvent('mouseup', true, true, window, 1, 0, 0);
 
+				// mouseup is added to body, tablist needs to be added to document...
+				var body = document.querySelector('body');
+				body.appendChild(tabList.el);
+
+				tabList._nav.dispatchEvent(mousedownEvent);
 				tabList._nav.dispatchEvent(mouseupEvent);
+
+				// detach now that events are done.
+				body.removeChild(tabList.el);
 				expect(dragEndSpy.callCount).to.equal(1);
 			});
 

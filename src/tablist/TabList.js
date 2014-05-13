@@ -70,8 +70,7 @@ define([], function () {
 		this.el.appendChild(container);
 		this.el.appendChild(forward);
 
-		this._clickNavScrolling = this._clickNavScrolling.bind(this);
-		this._touchNavScrolling = this._touchNavScrolling.bind(this);
+		this._onDragScroll = this._onDragScroll.bind(this);
 		this._onDragStart = this._onDragStart.bind(this);
 		this._onDragEnd = this._onDragEnd.bind(this);
 		this._onKeyPress = this._onKeyPress.bind(this);
@@ -145,13 +144,13 @@ define([], function () {
 
 		if (e.type === 'mousedown') {
 			this._startPosition = e.clientX;
-			document.addEventListener('mousemove', this._clickNavScrolling);
+			document.addEventListener('mousemove', this._onDragScroll);
 			document.addEventListener('mouseup', this._onDragEnd);
 		} else if (e.type === 'touchstart') {
 			// keeps mouse event from being delivered on touch events
 			e.preventDefault();
 			this._startPosition = e.touches[0].clientX;
-			document.addEventListener('touchmove', this._touchNavScrolling);
+			document.addEventListener('touchmove', this._onDragScroll);
 			document.addEventListener('touchend', this._onDragEnd);
 			document.addEventListener('touchcancel', this._onDragEnd);
 		}
@@ -169,15 +168,16 @@ define([], function () {
 	TabList.prototype._onDragEnd = function (e) {
 
 		if (e.type === 'mouseup') {
-			document.removeEventListener('mousemove', this._clickNavScrolling);
+			document.removeEventListener('mousemove', this._onDragScroll);
 			document.removeEventListener('mouseup', this._onDragEnd);
 		} else if (e.type === 'touchend' || e.type === 'touchcancel') {
-			document.removeEventListener('touchmove', this._touchNavScrolling);
+			document.removeEventListener('touchmove', this._onDragScroll);
 			document.removeEventListener('touchend', this._onDragEnd);
 			document.removeEventListener('touchcancel', this._onDragEnd);
 		}
 
 		this._checkValueBeforeScrolling(this._navPosition + this._positionChange);
+
 		this._positionChange = 0;
 
 		// add back the class that animates nav sliding
@@ -235,23 +235,26 @@ define([], function () {
 	 * @param  {object} e,
 	 *         "mousemove" event
 	 */
-	TabList.prototype._clickNavScrolling = function (e) {
-		this._endPosition = e.clientX;
-		this._positionChange = this._endPosition - this._startPosition;
-		this._setTranslate(this._navPosition + this._positionChange);
-	};
+	TabList.prototype._onDragScroll = function (e) {
+		var position,
+		    positionChange,
+		    type;
 
-	/**
-	 * Called on "touchmove", updates the scrollLeft position
-	 * on the nav slider that contains the tab elements.
-	 *
-	 * @param  {object} e,
-	 *         "touchmove" event
-	 */
-	TabList.prototype._touchNavScrolling = function (e) {
-		this._endPosition = e.touches[0].clientX;
-		this._positionChange = this._endPosition - this._startPosition;
-		this._setTranslate(this._navPosition + this._positionChange);
+		type = e.type;
+
+		if (type === 'mousemove') {
+			position = e.clientX;
+		} else if (type === 'touchmove') {
+			position = e.touches[0].clientX;
+		}
+
+		positionChange = position - this._startPosition;
+		this._positionChange = positionChange;
+		this._setTranslate(this._navPosition + positionChange);
+
+		if (Math.abs(positionChange) >= 5) {
+			this._dontSelect = true;
+		}
 	};
 
 	/**
@@ -447,15 +450,16 @@ define([], function () {
 			tabEl: tabEl,
 			panelEl: panelEl,
 			select: function () {
-				_this._selectTab(tab);
+				if (_this._dontSelect === true) {
+					_this._dontSelect = false;
+				} else {
+					_this._selectTab(tab);
+				}
 				return false;
 			},
 			touchend: function () {
 				_this._nav.classList.add('smooth');
-				// if the user moved more than 5px, treat as a drag not a click
-				if (Math.abs(_this._positionChange) <= 5) {
-					_this._selectTab(tab);
-				}
+				tab.select();
 				return false;
 			},
 			contentReady: false
@@ -607,8 +611,7 @@ define([], function () {
 		}
 
 		// methods bound to 'this'
-		this._clickNavScrolling = null;
-		this._touchNavScrolling = null;
+		this._onDragScroll = null;
 		this._onDragStart = null;
 		this._onDragEnd = null;
 		this._onKeyPress = null;

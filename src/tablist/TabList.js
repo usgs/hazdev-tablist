@@ -572,7 +572,7 @@ define([], function () {
 			'tabs': tabs
 		});
 
-		el.parentNode.replaceChild(tablist.el, el);
+		el.parentNode.replaceChild(tablist._el, el);
 	};
 
 	TabList.tabbifyAll = function () {

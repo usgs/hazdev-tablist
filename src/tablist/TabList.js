@@ -26,25 +26,25 @@ define([], function () {
 	var TabList = function (options) {
 		var backward, forward, container;
 
-		this.el = options.el || document.createElement('section');
-		this.el.classList.add('tablist');
+		this._el = options.el || document.createElement('section');
+		this._el.classList.add('tablist');
 
 		// add tab position class, if needed
 		if (options.tabPosition === 'right') {
-			this.el.classList.add('tablist-right');
+			this._el.classList.add('tablist-right');
 		} else if (options.tabPosition === 'top') {
-			this.el.classList.add('tablist-top');
+			this._el.classList.add('tablist-top');
 		} else {
-			this.el.classList.add('tablist-left');
+			this._el.classList.add('tablist-left');
 		}
 
 		// add header
 		if (options.header) {
-			this._header = this.el.appendChild(document.createElement('header'));
+			this._header = this._el.appendChild(document.createElement('header'));
 			this._header.innerHTML = options.header;
 		}
 
-		// create tab container 
+		// create tab container
 		container = this._container = document.createElement('div');
 		container.className = 'tablist-container';
 
@@ -66,9 +66,9 @@ define([], function () {
 
 
 		container.appendChild(this._nav);
-		this.el.appendChild(backward);
-		this.el.appendChild(container);
-		this.el.appendChild(forward);
+		this._el.appendChild(backward);
+		this._el.appendChild(container);
+		this._el.appendChild(forward);
 
 		this._onDragScroll = this._onDragScroll.bind(this);
 		this._onDragStart = this._onDragStart.bind(this);
@@ -330,14 +330,14 @@ define([], function () {
 	 * automatically fades the tab position using the 'fade' class.
 	 */
 	TabList.prototype._showTabPosition = function () {
-		var span = this.el.querySelector('.tab-position-indicator'),
+		var span = this._el.querySelector('.tab-position-indicator'),
 		    currentTabNumber = this._tabs.indexOf(this._selected) + 1,
 		    totalTabNumber = this._tabs.length;
 
 		if (!span) {
 			// create new span
 			span = document.createElement('span');
-			this.el.appendChild(span);
+			this._el.appendChild(span);
 		}
 
 		// update text
@@ -479,7 +479,7 @@ define([], function () {
 
 		// add elements to dom
 		this._nav.appendChild(tabEl);
-		this.el.appendChild(panelEl);
+		this._el.appendChild(panelEl);
 
 		// return reference to tab for selecting
 		return tab;
@@ -538,7 +538,7 @@ define([], function () {
 	};
 
 	TabList.prototype._ensureSelected = function () {
-		var selectedPanel = this.el.querySelector('.tablist-panel-selected'),
+		var selectedPanel = this._el.querySelector('.tablist-panel-selected'),
 		    tabs;
 		if (selectedPanel === null) {
 			tabs = this._tabs;
@@ -619,7 +619,7 @@ define([], function () {
 		this._selectNextTab = null;
 
 		// DOM elements
-		this.el = null;
+		this._el = null;
 		this._header = null;
 		this._container = null;
 		this._nav = null;

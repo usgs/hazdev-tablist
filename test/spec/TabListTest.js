@@ -251,13 +251,13 @@ define([
 
 				// mouseup is added to body, tablist needs to be added to document...
 				var body = document.querySelector('body');
-				body.appendChild(tabList.el);
+				body.appendChild(tabList._el);
 
 				tabList._nav.dispatchEvent(mousedownEvent);
 				tabList._nav.dispatchEvent(mouseupEvent);
 
 				// detach now that events are done.
-				body.removeChild(tabList.el);
+				body.removeChild(tabList._el);
 				expect(dragEndSpy.callCount).to.equal(1);
 			});
 

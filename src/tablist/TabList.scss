@@ -322,3 +322,17 @@ nav.smooth {
 	}
 
 }
+
+@media print {
+	.tablist-container,
+	.tab-position-indicator {
+		display:none;
+	}
+	.tablist-forward-button,
+	.tablist-backward-button {
+		visibility:hidden;
+	}
+	.tablist-panel {
+		border:none;
+	}
+}

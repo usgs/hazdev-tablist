@@ -10,31 +10,25 @@ require([
 
 	TabList.tabbifyAll();
 
-
-	// left
 	new TabList({
 		el: document.querySelector('#example-left'),
-		tabPosition: 'left',
 		tabs: [
 			{
-				title: '<header>Tab 1</header>' +
-						'<img src="http://placehold.it/320x240"/>',
+				title: '<header>Tab 1</header>',
 				content: '<header>Tab 1 - full title</header>' +
 						'<p>This is an image from placehold.it</p>' +
 						'<img src="http://placehold.it/640x480"/>' +
 						'<footer>blah, blah, this is a footer, blah.</footer>'
 			},
 			{
-				title: '<header>Bacon</header>' +
-						'<img src="http://baconmockup.com/320/240"/>',
+				title: '<header>Bacon</header>',
 				content: '<header>Bacon - full title</header>' +
 						'<p>This is an image from baconmockup.com</p>' +
 						'<img src="http://baconmockup.com/640/480"/>' +
 						'<footer>blah, blah, this is a footer, blah.</footer>'
 			},
 			{
-				title: '<header>Bill Murray</header>' +
-						'<img src="http://fillmurray.com/320/240"/>',
+				title: '<header>Bill Murray</header>',
 				content: '<header>Bill Murray - full title</header>' +
 						'<p>This is an image from fillmurray.com</p>' +
 						'<img src="http://fillmurray.com/640/480"/>' +
@@ -43,10 +37,8 @@ require([
 		]
 	});
 
-	// top
 	new TabList({
 		el: document.querySelector('#example-top'),
-		tabPosition: 'top',
 		tabs: [
 			{
 				title: 'Golf',
@@ -79,10 +71,8 @@ require([
 		]
 	});
 
-	// right
 	new TabList({
 		el: document.querySelector('#example-right'),
-		tabPosition: 'right',
 		tabs: [
 			{
 				title: 'Tab 1 title',

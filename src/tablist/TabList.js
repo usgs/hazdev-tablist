@@ -19,24 +19,12 @@ define([], function () {
 	 *        Optional, markup placed in header for tab list.
 	 * @param options.tabs {Array<Object>}
 	 *        Optional, any items are passed to addItem().
-	 * @param options.tabPosition {String}
-	 *        Optional, default "left".
-	 *        "left", "right", "top" are only supported options.
 	 */
 	var TabList = function (options) {
 		var backward, forward, container;
 
 		this._el = options.el || document.createElement('section');
 		this._el.classList.add('tablist');
-
-		// add tab position class, if needed
-		if (options.tabPosition === 'right') {
-			this._el.classList.add('tablist-right');
-		} else if (options.tabPosition === 'top') {
-			this._el.classList.add('tablist-top');
-		} else {
-			this._el.classList.add('tablist-left');
-		}
 
 		// add header
 		if (options.header) {
@@ -568,7 +556,6 @@ define([], function () {
 		}
 
 		tablist = new TabList({
-			'tabPosition': el.getAttribute('data-tabposition') || 'left',
 			'tabs': tabs
 		});
 

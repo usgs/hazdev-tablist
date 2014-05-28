@@ -1,16 +1,15 @@
-.tablist,
-.tablist-container,
-.tablist-panel {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-}
-
 // tablist depends on border-box
 .tablist,
 .tablist > nav,
 .tablist-tab,
-.tablist-panel {
+.tablist-container,
+.tablist-panel,
+.tablist-backward-button,
+.tablist-forward-button {
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+
 	margin:0;
 	padding:0;
 }

@@ -14,7 +14,6 @@ require([
 	// top
 	new TabList({
 		el: document.querySelector('#example-top'),
-		tabPosition: 'top',
 		tabs: [
 			{
 				title: 'Golf',
@@ -72,7 +71,6 @@ require([
 
 	new TabList({
 		el: document.querySelector('#example-top-second'),
-		tabPosition: 'top',
 		tabs: [
 			{
 				title: 'Golf',

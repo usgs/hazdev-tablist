@@ -23,7 +23,6 @@
 	width:60px;
 	margin-left:-30px;
 
-	opacity:1;
 	font-size:14px;
 	text-align:center;
 	padding:1px;
@@ -35,14 +34,26 @@
 	background:#f0f0f0;
 	color:#666;
 	border:1px solid #999;
+
+	opacity:1;
+	visibility:visible;
 }
 
 // hides the tab-position-indicator
 span.fade {
+	-webkit-transition-property: opacity, visibility;
+	-webkit-transition-duration: 1s, 0s;
+	-webkit-transition-delay: 1s, 2s;
+	-webkit-transition-timing-function: ease-out, linear;
+
+	transition-property: opacity, visibility;
+	transition-duration: 1s, 0s;
+	transition-delay: 1s, 2s;
+	transition-timing-function: ease-out, linear;
+
 	opacity:0;
-	transition:opacity 1s ease-out 1s;
-	-moz-transition:opacity 1s ease-out 1s;
-	-webkit-transition:opacity 1s ease-out 1s;
+	// collapse so that tab-position-indicator is not blocking clickable content
+	visibility: collapse;
 }
 
 nav.smooth {

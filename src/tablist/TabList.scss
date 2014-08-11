@@ -54,6 +54,7 @@ nav.smooth {
 // container
 .tablist {
 	position:relative;
+	margin:15px 0;
 
 	> .tablist-container {
 		padding:0 34px;
@@ -141,7 +142,7 @@ nav.smooth {
 
 // tab content
 .tablist-panel {
-	padding:10px 15px;
+	padding:0 15px;
 	border:1px solid #666;
 	margin-bottom:8px;
 	position:relative;

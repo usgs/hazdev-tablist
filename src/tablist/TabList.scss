@@ -41,13 +41,13 @@
 // hides the tab-position-indicator
 span.fade {
 	-webkit-transition-property: opacity, visibility;
-	-webkit-transition-duration: 1s, 0s;
-	-webkit-transition-delay: 1s, 2s;
+	-webkit-transition-duration: .25s, 0s;
+	-webkit-transition-delay: .75s, 1s;
 	-webkit-transition-timing-function: ease-out, linear;
 
 	transition-property: opacity, visibility;
-	transition-duration: 1s, 0s;
-	transition-delay: 1s, 2s;
+	transition-duration: .25s, 0s;
+	transition-delay: .75s, 1s;
 	transition-timing-function: ease-out, linear;
 
 	opacity:0;

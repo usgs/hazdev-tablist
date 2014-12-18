@@ -15,7 +15,7 @@ require([
 		tabs: [
 			{
 				title: '<header>Tab 1</header>',
-				content: '<header><h2>Tab 1 - full title<h2></header>' +
+				content: '<header><h2>Tab 1 - full title</h2></header>' +
 						'<p>This is an image from placehold.it</p>' +
 						'<img src="http://placehold.it/640x480"/>' +
 						'<footer>blah, blah, this is a footer, blah.</footer>'

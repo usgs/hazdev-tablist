@@ -64,13 +64,13 @@ nav.smooth {
 // container
 .tablist {
 	position:relative;
-	margin:15px 0;
+	margin: 1em 0 0;
 
 	> .tablist-container {
 		padding:0 34px;
 		width:100%;
 		overflow:hidden;
-		border-top:1px solid #666;
+		border-top:1px solid #ddd;
 		background:#f9f9f9;
 
 		// nav with tabs
@@ -116,25 +116,29 @@ nav.smooth {
 // tab buttons
 .tablist-tab {
 	display:inline-block;
-	border-right:1px solid #666;
-	padding:10px 15px;
+	border-right:1px solid #ccc; // this is supposed to be darker than #ddd
+	padding:0.5em 1em;
 	cursor:pointer;
-	color:#666;
+	color:#333;
 	background:#ededed;
 	-moz-user-select:none;
 	-webkit-user-select:none;
 	-ms-user-select:none;
 	user-select:none;
 	height:40px;
+	text-shadow: 0 1px 1px #fff;
 
 	&:first-child {
-		border-left:1px solid #666;
+		border-left:1px solid #ddd;
 	}
 
 	&:focus {
 		outline:none;
 	}
 
+	&:hover {
+		text-decoration:underline;
+	}
 }
 
 // selected
@@ -147,13 +151,17 @@ nav.smooth {
 		text-decoration:underline;
 		color:#000;
 	}
+
+	&:hover {
+		text-decoration:none;
+	}
 }
 
 
 // tab content
 .tablist-panel {
-	padding:0 15px;
-	border:1px solid #666;
+	padding:0 1em 1em;
+	border:1px solid #ddd;
 	margin-bottom:8px;
 	position:relative;
 	top:-1px;
@@ -175,7 +183,7 @@ nav.smooth {
 	height:41px;
 	width:35px;
 	cursor:pointer;
-	border:1px solid #666;
+	border:1px solid #ddd;
 	background:#fff;
 	z-index:10;
 
@@ -189,7 +197,7 @@ nav.smooth {
 		bottom:0;
 		left:0;
 		right:0;
-		opacity:.5;
+		opacity:0.6;
 		z-index:3;
 	}
 
@@ -197,7 +205,7 @@ nav.smooth {
 
 .tablist-backward-button {
 	left:0;
-	box-shadow:3px 0 1px rgba(0,0,0,0.1);
+	box-shadow:3px 0 1px rgba(0,0,0,0.07);
 
 	> .image {
 		-moz-transform:scaleX(-1);
@@ -211,7 +219,7 @@ nav.smooth {
 
 .tablist-forward-button {
 	right:0;
-	box-shadow:-3px 0 1px rgba(0,0,0,0.1);
+	box-shadow:-3px 0 1px rgba(0,0,0,0.07);
 }
 
 @media print {
@@ -223,6 +231,6 @@ nav.smooth {
 	}
 
 	.tablist-panel {
-		border-color:#ccc;
+		border-color:#ddd;
 	}
 }

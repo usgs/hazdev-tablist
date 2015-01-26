@@ -7,230 +7,230 @@
 .tablist-backward-button,
 .tab-position-indicator,
 .tablist-forward-button {
-	box-sizing:border-box;
-	-moz-box-sizing:border-box;
-	-webkit-box-sizing:border-box;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
 
-	margin:0;
-	padding:0;
+  margin:0;
+  padding:0;
 }
 
 // indicates the position of the current tab
 .tab-position-indicator {
-	position:absolute;
-	top:30px;
-	left:50%;
-	width:60px;
-	margin-left:-30px;
+  position:absolute;
+  top:30px;
+  left:50%;
+  width:60px;
+  margin-left:-30px;
 
-	text-align:center;
-	padding:1px;
-	border-radius:1em;
-	text-shadow:0 1px 0 #fff;
-	z-index:1;
-	box-shadow:0px 1px 3px rgba(0, 0, 0, 0.2);
+  text-align:center;
+  padding:1px;
+  border-radius:1em;
+  text-shadow:0 1px 0 #fff;
+  z-index:1;
+  box-shadow:0px 1px 3px rgba(0, 0, 0, 0.2);
 
-	background:#f0f0f0;
-	color:#666;
-	border:1px solid #999;
+  background:#f0f0f0;
+  color:#666;
+  border:1px solid #999;
 
-	opacity:1;
-	visibility:visible;
+  opacity:1;
+  visibility:visible;
 }
 
 // hides the tab-position-indicator
 span.fade {
-	-webkit-transition-property: opacity, visibility;
-	-webkit-transition-duration: .25s, 0s;
-	-webkit-transition-delay: .75s, 1s;
-	-webkit-transition-timing-function: ease-out, linear;
+  -webkit-transition-property: opacity, visibility;
+  -webkit-transition-duration: .25s, 0s;
+  -webkit-transition-delay: .75s, 1s;
+  -webkit-transition-timing-function: ease-out, linear;
 
-	transition-property: opacity, visibility;
-	transition-duration: .25s, 0s;
-	transition-delay: .75s, 1s;
-	transition-timing-function: ease-out, linear;
+  transition-property: opacity, visibility;
+  transition-duration: .25s, 0s;
+  transition-delay: .75s, 1s;
+  transition-timing-function: ease-out, linear;
 
-	opacity:0;
-	// collapse so that tab-position-indicator is not blocking clickable content
-	visibility: collapse;
+  opacity:0;
+  // collapse so that tab-position-indicator is not blocking clickable content
+  visibility: collapse;
 }
 
 nav.smooth {
-	transition:all 0.3s ease-in-out;
-	-moz-transition:all 0.3s ease-in-out;
-	-webkit-transition:all 0.3s ease-in-out;
+  transition:all 0.3s ease-in-out;
+  -moz-transition:all 0.3s ease-in-out;
+  -webkit-transition:all 0.3s ease-in-out;
 }
 
 // container
 .tablist {
-	position:relative;
-	margin: 1em 0 0;
+  position:relative;
+  margin: 1em 0 0;
 
-	> .tablist-container {
-		padding:0 34px;
-		width:100%;
-		overflow:hidden;
-		border-top:1px solid #ddd;
-		background:#f9f9f9;
+  > .tablist-container {
+    padding:0 34px;
+    width:100%;
+    overflow:hidden;
+    border-top:1px solid #ddd;
+    background:#f9f9f9;
 
-		// nav with tabs
-		> nav {
-			display:block;
-			position:relative;
-			white-space:nowrap;
-			bottom:1px;
-			z-index:1;
+    // nav with tabs
+    > nav {
+      display:block;
+      position:relative;
+      white-space:nowrap;
+      bottom:1px;
+      z-index:1;
 
-			> .tablist-tab-selected {
-				box-shadow:none;
+      > .tablist-tab-selected {
+        box-shadow:none;
 
-				// removes the bottom border allowing the tab to flow into the content
-				&:after {
-					position:absolute;
-					content:'';
-					margin-bottom:-1px;
-					bottom:0;
-					left:0;
-					width:100%;
-					height:2px;
-					background-color:#fff;
-					z-index:1;
-				}
-			}
-		}
+        // removes the bottom border allowing the tab to flow into the content
+        &:after {
+          position:absolute;
+          content:'';
+          margin-bottom:-1px;
+          bottom:0;
+          left:0;
+          width:100%;
+          height:2px;
+          background-color:#fff;
+          z-index:1;
+        }
+      }
+    }
 
-		// clear after floating contents
-		&:after {
-			display:block;
-			content:'';
-			clear:both;
-		}
+    // clear after floating contents
+    &:after {
+      display:block;
+      content:'';
+      clear:both;
+    }
 
-		img {
-			max-width:100%;
-		}
-	}
+    img {
+      max-width:100%;
+    }
+  }
 }
 
 
 // tab buttons
 .tablist-tab {
-	display:inline-block;
-	border-right:1px solid #ccc; // this is supposed to be darker than #ddd
-	padding:0.5em 1em;
-	cursor:pointer;
-	color:#333;
-	background:#ededed;
-	-moz-user-select:none;
-	-webkit-user-select:none;
-	-ms-user-select:none;
-	user-select:none;
-	height:40px;
-	text-shadow: 0 1px 1px #fff;
+  display:inline-block;
+  border-right:1px solid #ccc; // this is supposed to be darker than #ddd
+  padding:0.5em 1em;
+  cursor:pointer;
+  color:#333;
+  background:#ededed;
+  -moz-user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  height:40px;
+  text-shadow: 0 1px 1px #fff;
 
-	&:first-child {
-		border-left:1px solid #ddd;
-	}
+  &:first-child {
+    border-left:1px solid #ddd;
+  }
 
-	&:focus {
-		outline:none;
-	}
+  &:focus {
+    outline:none;
+  }
 
-	&:hover {
-		text-decoration:underline;
-	}
+  &:hover {
+    text-decoration:underline;
+  }
 }
 
 // selected
 .tablist-tab-selected {
-	position:relative;
-	color:#000;
-	background:#fff;
+  position:relative;
+  color:#000;
+  background:#fff;
 
-	&:focus {
-		text-decoration:underline;
-		color:#000;
-	}
+  &:focus {
+    text-decoration:underline;
+    color:#000;
+  }
 
-	&:hover {
-		text-decoration:none;
-	}
+  &:hover {
+    text-decoration:none;
+  }
 }
 
 
 // tab content
 .tablist-panel {
-	padding:0 1em 1em;
-	border:1px solid #ddd;
-	margin-bottom:8px;
-	position:relative;
-	top:-1px;
+  padding:0 1em 1em;
+  border:1px solid #ddd;
+  margin-bottom:8px;
+  position:relative;
+  top:-1px;
 
-	// hide by default
-	display:none;
+  // hide by default
+  display:none;
 }
 
 // show the selected panel
 .tablist-panel-selected {
-	display:block;
+  display:block;
 }
 
 .tablist-backward-button,
 .tablist-forward-button {
-	position:absolute;
-	top:0;
-	display:block;
-	height:41px;
-	width:35px;
-	cursor:pointer;
-	border:1px solid #ddd;
-	background:#fff;
-	z-index:10;
+  position:absolute;
+  top:0;
+  display:block;
+  height:41px;
+  width:35px;
+  cursor:pointer;
+  border:1px solid #ddd;
+  background:#fff;
+  z-index:10;
 
-	> .image {
-		position:absolute;
-		background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABOCAYAAACUlsCTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAH5JREFUeNrs2UENgDAQRcENCpBQCUjDEZIqBQmwB0gawo0T2ZnkG3jppW0EAAAAAAAAb5oEEVtuzy3VIxzXysZYhwilY8y5LoYYYoghhhhiiCGGGDViTC7FToMIIogggggiiCCCCH/jOX/gg+cRo3yEW5MAAAAAAADgm1OAAQAnKpPP/4VJ5gAAAABJRU5ErkJggg==);
-		background-size:33px 39px;
-		background-position:0;
-		background-repeat:no-repeat;
-		top:0;
-		bottom:0;
-		left:0;
-		right:0;
-		opacity:0.6;
-		z-index:3;
-	}
+  > .image {
+    position:absolute;
+    background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABOCAYAAACUlsCTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAH5JREFUeNrs2UENgDAQRcENCpBQCUjDEZIqBQmwB0gawo0T2ZnkG3jppW0EAAAAAAAAb5oEEVtuzy3VIxzXysZYhwilY8y5LoYYYoghhhhiiCGGGDViTC7FToMIIogggggiiCCCCH/jOX/gg+cRo3yEW5MAAAAAAADgm1OAAQAnKpPP/4VJ5gAAAABJRU5ErkJggg==);
+    background-size:33px 39px;
+    background-position:0;
+    background-repeat:no-repeat;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    opacity:0.6;
+    z-index:3;
+  }
 
 }
 
 .tablist-backward-button {
-	left:0;
-	box-shadow:3px 0 1px rgba(0,0,0,0.07);
+  left:0;
+  box-shadow:3px 0 1px rgba(0,0,0,0.07);
 
-	> .image {
-		-moz-transform:scaleX(-1);
-		-o-transform:scaleX(-1);
-		-webkit-transform:scaleX(-1);
-		transform:scaleX(-1);
-		filter:FlipH;
-		-ms-filter:"FlipH";
-	}
+  > .image {
+    -moz-transform:scaleX(-1);
+    -o-transform:scaleX(-1);
+    -webkit-transform:scaleX(-1);
+    transform:scaleX(-1);
+    filter:FlipH;
+    -ms-filter:"FlipH";
+  }
 }
 
 .tablist-forward-button {
-	right:0;
-	box-shadow:-3px 0 1px rgba(0,0,0,0.07);
+  right:0;
+  box-shadow:-3px 0 1px rgba(0,0,0,0.07);
 }
 
 @media print {
-	.tablist-container,
-	.tab-position-indicator,
-	.tablist-forward-button,
-	.tablist-backward-button {
-		display:none;
-	}
+  .tablist-container,
+  .tab-position-indicator,
+  .tablist-forward-button,
+  .tablist-backward-button {
+    display:none;
+  }
 
-	.tablist-panel {
-		border-color:#ddd;
-	}
+  .tablist-panel {
+    border-color:#ddd;
+  }
 }

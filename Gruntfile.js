@@ -16,14 +16,9 @@ module.exports = function (grunt) {
     tmp: '.tmp'
   };
 
-  // TODO :: Read this from .bowerrc
-  var bowerConfig = {
-    directory: 'bower_components'
-  };
 
   grunt.initConfig({
     app: appConfig,
-    bower: bowerConfig,
     watch: {
       scripts: {
         files: ['<%= app.src %>/**/*.js'],
@@ -53,12 +48,10 @@ module.exports = function (grunt) {
       dev: {
         options: {
           base: '<%= app.test %>',
-          components: bowerConfig.directory,
           port: 8000,
           middleware: function (connect, options) {
             return [
               mountFolder(connect, '.tmp'),
-              mountFolder(connect, 'bower_components'),
               mountFolder(connect, 'node_modules'),
               mountFolder(connect, options.base),
               mountFolder(connect, appConfig.src)

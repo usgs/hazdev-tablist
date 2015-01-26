@@ -35,7 +35,8 @@
     "matchdep": "~0.1.2",
     "mocha": "~1.9.0",
     "grunt-contrib-compass": "~0.7.0",
-    "sinon": "^1.9.0"
+    "sinon": "^1.9.0",
+    "requirejs": "~2.1.15"
   },
   "engines": {
     "node": ">=0.8.0"

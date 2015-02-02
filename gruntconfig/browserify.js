@@ -17,8 +17,7 @@ var browserify = {
 [
   'index',
   'example',
-  'usability',
-  'spec/TabListTest'
+  'usability'
 ].forEach(function (bundle) {
   var targetFile = config.build + '/' + config.test + '/' + bundle + '.js';
   var sourceFile = config.test + '/' + bundle + '.js';

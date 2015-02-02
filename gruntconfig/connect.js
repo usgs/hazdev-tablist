@@ -9,10 +9,21 @@ var connect = {
   build: {
     options: {
       base: [
+        config.build + '/' + config.example,
+        config.build + '/' + config.src
+      ],
+      open: 'http://localhost:8000/',
+      port: 8000
+    }
+  },
+  test: {
+    options: {
+      base: [
         config.build + '/' + config.test,
         config.build + '/' + config.src
       ],
-      port: 8000
+      open: 'http://localhost:8001/',
+      port: 8001
     }
   },
   dist: {
@@ -21,6 +32,7 @@ var connect = {
         config.dist
       ],
       keepalive: true,
+      open: 'http://localhost:8002/',
       port: 8002
     }
   }

@@ -15,11 +15,12 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:build',
     'browserify',
-    'connect:build',
     'copy:mocha',
     'copy:test',
     'copy:example',
     'compass:build',
+    'connect:build',
+    'connect:test',
     'mocha_phantomjs'
   ]);
 

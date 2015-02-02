@@ -17,7 +17,7 @@ var uglify = {
 
 // uglify from build into dist
 [
-  'example.js',
+  'index.js',
   'usability.js'
 ].forEach(function (file) {
   uglify.dist.files[config.dist + '/' + file] = config.build + '/example/' + file;

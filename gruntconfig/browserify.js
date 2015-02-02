@@ -20,9 +20,9 @@ var browserify = {
       ]
     }
   },
-  'example/example': {
-    src: config.example + '/example.js',
-    dest: config.build + '/' + config.example + '/example.js',
+  'example/index': {
+    src: config.example + '/index.js',
+    dest: config.build + '/' + config.example + '/index.js',
     options: {
       external: 'tablist/TabList'
     }

@@ -10,8 +10,7 @@ var uglify = {
 
 // uglify from build into dist
 [
-  'tablist/TabList.js',
-  'tablist/ImageList.js'
+  'tablist/TabList.js'
 ].forEach(function (file) {
   uglify.dist.files[config.dist + '/' + file] = config.build + '/src/' + file;
 });

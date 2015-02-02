@@ -28,7 +28,6 @@ var browserify = {
 });
 
 [
-  'tablist/ImageList',
   'tablist/TabList'
 ].forEach(function (bundle) {
   var targetFile = config.build + '/' + config.src + '/' + bundle + '.js';

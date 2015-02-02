@@ -17,11 +17,11 @@ var uglify = {
 
 // uglify from build into dist
 [
-  'example.js'
+  'example.js',
+  'usability.js'
 ].forEach(function (file) {
-  uglify.dist.files[config.dist + '/' + file] = config.build + '/test/' + file;
+  uglify.dist.files[config.dist + '/' + file] = config.build + '/example/' + file;
 });
-
 
 
 module.exports = uglify;

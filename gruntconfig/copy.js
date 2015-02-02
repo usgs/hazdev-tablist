@@ -4,10 +4,20 @@ var config = require('./config');
 
 var copy = {
   dist: {
-    cwd: config.build + '/' + config.test,
+    cwd: config.build + '/' + config.example,
     dest: config.dist,
     expand: true,
-    src: 'example.html'
+    src: [
+      '*.html'
+    ]
+  },
+  example: {
+    cwd: config.example,
+    dest: config.build + '/' + config.example,
+    expand: true,
+    src: [
+      '*.html'
+    ]
   },
   mocha: {
     cwd: config.node_modules,

@@ -18,6 +18,7 @@ module.exports = function (grunt) {
     'connect:build',
     'copy:mocha',
     'copy:test',
+    'copy:example',
     'compass:build',
     'mocha_phantomjs'
   ]);

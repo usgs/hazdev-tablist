@@ -20,16 +20,16 @@ var browserify = {
       ]
     }
   },
-  'test/example': {
-    src: config.test + '/example.js',
-    dest: config.build + '/' + config.test + '/example.js',
+  'example/example': {
+    src: config.example + '/example.js',
+    dest: config.build + '/' + config.example + '/example.js',
     options: {
       external: 'tablist/TabList'
     }
   },
-  'test/usability': {
-    src: config.test + '/usability.js',
-    dest: config.build + '/' + config.test + '/usability.js',
+  'example/usability': {
+    src: config.example + '/usability.js',
+    dest: config.build + '/' + config.example + '/usability.js',
     options: {
       external: 'tablist/TabList'
     }

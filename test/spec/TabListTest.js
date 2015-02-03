@@ -18,25 +18,12 @@ describe('Unit tests for the "TabList" class', function () {
 
   describe('constructor()', function () {
 
-    it('only loads content for selected tab', function () {
-      var tl = TabList({
-        tabs: [
-          {
-            title: 'title1',
-            content: 'content1'
-          },
-          {
-            title: 'title2',
-            content: 'content2',
-            selected: true
-          }
-        ]
+      it('Can be defined.', function () {
+        var tl = TabList({});
+        /* jshint -W030 */
+        expect(tl).not.to.be.undefined;
+        /* jshint +W030 */
       });
-
-      expect(tl.tabs[0].contentReady).to.equal(false);
-      expect(tl.tabs[1].contentReady).to.equal(true);
-    });
-
   });
 
   describe('addTab()', function () {

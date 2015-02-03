@@ -100,6 +100,7 @@ var TabList = function (options) {
       _selected,
       _startPosition,
       _dontSelect,
+      _tabs,
 
       _centerSelectedTab,
       _checkValueBeforeScrolling,
@@ -173,7 +174,7 @@ var TabList = function (options) {
     _nav.addEventListener('keyup', _onKeyPress);
 
     // array of tab objects
-    _this.tabs = [];
+    _tabs = [];
 
     // add any items provided when constructing
     if (options.tabs) {
@@ -372,8 +373,8 @@ var TabList = function (options) {
    */
   _selectPreviousTab = function () {
     var increment = -1,
-        currentIndex = _this.tabs.indexOf(_selected) + increment,
-        maxTabIndex = _this.tabs.length - 1,
+        currentIndex = _tabs.indexOf(_selected) + increment,
+        maxTabIndex = _tabs.length - 1,
         minTabIndex = 0;
 
     // if at the start of the tablist, jump to end
@@ -381,10 +382,10 @@ var TabList = function (options) {
       currentIndex = maxTabIndex;
       // bug with translate position, remove class that animates
       _nav.classList.remove('smooth');
-      _this.tabs[currentIndex].select();
+      _tabs[currentIndex].select();
       _nav.classList.add('smooth');
     } else {
-      _this.tabs[currentIndex].select();
+      _tabs[currentIndex].select();
     }
   };
 
@@ -397,8 +398,8 @@ var TabList = function (options) {
    */
   _selectNextTab = function () {
     var increment = 1,
-        currentIndex = _this.tabs.indexOf(_selected) + increment,
-        maxTabIndex = _this.tabs.length - 1,
+        currentIndex = _tabs.indexOf(_selected) + increment,
+        maxTabIndex = _tabs.length - 1,
         minTabIndex = 0;
 
     // if at the end of the tablist, jump to start
@@ -406,7 +407,7 @@ var TabList = function (options) {
       currentIndex = minTabIndex;
     }
 
-    _this.tabs[currentIndex].select();
+    _tabs[currentIndex].select();
   };
 
 
@@ -416,8 +417,8 @@ var TabList = function (options) {
    */
   _showTabPosition = function () {
     var span = _this.el.querySelector('.tab-position-indicator'),
-        currentTabNumber = _this.tabs.indexOf(_selected) + 1,
-        totalTabNumber = _this.tabs.length;
+        currentTabNumber = _tabs.indexOf(_selected) + 1,
+        totalTabNumber = _tabs.length;
 
     if (!span) {
       // create new span
@@ -442,8 +443,8 @@ var TabList = function (options) {
   _updateTabIndex = function () {
     var tab;
 
-    for (var i = 0; i < _this.tabs.length; i++) {
-      tab = _this.tabs[i].tabEl;
+    for (var i = 0; i < _tabs.length; i++) {
+      tab = _tabs[i].tabEl;
       if (tab.getAttribute('tabindex') !== -1) {
         tab.setAttribute('tabindex', -1);
         tab.setAttribute('aria-hidden', true);
@@ -464,8 +465,8 @@ var TabList = function (options) {
   _selectTab = function (toSelect) {
     var previouslySelected = _selected;
 
-    for (var i=0, len=_this.tabs.length; i<len; i++) {
-      var tab = _this.tabs[i],
+    for (var i=0, len=_tabs.length; i<len; i++) {
+      var tab = _tabs[i],
           options = tab.options,
           tabEl = tab.tabEl,
           panelEl = tab.panelEl;
@@ -510,7 +511,7 @@ var TabList = function (options) {
     var selectedPanel = _this.el.querySelector('.tablist-panel-selected'),
         tabs;
     if (selectedPanel === null) {
-      tabs = _this.tabs;
+      tabs = _tabs;
       if (tabs.length > 0) {
         // select first tab by default
         tabs[0].select();
@@ -585,7 +586,7 @@ var TabList = function (options) {
       contentReady: false
     };
 
-    _this.tabs.push(tab);
+    _tabs.push(tab);
 
     // click handler for tab
     tabEl.addEventListener('click', tab.select);
@@ -617,9 +618,9 @@ var TabList = function (options) {
     _forward.removeEventListener('click', _selectNextTab);
 
     // remove tabEl bindings
-    if (_this.tabs) {
-      for (var i = 0; i < _this.tabs.length; i++) {
-        tab = _this.tabs[i];
+    if (_tabs) {
+      for (var i = 0; i < _tabs.length; i++) {
+        tab = _tabs[i];
 
         // if tab has onDestroy method, call onDestroy()
         if (typeof tab.options.onDestroy === 'function') {
@@ -656,7 +657,7 @@ var TabList = function (options) {
 
     // tab objects
     _selected = null;
-    _this.tabs = null;
+    _tabs = null;
   };
 
   _initialize();

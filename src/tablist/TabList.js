@@ -12,7 +12,7 @@ var ID_SEQUENCE = 0;
  * @return {String|DOMElement}
  *         This implementation returns obj.title.
  */
-var getTabContent = function(obj) {
+var __getTabContent = function(obj) {
   return obj.title;
 };
 
@@ -26,9 +26,9 @@ var getTabContent = function(obj) {
  *         If obj.content is a function, its return value is returned.
  *         Otherwise, this implementation returns obj.content.
  */
-var getPanelContent = function(obj) {
+var __getPanelContent = function(obj) {
   if (typeof obj.content === 'function') {
-    return obj.content();
+    return obj.content(obj);
   } else {
     return obj.content;
   }
@@ -73,7 +73,7 @@ var tabbifyAll = function () {
 /**
  * Construct a new ItemList.
  *
- * Sub-classes may override the methods getTabContent() and
+ * Sub-classes may override the methods __getTabContent() and
  * getPanelContent() to change list formatting.
  *
  * @param options {Object}
@@ -473,7 +473,7 @@ var TabList = function (options) {
       if (tab === toSelect) {
         // load tab content, if needed...
         if (!tab.contentReady) {
-          var panelContent = TabList.getPanelContent(options);
+          var panelContent = __getPanelContent(options);
           if (typeof panelContent === 'string') {
             tab.panelEl.innerHTML = panelContent;
           } else {
@@ -528,13 +528,13 @@ var TabList = function (options) {
    * @param options.onSelect {Function}
    *        Optional.
    *        Called when tab is selected.
-   * @see getTabContent(), getPanelContent()
+   * @see __getTabContent(), __getPanelContent()
    *      these methods format content shown in tabs and panels,
    *      and use the following parameters by default.
    * @param options.title {String|DOMElement}
-   *        Used by getTabContent() to generate tab content.
+   *        Used by __getTabContent() to generate tab content.
    * @param options.content {String|DOMElement|Function}
-   *        Used by getPanelContent() to generate panel content.
+   *        Used by __getPanelContent() to generate panel content.
    * @return object with select() method that can be used to show the tab.
    */
   _this.addTab = function (options, dontEnsureSelected) {
@@ -550,7 +550,7 @@ var TabList = function (options) {
     tabEl.setAttribute('role', 'tab');
     tabEl.setAttribute('tabindex', -1);
     tabEl.setAttribute('aria-controls', panelId);
-    var tabContent = getTabContent(options);
+    var tabContent = __getTabContent(options);
     if (typeof tabContent === 'string') {
       tabEl.innerHTML = tabContent;
     } else {
@@ -665,8 +665,6 @@ var TabList = function (options) {
 };
 
 // Expose public methods
-TabList.getPanelContent = getPanelContent;
-TabList.getTabContent = getTabContent;
 TabList.tabbifyAll = tabbifyAll;
 TabList.tabbifyOne = tabbifyOne;
 

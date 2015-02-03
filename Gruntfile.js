@@ -29,6 +29,7 @@ module.exports = function (grunt) {
     'cssmin:dist',
     'uglify',
     'copy:dist',
+    'replace:dist',
     'connect:dist'
   ]);
 

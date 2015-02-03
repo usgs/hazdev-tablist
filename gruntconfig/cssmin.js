@@ -1,15 +1,10 @@
 'use strict';
 
-var config = require('./config');
-
 var cssmin = {
   dist: {
-    cwd: config.build + '/' + config.src,
-    dest: config.dist,
-    expand: true,
-    src: [
-      '**/*.css'
-    ]
+    files: {
+      'dist/hazdev-tablist.css': ['.build/src/tablist/TabList.css']
+    }
   }
 };
 

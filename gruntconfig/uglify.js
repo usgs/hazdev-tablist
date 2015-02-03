@@ -10,9 +10,9 @@ var uglify = {
 
 // uglify from build into dist
 [
-  'tablist/TabList.js'
+  'hazdev-tablist.js'
 ].forEach(function (file) {
-  uglify.dist.files[config.dist + '/' + file] = config.build + '/src/' + file;
+  uglify.dist.files[config.dist + '/' + file] = config.build + '/src/tablist/' + file;
 });
 
 // uglify from build into dist

@@ -13,7 +13,7 @@ var browserify = {
   },
   'tablist/TabList': {
     src: [],
-    dest: config.build + '/' + config.src + '/tablist/TabList.js',
+    dest: config.build + '/' + config.src + '/tablist/hazdev-tablist.js',
     options: {
       alias: [
         './' + config.src + '/tablist/TabList.js:tablist/TabList'

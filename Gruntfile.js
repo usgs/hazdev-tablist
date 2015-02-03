@@ -16,7 +16,6 @@ module.exports = function (grunt) {
     'clean:build',
     'browserify',
     'copy:test',
-    'copy:example',
     'compass:build',
     'connect:build',
     'connect:test',
@@ -28,8 +27,6 @@ module.exports = function (grunt) {
     'build',
     'cssmin:dist',
     'uglify',
-    'copy:dist',
-    'replace:dist',
     'connect:dist'
   ]);
 

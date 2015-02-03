@@ -9,11 +9,10 @@ var connect = {
   build: {
     options: {
       base: [
-        config.build + '/' + config.example,
         config.build + '/' + config.src,
-        'node_modules'
+        config.example
       ],
-      open: 'http://localhost:8000/',
+      open: 'http://localhost:8000/example.html',
       port: 8000
     }
   },
@@ -21,20 +20,20 @@ var connect = {
     options: {
       base: [
         config.build + '/' + config.test,
-        config.build + '/' + config.src,
         'node_modules'
       ],
-      open: 'http://localhost:8001/',
+      open: 'http://localhost:8001/test.html',
       port: 8001
     }
   },
   dist: {
     options: {
       base: [
-        config.dist
+        config.dist,
+        config.example
       ],
       keepalive: true,
-      open: 'http://localhost:8002/',
+      open: 'http://localhost:8002/example.html',
       port: 8002
     }
   }

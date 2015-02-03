@@ -3,7 +3,7 @@
 var cssmin = {
   dist: {
     files: {
-      'dist/hazdev-tablist.css': ['.build/src/tablist/TabList.css']
+      'dist/hazdev-tablist.css': ['.build/src/hazdev-tablist.css']
     }
   }
 };

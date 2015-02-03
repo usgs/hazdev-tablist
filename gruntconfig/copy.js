@@ -19,15 +19,6 @@ var copy = {
       '*.html'
     ]
   },
-  mocha: {
-    cwd: config.node_modules,
-    dest: config.build + '/' + config.test,
-    expand: true,
-    src: [
-      'mocha/mocha.js',
-      'mocha/mocha.css'
-    ]
-  },
   test: {
     cwd: config.test,
     dest: config.build + '/' + config.test,

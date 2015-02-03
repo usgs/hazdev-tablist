@@ -15,7 +15,6 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:build',
     'browserify',
-    'copy:mocha',
     'copy:test',
     'copy:example',
     'compass:build',

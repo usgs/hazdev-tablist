@@ -10,7 +10,8 @@ var connect = {
     options: {
       base: [
         config.build + '/' + config.example,
-        config.build + '/' + config.src
+        config.build + '/' + config.src,
+        'node_modules'
       ],
       open: 'http://localhost:8000/',
       port: 8000
@@ -20,7 +21,8 @@ var connect = {
     options: {
       base: [
         config.build + '/' + config.test,
-        config.build + '/' + config.src
+        config.build + '/' + config.src,
+        'node_modules'
       ],
       open: 'http://localhost:8001/',
       port: 8001

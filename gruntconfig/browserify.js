@@ -22,7 +22,12 @@ var browserify = {
   },
   test: {
     src: config.test + '/test.js',
-    dest: config.build + '/' + config.test + '/test.js'
+    dest: config.build + '/' + config.test + '/test.js',
+    options: {
+      external: [
+        'tablist/TabList'
+      ]
+    }
   }
 };
 

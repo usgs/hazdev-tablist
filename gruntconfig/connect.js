@@ -19,6 +19,7 @@ var connect = {
   test: {
     options: {
       base: [
+        config.build + '/' + config.src,
         config.build + '/' + config.test,
         'node_modules'
       ],

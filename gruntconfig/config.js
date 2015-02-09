@@ -7,8 +7,7 @@ var config = {
   example: 'example',
   node_modules: 'node_modules',
   src: 'src',
-  test: 'test',
-  tmp: '.tmp'
+  test: 'test'
 };
 
 module.exports = config;

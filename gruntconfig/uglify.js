@@ -4,16 +4,9 @@ var config = require('./config');
 
 var uglify = {
   dist: {
-    files: {}
+    src: config.build + '/' + config.src + '/hazdev-tablist.js',
+    dest: config.dist + '/' + '/hazdev-tablist.js'
   }
 };
-
-// uglify from build into dist
-[
-  'hazdev-tablist.js'
-].forEach(function (file) {
-  uglify.dist.files[config.dist + '/' + file] = config.build + '/' + config.src + '/' + file;
-});
-
 
 module.exports = uglify;

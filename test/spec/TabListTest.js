@@ -1,10 +1,8 @@
-/* global describe, it, beforeEach, afterEach */
+/* global chai, sinon, describe, it, beforeEach, afterEach */
 
 'use strict';
 
-var chai = require('chai'),
-    sinon = require('sinon'),
-    TabList = require('tablist/TabList');
+var TabList = require('tablist/TabList');
 
 var expect = chai.expect;
 

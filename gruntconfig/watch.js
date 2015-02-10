@@ -8,7 +8,7 @@ var watch = {
     tasks: [ 'jshint:examples']
   },
   gruntfile: {
-    files: ['Gruntfile.js'],
+    files: ['Gruntfile.js', 'gruntconfig/*.js'],
     tasks: ['jshint:gruntfile']
   },
   scripts: {

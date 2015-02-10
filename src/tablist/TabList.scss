@@ -170,6 +170,11 @@
 
   // hide by default
   display:none;
+
+  // keep images from breaking tablist container
+  img {
+    max-width:100%;
+  }
 }
 
 // show the selected panel

@@ -5,7 +5,7 @@ var config = require('./config');
 var watch = {
   example: {
     files: [config.example + '/*.html', config.example + '/**/*.js'],
-    tasks: [ 'jshint:examples', 'browserify', 'mocha_phantomjs']
+    tasks: [ 'jshint:examples']
   },
   gruntfile: {
     files: ['Gruntfile.js'],

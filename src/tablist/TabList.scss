@@ -38,33 +38,28 @@
   visibility:visible;
 }
 
-// hides the tab-position-indicator
-span.fade {
-  -webkit-transition-property: opacity, visibility;
-  -webkit-transition-duration: .25s, 0s;
-  -webkit-transition-delay: .75s, 1s;
-  -webkit-transition-timing-function: ease-out, linear;
-
-  transition-property: opacity, visibility;
-  transition-duration: .25s, 0s;
-  transition-delay: .75s, 1s;
-  transition-timing-function: ease-out, linear;
-
-  opacity:0;
-  // collapse so that tab-position-indicator is not blocking clickable content
-  visibility: collapse;
-}
-
-nav.smooth {
-  transition:all 0.3s ease-in-out;
-  -moz-transition:all 0.3s ease-in-out;
-  -webkit-transition:all 0.3s ease-in-out;
-}
-
 // container
 .tablist {
   position:relative;
   margin: 1em 0 0;
+
+  // hides the tab-position-indicator
+  span.fade {
+    -webkit-transition-property: opacity, visibility;
+    -webkit-transition-duration: .25s, 0s;
+    -webkit-transition-delay: .75s, 1s;
+    -webkit-transition-timing-function: ease-out, linear;
+
+    transition-property: opacity, visibility;
+    transition-duration: .25s, 0s;
+    transition-delay: .75s, 1s;
+    transition-timing-function: ease-out, linear;
+
+    opacity:0;
+    // collapse so that tab-position-indicator is not blocking clickable content
+    visibility: collapse;
+  }
+
 
   > .tablist-container {
     padding:0 34px;
@@ -80,6 +75,13 @@ nav.smooth {
       white-space:nowrap;
       bottom:1px;
       z-index:1;
+      line-height: 1.5;
+
+      &.smooth {
+        transition:all 0.3s ease-in-out;
+        -moz-transition:all 0.3s ease-in-out;
+        -webkit-transition:all 0.3s ease-in-out;
+      }
 
       > .tablist-tab-selected {
         box-shadow:none;

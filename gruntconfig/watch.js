@@ -5,7 +5,11 @@ var config = require('./config');
 var watch = {
   example: {
     files: [config.example + '/*.html', config.example + '/**/*.js'],
-    tasks: [ 'jshint:examples']
+    tasks: ['jshint:examples']
+  },
+  css: {
+    files: [config.src + '/**/*.scss'],
+    tasks: ['compass']
   },
   gruntfile: {
     files: ['Gruntfile.js', 'gruntconfig/*.js'],
@@ -17,7 +21,7 @@ var watch = {
   },
   test: {
     files: [config.test + '/*.html', config.test + '/**/*.js'],
-    tasks: [ 'jshint:tests', 'browserify:test', 'mocha_phantomjs']
+    tasks: ['jshint:tests', 'browserify:test', 'mocha_phantomjs']
   }
 };
 

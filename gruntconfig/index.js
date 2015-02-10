@@ -11,7 +11,6 @@ var config = {
   uglify: require('./uglify'),
   watch: require('./watch'),
   mocha_phantomjs: require('./mocha_phantomjs'),
-  replace: require('./replace'),
 
   tasks: [
     'grunt-browserify',
@@ -23,8 +22,7 @@ var config = {
     'grunt-contrib-jshint',
     'grunt-contrib-uglify',
     'grunt-contrib-watch',
-    'grunt-mocha-phantomjs',
-    'grunt-replace'
+    'grunt-mocha-phantomjs'
   ]
 };
 

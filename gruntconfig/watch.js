@@ -13,11 +13,11 @@ var watch = {
   },
   scripts: {
     files: [config.src + '/**/*.js'],
-    tasks: ['jshint:scripts', 'browserify', 'mocha_phantomjs']
+    tasks: ['jshint:scripts', 'browserify:source', 'mocha_phantomjs']
   },
   test: {
     files: [config.test + '/*.html', config.test + '/**/*.js'],
-    tasks: [ 'jshint:tests', 'browserify', 'mocha_phantomjs']
+    tasks: [ 'jshint:tests', 'browserify:test', 'mocha_phantomjs']
   }
 };
 

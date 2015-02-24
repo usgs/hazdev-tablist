@@ -117,11 +117,6 @@ var TabList = function (options) {
     _this.el.appendChild(_container);
     _this.el.appendChild(_forward);
 
-    _onDragScroll = _onDragScroll.bind(this);
-    _onDragStart = _onDragStart.bind(this);
-    _onDragEnd = _onDragEnd.bind(this);
-    _onKeyPress = _onKeyPress.bind(this);
-
     // mouse (desktop) interactions
     _backward.addEventListener('click', _this.selectPreviousTab);
     _forward.addEventListener('click', _this.selectNextTab);

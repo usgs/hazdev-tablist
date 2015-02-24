@@ -35,41 +35,6 @@ var __getPanelContent = function(obj) {
 };
 
 
-var tabbifyOne = function (el) {
-  var tabs = [],
-      panels,
-      panel,
-      i, len,
-      tablist;
-
-  panels = el.querySelectorAll('.panel');
-  for (i = 0, len = panels.length; i < len; i++) {
-    panel = panels[i];
-    tabs.push({
-      'title': panel.getAttribute('data-title') ||
-          panel.querySelector('header').innerHTML,
-      'content': panel.innerHTML,
-      'selected': panel.getAttribute('data-selected') === 'true'
-    });
-  }
-
-  tablist = TabList({
-    'tabs': tabs
-  });
-
-  el.parentNode.replaceChild(tablist.el, el);
-};
-
-var tabbifyAll = function () {
-  var lists,
-      i;
-  lists = document.querySelectorAll('.tablist');
-  for (i = lists.length - 1; i >= 0; i--) {
-    TabList.tabbifyOne(lists[i]);
-  }
-};
-
-
 /**
  * Construct a new ItemList.
  *
@@ -109,8 +74,6 @@ var TabList = function (options) {
       _onDragScroll,
       _onDragStart,
       _onKeyPress,
-      _selectPreviousTab,
-      _selectNextTab,
       _selectTab,
       _setTranslate,
       _showTabPosition,
@@ -154,16 +117,9 @@ var TabList = function (options) {
     _this.el.appendChild(_container);
     _this.el.appendChild(_forward);
 
-    _onDragScroll = _onDragScroll.bind(this);
-    _onDragStart = _onDragStart.bind(this);
-    _onDragEnd = _onDragEnd.bind(this);
-    _onKeyPress = _onKeyPress.bind(this);
-    _selectPreviousTab = _selectPreviousTab.bind(this);
-    _selectNextTab = _selectNextTab.bind(this);
-
     // mouse (desktop) interactions
-    _backward.addEventListener('click', _selectPreviousTab);
-    _forward.addEventListener('click', _selectNextTab);
+    _backward.addEventListener('click', _this.selectPreviousTab);
+    _forward.addEventListener('click', _this.selectNextTab);
     _nav.addEventListener('mousedown', _onDragStart);
 
     // touch (mobile) interactions
@@ -208,10 +164,10 @@ var TabList = function (options) {
 
     if (keyCode === 37 || keyCode === 38) {
       // d-pad left/up key
-      _selectPreviousTab();
+      _this.selectPreviousTab();
     } else if (keyCode === 39 || keyCode === 40) {
       // d-pad right/down key
-      _selectNextTab();
+      _this.selectNextTab();
     }
   };
 
@@ -363,53 +319,6 @@ var TabList = function (options) {
         'translate3d(' + position + 'px, 0px, 0px)';
     _nav.style.transform = 'translate3d(' + position + 'px, 0px, 0px)';
   };
-
-
-  /**
-   * Called on 'forward' button click, and also called on
-   * 'down'/'right' d-pad keyboard click. Selects the appropropriate tab
-   * in the list. This includes wrapping from the first tab in the list
-   * to the last.
-   */
-  _selectPreviousTab = function () {
-    var increment = -1,
-        currentIndex = _tabs.indexOf(_selected) + increment,
-        maxTabIndex = _tabs.length - 1,
-        minTabIndex = 0;
-
-    // if at the start of the tablist, jump to end
-    if (currentIndex < minTabIndex) {
-      currentIndex = maxTabIndex;
-      // bug with translate position, remove class that animates
-      _nav.classList.remove('smooth');
-      _tabs[currentIndex].select();
-      _nav.classList.add('smooth');
-    } else {
-      _tabs[currentIndex].select();
-    }
-  };
-
-
-  /*
-   * Called on 'backward' button click, and also called on
-   * 'up'/'left' d-pad keyboard click. Selects the appropropriate tab
-   * in the list. This includes wrapping from the last tab in the list
-   * to the first.
-   */
-  _selectNextTab = function () {
-    var increment = 1,
-        currentIndex = _tabs.indexOf(_selected) + increment,
-        maxTabIndex = _tabs.length - 1,
-        minTabIndex = 0;
-
-    // if at the end of the tablist, jump to start
-    if (currentIndex > maxTabIndex) {
-      currentIndex = minTabIndex;
-    }
-
-    _tabs[currentIndex].select();
-  };
-
 
   /**
    * Adds/ Updates the span that indicates the current tab position,
@@ -614,8 +523,8 @@ var TabList = function (options) {
     _nav.removeEventListener('mousedown', _onDragStart);
     _nav.removeEventListener('touchstart', _onDragStart);
     _nav.removeEventListener('keyup', _onKeyPress);
-    _backward.removeEventListener('click', _selectPreviousTab);
-    _forward.removeEventListener('click', _selectNextTab);
+    _backward.removeEventListener('click', _this.selectPreviousTab);
+    _forward.removeEventListener('click', _this.selectNextTab);
 
     // remove tabEl bindings
     if (_tabs) {
@@ -638,8 +547,6 @@ var TabList = function (options) {
     _onDragStart = null;
     _onDragEnd = null;
     _onKeyPress = null;
-    _selectPreviousTab = null;
-    _selectNextTab = null;
 
     // DOM elements
     _this.el = null;
@@ -660,9 +567,90 @@ var TabList = function (options) {
     _tabs = null;
   };
 
+  /*
+   * Called on 'backward' button click, and also called on
+   * 'up'/'left' d-pad keyboard click. Selects the appropropriate tab
+   * in the list. This includes wrapping from the last tab in the list
+   * to the first.
+   */
+  _this.selectNextTab = function () {
+    var increment = 1,
+        currentIndex = _tabs.indexOf(_selected) + increment,
+        maxTabIndex = _tabs.length - 1,
+        minTabIndex = 0;
+
+    // if at the end of the tablist, jump to start
+    if (currentIndex > maxTabIndex) {
+      currentIndex = minTabIndex;
+    }
+
+    _tabs[currentIndex].select();
+  };
+
+  /**
+   * Called on 'forward' button click, and also called on
+   * 'down'/'right' d-pad keyboard click. Selects the appropropriate tab
+   * in the list. This includes wrapping from the first tab in the list
+   * to the last.
+   */
+  _this.selectPreviousTab = function () {
+    var increment = -1,
+        currentIndex = _tabs.indexOf(_selected) + increment,
+        maxTabIndex = _tabs.length - 1,
+        minTabIndex = 0;
+
+    // if at the start of the tablist, jump to end
+    if (currentIndex < minTabIndex) {
+      currentIndex = maxTabIndex;
+      // bug with translate position, remove class that animates
+      _nav.classList.remove('smooth');
+      _tabs[currentIndex].select();
+      _nav.classList.add('smooth');
+    } else {
+      _tabs[currentIndex].select();
+    }
+  };
+
+
   _initialize();
   return _this;
 };
+
+
+var tabbifyOne = function (el) {
+  var tabs = [],
+      panels,
+      panel,
+      i, len,
+      tablist;
+
+  panels = el.querySelectorAll('.panel');
+  for (i = 0, len = panels.length; i < len; i++) {
+    panel = panels[i];
+    tabs.push({
+      'title': panel.getAttribute('data-title') ||
+          panel.querySelector('header').innerHTML,
+      'content': panel.innerHTML,
+      'selected': panel.getAttribute('data-selected') === 'true'
+    });
+  }
+
+  tablist = TabList({
+    'tabs': tabs
+  });
+
+  el.parentNode.replaceChild(tablist.el, el);
+};
+
+var tabbifyAll = function () {
+  var lists,
+      i;
+  lists = document.querySelectorAll('.tablist');
+  for (i = lists.length - 1; i >= 0; i--) {
+    TabList.tabbifyOne(lists[i]);
+  }
+};
+
 
 // Expose public methods
 TabList.tabbifyAll = tabbifyAll;

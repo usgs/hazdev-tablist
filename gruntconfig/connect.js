@@ -12,8 +12,8 @@ var connect = {
         config.build + '/' + config.src,
         config.example
       ],
-      open: 'http://localhost:8000/example.html',
-      port: 8000
+      open: 'http://localhost:' + config.buildPort + '/example.html',
+      port: config.buildPort
     }
   },
   test: {
@@ -23,8 +23,8 @@ var connect = {
         config.build + '/' + config.test,
         'node_modules'
       ],
-      open: 'http://localhost:8001/test.html',
-      port: 8001
+      open: 'http://localhost:' + config.testPort + '/test.html',
+      port: config.testPort
     }
   },
   dist: {
@@ -34,8 +34,19 @@ var connect = {
         config.example
       ],
       keepalive: true,
-      open: 'http://localhost:8002/example.html',
-      port: 8002
+      open: 'http://localhost:' + config.distPort + '/example.html',
+      port: config.distPort
+    }
+  },
+  example: {
+    options: {
+      base: [
+        config.example,
+        config.build + '/' + config.src
+      ],
+      livereload: config.livereloadPort,
+      open: 'http://localhost:' + config.examplePort + '/example.html',
+      port: config.examplePort
     }
   }
 };

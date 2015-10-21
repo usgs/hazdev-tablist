@@ -9,7 +9,8 @@ var watch = {
   },
   css: {
     files: [config.src + '/**/*.scss'],
-    tasks: ['postcss:build']
+    tasks: ['postcss:build'],
+    livereload: config.livereloadPort
   },
   gruntfile: {
     files: ['Gruntfile.js', 'gruntconfig/*.js'],

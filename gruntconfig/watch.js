@@ -9,7 +9,7 @@ var watch = {
   },
   css: {
     files: [config.src + '/**/*.scss'],
-    tasks: ['compass']
+    tasks: ['postcss:build']
   },
   gruntfile: {
     files: ['Gruntfile.js', 'gruntconfig/*.js'],

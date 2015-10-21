@@ -16,7 +16,7 @@ module.exports = function (grunt) {
     'clean:build',
     'browserify',
     'copy:test',
-    'compass:build',
+    'postcss:build',
     'connect:build',
     'connect:test',
     'mocha_phantomjs'
@@ -25,7 +25,7 @@ module.exports = function (grunt) {
   grunt.registerTask('dist', [
     'clean:dist',
     'build',
-    'cssmin:dist',
+    'postcss:dist',
     'uglify',
     'connect:dist'
   ]);

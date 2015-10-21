@@ -1,4 +1,4 @@
-// tablist depends on border-box
+/* tablist depends on border-box */
 .tablist,
 .tablist > nav,
 .tablist-tab,
@@ -8,14 +8,12 @@
 .tab-position-indicator,
 .tablist-forward-button {
   box-sizing:border-box;
-  -moz-box-sizing:border-box;
-  -webkit-box-sizing:border-box;
 
   margin:0;
   padding:0;
 }
 
-// indicates the position of the current tab
+/* indicates the position of the current tab */
 .tab-position-indicator {
   position:absolute;
   top:30px;
@@ -38,25 +36,20 @@
   visibility:visible;
 }
 
-// container
+/* container */
 .tablist {
   position:relative;
   margin: 1em 0 0;
 
-  // hides the tab-position-indicator
+  /* hides the tab-position-indicator */
   span.fade {
-    -webkit-transition-property: opacity, visibility;
-    -webkit-transition-duration: .25s, 0s;
-    -webkit-transition-delay: .75s, 1s;
-    -webkit-transition-timing-function: ease-out, linear;
-
     transition-property: opacity, visibility;
     transition-duration: .25s, 0s;
     transition-delay: .75s, 1s;
     transition-timing-function: ease-out, linear;
 
     opacity:0;
-    // collapse so that tab-position-indicator is not blocking clickable content
+    /* collapse so that tab-position-indicator is not blocking clickable content */
     visibility: collapse;
   }
 
@@ -68,7 +61,7 @@
     border-top:1px solid #ddd;
     background:#f9f9f9;
 
-    // nav with tabs
+    /* nav with tabs */
     > nav {
       display:block;
       position:relative;
@@ -79,14 +72,12 @@
 
       &.smooth {
         transition:all 0.3s ease-in-out;
-        -moz-transition:all 0.3s ease-in-out;
-        -webkit-transition:all 0.3s ease-in-out;
       }
 
       > .tablist-tab-selected {
         box-shadow:none;
 
-        // removes the bottom border allowing the tab to flow into the content
+        /* removes the bottom border allowing the tab to flow into the content */
         &:after {
           position:absolute;
           content:'';
@@ -101,7 +92,7 @@
       }
     }
 
-    // clear after floating contents
+    /* clear after floating contents */
     &:after {
       display:block;
       content:'';
@@ -115,17 +106,14 @@
 }
 
 
-// tab buttons
+/* tab buttons */
 .tablist-tab {
   display:inline-block;
-  border-right:1px solid #ccc; // this is supposed to be darker than #ddd
+  border-right:1px solid #ccc;
   padding:0.5em 1em;
   cursor:pointer;
   color:#333;
   background:#ededed;
-  -moz-user-select:none;
-  -webkit-user-select:none;
-  -ms-user-select:none;
   user-select:none;
   height:40px;
   text-shadow: 0 1px 1px #fff;
@@ -143,7 +131,7 @@
   }
 }
 
-// selected
+/* selected */
 .tablist-tab-selected {
   position:relative;
   color:#000;
@@ -160,7 +148,7 @@
 }
 
 
-// tab content
+/* tab content */
 .tablist-panel {
   padding:0 1em 1em;
   border:1px solid #ddd;
@@ -168,16 +156,16 @@
   position:relative;
   top:-1px;
 
-  // hide by default
+  /* hide by default */
   display:none;
 
-  // keep images from breaking tablist container
+  /* keep images from breaking tablist container */
   img {
     max-width:100%;
   }
 }
 
-// show the selected panel
+/* show the selected panel */
 .tablist-panel-selected {
   display:block;
 }
@@ -215,12 +203,8 @@
   box-shadow:3px 0 1px rgba(0,0,0,0.07);
 
   > .image {
-    -moz-transform:scaleX(-1);
-    -o-transform:scaleX(-1);
-    -webkit-transform:scaleX(-1);
     transform:scaleX(-1);
     filter:FlipH;
-    -ms-filter:"FlipH";
   }
 }
 

@@ -37,7 +37,7 @@
   position: relative;
 
   /* hides the tab-position-indicator */
-  span.fade {
+  > .fade {
     transition-delay: .75s, 1s;
     transition-duration: .25s, 0s;
     transition-property: opacity, visibility;
@@ -46,55 +46,51 @@
     /* collapse so tab-position-indicator is not blocking clickable content */
     visibility: collapse;
   }
+}
 
-  > .tablist-container {
-    background: #f9f9f9;
-    border-top: 1px solid #ddd;
-    overflow: hidden;
-    padding: 0 34px;
+.tablist-container {
+  background: #f9f9f9;
+  border-top: 1px solid #ddd;
+  overflow: hidden;
+  padding: 0 34px;
+  width: 100%;
+
+  /* nav with tabs */
+  > nav {
+    bottom: 1px;
+    display: block;
+    line-height:  1.5;
+    position: relative;
+    white-space: nowrap;
+    z-index: 1;
+
+    &.smooth {
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  /* clear after floating contents */
+  &:after {
+    clear: both;
+    content: '';
+    display: block;
+  }
+}
+
+.tablist-tab-selected {
+  box-shadow: none;
+
+  /* removes the bottom border allowing the tab to flow into the content */
+  &:after {
+    background-color: #fff;
+    bottom: 0;
+    content: '';
+    height: 2px;
+    left: 0;
+    margin-bottom: -1px;
+    position: absolute;
     width: 100%;
-
-    /* nav with tabs */
-    > nav {
-      bottom: 1px;
-      display: block;
-      line-height:  1.5;
-      position: relative;
-      white-space: nowrap;
-      z-index: 1;
-
-      &.smooth {
-        transition: all 0.3s ease-in-out;
-      }
-
-      > .tablist-tab-selected {
-        box-shadow: none;
-
-        /* removes the bottom border allowing the tab to flow into the content */
-        &:after {
-          background-color: #fff;
-          bottom: 0;
-          content: '';
-          height: 2px;
-          left: 0;
-          margin-bottom: -1px;
-          position: absolute;
-          width: 100%;
-          z-index: 1;
-        }
-      }
-    }
-
-    /* clear after floating contents */
-    &:after {
-      clear: both;
-      content: '';
-      display: block;
-    }
-
-    img {
-      max-width: 100%;
-    }
+    z-index: 1;
   }
 }
 
@@ -152,7 +148,7 @@
   top: -1px;
 
   /* keep images from breaking tablist container */
-  img {
+  > img {
     max-width: 100%;
   }
 }
@@ -187,7 +183,6 @@
     top: 0;
     z-index: 3;
   }
-
 }
 
 .tablist-backward-button {

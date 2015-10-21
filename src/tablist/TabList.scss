@@ -7,100 +7,93 @@
 .tablist-backward-button,
 .tab-position-indicator,
 .tablist-forward-button {
-  box-sizing:border-box;
-
-  margin:0;
-  padding:0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* indicates the position of the current tab */
 .tab-position-indicator {
-  position:absolute;
-  top:30px;
-  left:50%;
-  width:60px;
-  margin-left:-30px;
-
-  text-align:center;
-  padding:1px;
-  border-radius:1em;
-  text-shadow:0 1px 0 #fff;
-  z-index:1;
-  box-shadow:0px 1px 3px rgba(0, 0, 0, 0.2);
-
-  background:#f0f0f0;
-  color:#666;
-  border:1px solid #999;
-
-  opacity:1;
-  visibility:visible;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 1em;
+  color: #666;
+  left: 50%;
+  margin-left: -30px;
+  opacity: 1;
+  padding: 1px;
+  position: absolute;
+  text-align: center;
+  text-shadow: 0 1px 0 #fff;
+  top: 30px;
+  visibility: visible;
+  width: 60px;
+  z-index: 1;
 }
 
 /* container */
 .tablist {
-  position:relative;
   margin: 1em 0 0;
+  position: relative;
 
   /* hides the tab-position-indicator */
   span.fade {
-    transition-property: opacity, visibility;
-    transition-duration: .25s, 0s;
     transition-delay: .75s, 1s;
+    transition-duration: .25s, 0s;
+    transition-property: opacity, visibility;
     transition-timing-function: ease-out, linear;
-
     opacity:0;
-    /* collapse so that tab-position-indicator is not blocking clickable content */
+    /* collapse so tab-position-indicator is not blocking clickable content */
     visibility: collapse;
   }
 
-
   > .tablist-container {
-    padding:0 34px;
-    width:100%;
-    overflow:hidden;
-    border-top:1px solid #ddd;
-    background:#f9f9f9;
+    background: #f9f9f9;
+    border-top: 1px solid #ddd;
+    overflow: hidden;
+    padding: 0 34px;
+    width: 100%;
 
     /* nav with tabs */
     > nav {
-      display:block;
-      position:relative;
-      white-space:nowrap;
-      bottom:1px;
-      z-index:1;
-      line-height: 1.5;
+      bottom: 1px;
+      display: block;
+      line-height:  1.5;
+      position: relative;
+      white-space: nowrap;
+      z-index: 1;
 
       &.smooth {
-        transition:all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
       }
 
       > .tablist-tab-selected {
-        box-shadow:none;
+        box-shadow: none;
 
         /* removes the bottom border allowing the tab to flow into the content */
         &:after {
-          position:absolute;
-          content:'';
-          margin-bottom:-1px;
-          bottom:0;
-          left:0;
-          width:100%;
-          height:2px;
-          background-color:#fff;
-          z-index:1;
+          background-color: #fff;
+          bottom: 0;
+          content: '';
+          height: 2px;
+          left: 0;
+          margin-bottom: -1px;
+          position: absolute;
+          width: 100%;
+          z-index: 1;
         }
       }
     }
 
     /* clear after floating contents */
     &:after {
-      display:block;
-      content:'';
-      clear:both;
+      clear: both;
+      content: '';
+      display: block;
     }
 
     img {
-      max-width:100%;
+      max-width: 100%;
     }
   }
 }
@@ -108,38 +101,38 @@
 
 /* tab buttons */
 .tablist-tab {
-  display:inline-block;
-  border-right:1px solid #ccc;
-  padding:0.5em 1em;
-  cursor:pointer;
-  color:#333;
-  background:#ededed;
-  user-select:none;
-  height:40px;
+  background: #ededed;
+  border-right: 1px solid #ddd;
+  color: #333;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  padding: 0.5em 1em;
+  user-select: none;
   text-shadow: 0 1px 1px #fff;
 
   &:first-child {
-    border-left:1px solid #ddd;
+    border-left: 1px solid #ddd;
   }
 
   &:focus {
-    outline:none;
+    outline: none;
   }
 
   &:hover {
-    text-decoration:underline;
+    text-decoration: underline;
   }
 }
 
 /* selected */
 .tablist-tab-selected {
-  position:relative;
-  color:#000;
-  background:#fff;
+  background: #fff;
+  color: #000;
+  position: relative;
 
   &:focus {
-    text-decoration:underline;
-    color:#000;
+    color: #000;
+    text-decoration: underline;
   }
 
   &:hover {
@@ -150,67 +143,66 @@
 
 /* tab content */
 .tablist-panel {
-  padding:0 1em 1em;
-  border:1px solid #ddd;
-  margin-bottom:8px;
-  position:relative;
-  top:-1px;
-
+  border: 1px solid #ddd;
   /* hide by default */
-  display:none;
+  display: none;
+  margin-bottom: 8px;
+  padding: 0 1em 1em;
+  position: relative;
+  top: -1px;
 
   /* keep images from breaking tablist container */
   img {
-    max-width:100%;
+    max-width: 100%;
   }
 }
 
 /* show the selected panel */
 .tablist-panel-selected {
-  display:block;
+  display: block;
 }
 
 .tablist-backward-button,
 .tablist-forward-button {
-  position:absolute;
-  top:0;
-  display:block;
-  height:41px;
-  width:35px;
-  cursor:pointer;
-  border:1px solid #ddd;
-  background:#fff;
-  z-index:10;
+  background: #fff;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  display: block;
+  height: 41px;
+  position: absolute;
+  top: 0;
+  width: 35px;
+  z-index: 10;
 
   > .image {
-    position:absolute;
-    background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABOCAYAAACUlsCTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAH5JREFUeNrs2UENgDAQRcENCpBQCUjDEZIqBQmwB0gawo0T2ZnkG3jppW0EAAAAAAAAb5oEEVtuzy3VIxzXysZYhwilY8y5LoYYYoghhhhiiCGGGDViTC7FToMIIogggggiiCCCCH/jOX/gg+cRo3yEW5MAAAAAAADgm1OAAQAnKpPP/4VJ5gAAAABJRU5ErkJggg==);
-    background-size:33px 39px;
-    background-position:0;
-    background-repeat:no-repeat;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    opacity:0.6;
-    z-index:3;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABOCAYAAACUlsCTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAH5JREFUeNrs2UENgDAQRcENCpBQCUjDEZIqBQmwB0gawo0T2ZnkG3jppW0EAAAAAAAAb5oEEVtuzy3VIxzXysZYhwilY8y5LoYYYoghhhhiiCGGGDViTC7FToMIIogggggiiCCCCH/jOX/gg+cRo3yEW5MAAAAAAADgm1OAAQAnKpPP/4VJ5gAAAABJRU5ErkJggg==);
+    background-position: 0;
+    background-repeat: no-repeat;
+    background-size: 33px 39px;
+    bottom: 0;
+    left: 0;
+    opacity: 0.6;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 3;
   }
 
 }
 
 .tablist-backward-button {
-  left:0;
-  box-shadow:3px 0 1px rgba(0,0,0,0.07);
+  box-shadow: 3px 0 1px rgba(0,0,0,0.07);
+  left: 0;
 
   > .image {
-    transform:scaleX(-1);
-    filter:FlipH;
+    filter: FlipH;
+    transform: scaleX(-1);
   }
 }
 
 .tablist-forward-button {
-  right:0;
-  box-shadow:-3px 0 1px rgba(0,0,0,0.07);
+  box-shadow: -3px 0 1px rgba(0,0,0,0.07);
+  right: 0;
 }
 
 @media print {
@@ -218,10 +210,10 @@
   .tab-position-indicator,
   .tablist-forward-button,
   .tablist-backward-button {
-    display:none;
+    display: none;
   }
 
   .tablist-panel {
-    border-color:#ddd;
+    border-color: #ddd;
   }
 }

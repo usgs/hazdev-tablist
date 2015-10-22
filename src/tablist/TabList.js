@@ -106,11 +106,11 @@ var TabList = function (options) {
     // add tab back/next buttons
     _backward = document.createElement('div');
     _backward.className = 'tablist-backward-button';
-    _backward.innerHTML = '<div class="image"></div>';
+    _backward.innerHTML = '<div class="material-icons">chevron_left</div>';
 
     _forward = document.createElement('div');
     _forward.className = 'tablist-forward-button';
-    _forward.innerHTML = '<div class="image"></div>';
+    _forward.innerHTML = '<div class="material-icons">chevron_right</div>';
 
     _container.appendChild(_nav);
     _this.el.appendChild(_backward);

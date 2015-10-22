@@ -170,29 +170,17 @@
   width: 35px;
   z-index: 10;
 
-  > .image {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABOCAYAAACUlsCTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAH5JREFUeNrs2UENgDAQRcENCpBQCUjDEZIqBQmwB0gawo0T2ZnkG3jppW0EAAAAAAAAb5oEEVtuzy3VIxzXysZYhwilY8y5LoYYYoghhhhiiCGGGDViTC7FToMIIogggggiiCCCCH/jOX/gg+cRo3yEW5MAAAAAAADgm1OAAQAnKpPP/4VJ5gAAAABJRU5ErkJggg==);
-    background-position: 0;
-    background-repeat: no-repeat;
-    background-size: 33px 39px;
-    bottom: 0;
-    left: 0;
-    opacity: 0.6;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 3;
+  > .material-icons {
+    line-height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
   }
 }
 
 .tablist-backward-button {
   box-shadow: 3px 0 1px rgba(0,0,0,0.07);
   left: 0;
-
-  > .image {
-    filter: FlipH;
-    transform: scaleX(-1);
-  }
 }
 
 .tablist-forward-button {

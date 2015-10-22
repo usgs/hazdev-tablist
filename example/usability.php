@@ -4,6 +4,7 @@ if (!isset($TEMPLATE)) {
   $TITLE = 'Usability Example';
   $NAVIGATION = true;
   $HEAD = '
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="hazdev-tablist.css"/>
   ';
 

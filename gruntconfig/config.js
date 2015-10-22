@@ -11,6 +11,7 @@ var config = {
   livereloadPort: 8079,
   node_modules: 'node_modules',
   src: 'src',
+  templatePort: 8074,
   test: 'test',
   testPort: 8071
 };

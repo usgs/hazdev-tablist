@@ -17,7 +17,9 @@ module.exports = function (grunt) {
     'browserify',
     'copy:test',
     'postcss:build',
-    'connect:build',
+    'configureProxies:example',
+    'connect:template',
+    'connect:example',
     'connect:test',
     'mocha_phantomjs'
   ]);

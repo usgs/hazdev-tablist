@@ -2,20 +2,42 @@
 
 var config = require('./config');
 
+var corsMiddleware = function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader('Access-Control-Allow-Headers',
+      'accept,origin,authorization,content-type');
+  return next();
+};
+
+var addMiddleware = function (connect, options, middlewares) {
+  middlewares.unshift(
+    require('grunt-connect-proxy/lib/utils').proxyRequest,
+    corsMiddleware,
+    require('gateway')(options.base[0], {
+      '.php': 'php-cgi',
+      'env': {
+        'PHPRC': 'node_modules/hazdev-template/dist/conf/php.ini'
+      }
+    })
+  );
+  return middlewares;
+};
+
 var connect = {
   options: {
     hostname: '*'
   },
-  build: {
-    options: {
-      base: [
-        config.build + '/' + config.src,
-        config.example
-      ],
-      open: 'http://localhost:' + config.buildPort + '/example.html',
-      port: config.buildPort
+  proxies: [
+    {
+      context: '/theme/',
+      host: 'localhost',
+      port: config.templatePort,
+      rewrite: {
+        '^/theme': ''
+      }
     }
-  },
+  ],
   test: {
     options: {
       base: [
@@ -30,11 +52,11 @@ var connect = {
   dist: {
     options: {
       base: [
-        config.dist,
-        config.example
+        config.example,
+        config.dist
       ],
       keepalive: true,
-      open: 'http://localhost:' + config.distPort + '/example.html',
+      open: 'http://localhost:' + config.distPort + '/example.php',
       port: config.distPort
     }
   },
@@ -45,8 +67,15 @@ var connect = {
         config.build + '/' + config.src
       ],
       livereload: config.livereloadPort,
-      open: 'http://localhost:' + config.examplePort + '/example.html',
+      open: 'http://localhost:' + config.examplePort + '/example.php',
+      middleware: addMiddleware,
       port: config.examplePort
+    }
+  },
+  template: {
+    options: {
+      base: ['node_modules/hazdev-template/dist/htdocs'],
+      port: config.templatePort
     }
   }
 };

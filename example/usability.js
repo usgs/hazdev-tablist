@@ -13,53 +13,50 @@ TabList({
   tabs: [
     {
       title: 'Golf',
-      content: '<header>Golf</header>' +
-          '<form>' +
-            '<label>Choice 1</label>' +
-            '<input type="radio" name="choice" value="1"' +
-                'checked="checked" />' +
-            '<br />' +
-            '<label>Choice 2</label>' +
-            '<input type="radio" name="choice" value="2" />' +
-            '<br />' +
-            '<label>Choice 3</label>' +
-            '<input type="radio" name="choice" value="3" />' +
-            '<br />' +
-            '<label>Choice 4</label>' +
-            '<input type="radio" name="choice" value="4" />' +
-          '</form>'
+      content: '<h2>Golf</h2>' +
+        '<form>' +
+          '<input id="choice1" type="radio" name="choice" value="1"' +
+              'checked="checked" />' +
+          '<label for="choice1">Choice 1</label>' +
+          '<input id="choice2" type="radio" name="choice" value="2" />' +
+          '<label for="choice2">Choice 2</label>' +
+          '<input id="choice3" type="radio" name="choice" value="3" />' +
+          '<label for="choice3">Choice 3</label>' +
+          '<input id="choice4" type="radio" name="choice" value="4" />' +
+          '<label for="choice4">Choice 4</label>' +
+        '</form>'
     },
     {
       title: 'Soccer',
-      content: '<header>Soccer</header>' + LOREM
+      content: '<h2>Soccer</h2>' + LOREM
     },
     {
       title: 'Basketball',
-      content: '<header>Basketball</header>' + LOREM
+      content: '<h2>Basketball</h2>' + LOREM
     },
     {
       title: 'Tennis',
-      content: '<header>Tennis</header>' + LOREM
+      content: '<h2>Tennis</h2>' + LOREM
     },
     {
       title: 'Track and Field',
-      content: '<header>Track and Field</header>' + LOREM
+      content: '<h2>Track and Field</h2>' + LOREM
     },
     {
       title: 'Bowling',
-      content: '<header>Bowling</header>' + LOREM
+      content: '<h2>Bowling</h2>' + LOREM
     },
     {
       title: 'Baseball',
-      content: '<header>Baseball</header>' + LOREM
+      content: '<h2>Baseball</h2>' + LOREM
     },
     {
       title: 'Hockey',
-      content: '<header>Hockey</header>' + LOREM
+      content: '<h2>Hockey</h2>' + LOREM
     },
     {
       title: 'Squash',
-      content: '<header>Squash</header>' + LOREM
+      content: '<h2>Squash</h2>' + LOREM
     }
   ]
 });
@@ -70,53 +67,50 @@ TabList({
   tabs: [
     {
       title: 'Golf',
-      content: '<header>Golf</header>' +
-          '<form>' +
-            '<label>Choice 1</label>' +
-            '<input type="radio" name="choice" value="1"' +
-                'checked="checked" />' +
-            '<br />' +
-            '<label>Choice 2</label>' +
-            '<input type="radio" name="choice" value="2" />' +
-            '<br />' +
-            '<label>Choice 3</label>' +
-            '<input type="radio" name="choice" value="3" />' +
-            '<br />' +
-            '<label>Choice 4</label>' +
-            '<input type="radio" name="choice" value="4" />' +
-          '</form>'
+      content: '<h2>Golf</h2>' +
+        '<form>' +
+          '<input id="choice5" type="radio" name="choice" value="1"' +
+              'checked="checked" />' +
+          '<label for="choice5">Choice 1</label>' +
+          '<input id="choice6" type="radio" name="choice" value="2" />' +
+          '<label for="choice6">Choice 2</label>' +
+          '<input id="choice7" type="radio" name="choice" value="3" />' +
+          '<label for="choice7">Choice 3</label>' +
+          '<input id="choice8" type="radio" name="choice" value="4" />' +
+          '<label for="choice8">Choice 4</label>' +
+        '</form>'
     },
     {
       title: 'Soccer',
-      content: '<header>Soccer</header>' + LOREM
+      content: '<h2>Soccer</h2>' + LOREM
     },
     {
       title: 'Basketball',
-      content: '<header>Basketball</header>' + LOREM
+      content: '<h2>Basketball</h2>' + LOREM
     },
     {
       title: 'Tennis',
-      content: '<header>Tennis</header>' + LOREM
+      content: '<h2>Tennis</h2>' + LOREM
     },
     {
       title: 'Track and Field',
-      content: '<header>Track and Field</header>' + LOREM
+      content: '<h2>Track and Field</h2>' + LOREM
     },
     {
       title: 'Bowling',
-      content: '<header>Bowling</header>' + LOREM
+      content: '<h2>Bowling</h2>' + LOREM
     },
     {
       title: 'Baseball',
-      content: '<header>Baseball</header>' + LOREM
+      content: '<h2>Baseball</h2>' + LOREM
     },
     {
       title: 'Hockey',
-      content: '<header>Hockey</header>' + LOREM
+      content: '<h2>Hockey</h2>' + LOREM
     },
     {
       title: 'Squash',
-      content: '<header>Squash</header>' + LOREM
+      content: '<h2>Squash</h2>' + LOREM
     }
   ]
 });

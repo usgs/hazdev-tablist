@@ -24,6 +24,15 @@ module.exports = function (grunt) {
     'mocha_phantomjs'
   ]);
 
+  grunt.registerTask('test', [
+    'clean:build',
+    'browserify',
+    'copy:test',
+    'postcss:build',
+    'connect:test',
+    'mocha_phantomjs'
+  ]);
+
   grunt.registerTask('dist', [
     'clean:dist',
     'build',

@@ -630,7 +630,7 @@ var tabbifyOne = function (el) {
     tabs.push({
       'title': panel.getAttribute('data-title') ||
           panel.querySelector('header').innerHTML,
-      'content': panel.innerHTML,
+      'content': panel,
       'selected': panel.getAttribute('data-selected') === 'true'
     });
   }
